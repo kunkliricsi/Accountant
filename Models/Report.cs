@@ -1,11 +1,12 @@
 using System;
+using System.Collections.Generic;
 
 namespace Accountant.Models
 {
-    public class Reports
+    public class Report
     {
-        public Guid ID { get; set; }
-        public Households HouseHold { get; set; }
+        public int ID { get; set; }
+        public ICollection<Expense> Expenses { get; set; }
         public bool Evaluated { get; set; }
         public DateTime EvaluationTime { get; set; }
     }
