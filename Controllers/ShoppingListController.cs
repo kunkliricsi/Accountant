@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace Accountant.Controllers
 {
+    [Route("[controller]")]
     [ApiController]
     public class ShoppingListController : ControllerBase
     {
@@ -17,7 +18,7 @@ namespace Accountant.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ICollection<Report>> GetAll()
+        public ActionResult<ICollection<ShoppingListItem>> GetAll()
         {
             return context.ShoppingList.ToList();
         }

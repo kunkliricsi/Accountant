@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace Accountant.Controllers
 {
+    [Route("[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
