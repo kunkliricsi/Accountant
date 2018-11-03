@@ -2,7 +2,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
- 
+using Accountant.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+
 namespace Accountant
 {
     public class Startup
@@ -16,11 +19,16 @@ namespace Accountant
  
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            var connectionString = "";
+
+            services.AddDbContext<AccountantContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString(connectionString)));
+
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
  
-        public void Configure(IApplicationBuilder app,
-                    IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseMvc();
         }

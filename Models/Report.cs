@@ -8,6 +8,6 @@ namespace Accountant.Models
         public int ID { get; set; }
         public ICollection<Expense> Expenses { get; set; }
         public bool Evaluated { get; set; }
-        public DateTime EvaluationTime { get; set; }
+        public DateTime DateOfEvaluation { get; set; }
     }
 }
