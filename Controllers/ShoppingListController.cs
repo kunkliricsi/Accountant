@@ -22,5 +22,49 @@ namespace Accountant.Controllers
         {
             return context.ShoppingList.ToList();
         }
+
+        [HttpGet("{id}")]
+        public ActionResult<ShoppingListItem> GetById(int id)
+        {
+            var item = context.ShoppingList.Find(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return item;
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, ShoppingListItem item)
+        {
+            var itemToUpdate = context.ShoppingList.Find(id);
+            if (itemToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            itemToUpdate.Name = item.Name;
+            itemToUpdate.DateOfCreation = item.DateOfCreation;
+            itemToUpdate.Comment = item.Comment;
+
+            context.ShoppingList.Update(itemToUpdate);
+            context.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var itemToDelete = context.ShoppingList.Find(id);
+            if (itemToDelete == null)
+            {
+                return NotFound();
+            }
+
+            context.ShoppingList.Remove(itemToDelete);
+            context.SaveChanges();
+            return NoContent();
+        }
     }
 }

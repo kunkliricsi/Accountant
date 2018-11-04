@@ -53,7 +53,6 @@ namespace Accountant.Controllers
                 return NotFound();
             }
 
-            reportToUpdate.Expenses = report.Expenses;
             reportToUpdate.Evaluated = report.Evaluated;
             reportToUpdate.DateOfEvaluation = report.DateOfEvaluation;
 
@@ -74,8 +73,8 @@ namespace Accountant.Controllers
             return expenses;
         }
 
-        [HttpGet("{id}/expense/{ReportId}", Name = "GetExpense")]
-        public ActionResult<Expense> GetExpenseById(int id, int ReportId)
+        [HttpGet("{id}/expense/{ExpenseId}")]
+        public ActionResult<Expense> GetExpenseById(int id, int ExpenseId)
         {
             var report = context.Reports.Find(id);
             if (report == null)
@@ -83,7 +82,7 @@ namespace Accountant.Controllers
                 return NotFound();
             }
 
-            var expenseToReturn = report.Expenses.FirstOrDefault(e => e.ID == ReportId);
+            var expenseToReturn = report.Expenses.FirstOrDefault(e => e.ID == ExpenseId);
             if (expenseToReturn == null)
             {
                 return NotFound();
@@ -106,7 +105,35 @@ namespace Accountant.Controllers
             context.Reports.Update(report);
             context.SaveChanges();
 
-            return CreatedAtAction("GetExpense", new { id = expense.ID}, expense);
+            return CreatedAtAction(nameof(GetExpenseById), expense);
+        }
+
+        [HttpPut("{id}/expense/{ExpenseId}")]
+        public IActionResult UpdateExpense(int id, int ExpenseId, Expense expense)
+        {
+            var report = context.Reports.Find(id);
+            if (report == null)
+            {
+                return NotFound();
+            }
+
+            var expenseToUpdate = report.Expenses.FirstOrDefault(e => e.ID == expense.ID);
+            if (expenseToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            expenseToUpdate.Amount = expense.Amount;
+            expenseToUpdate.Category = expense.Category;
+            expenseToUpdate.DateOfPurchase = expense.DateOfPurchase;
+            expenseToUpdate.ItemsPurchased = expense.ItemsPurchased;
+            expenseToUpdate.PayOption = expense.PayOption;
+            expenseToUpdate.Purchaser = expense.Purchaser;
+
+            context.Expenses.Update(expenseToUpdate);
+            context.SaveChanges();
+
+            return NoContent();
         }
     }
 }
