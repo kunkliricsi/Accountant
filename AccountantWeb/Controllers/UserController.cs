@@ -8,7 +8,7 @@ using System.Linq;
 namespace Accountant.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class UserController : ControllerBase
     {
         private readonly AccountantContext context;
