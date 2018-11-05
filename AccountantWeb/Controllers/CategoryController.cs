@@ -6,19 +6,19 @@ using System.Linq;
 
 namespace Accountant.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class CategoryController : ControllerBase
     {
-        private readonly AccountantContext context;
+         private readonly AccountantContext context;
 
         public CategoryController(AccountantContext context)
         {
             this.context = context;  
         }
-
-        [HttpGet("{id}", Name = "GetCategory")]
-        public ActionResult<Category> GetById(int id)
+ 
+        [HttpGet("{id}")]
+        public ActionResult<Category> Get(int id)
         {
             var category = context.Categories.Find(id);
             if (category == null)
@@ -30,21 +30,21 @@ namespace Accountant.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ICollection<Category>> GetAll()
+        public ActionResult<IEnumerable<Category>> Get()
         {
             return context.Categories.ToList();
         }
 
         [HttpPost]
-        public IActionResult Create(Category category)
+        public IActionResult Post(Category category)
         {
             context.Categories.Add(category);
             context.SaveChanges();
 
-            return CreatedAtAction("GetCategory", new {id = category.ID }, category);
+            return CreatedAtAction(nameof(Get), new {id = category.ID }, category);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             var categoryToDelete = context.Categories.Find(id);

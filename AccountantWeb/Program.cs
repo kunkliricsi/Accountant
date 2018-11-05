@@ -3,7 +3,6 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Accountant.Data;
-using Microsoft.Extensions.Logging;
 
 namespace Accountant
 {
@@ -12,7 +11,7 @@ namespace Accountant
         public static void Main(string[] args)
         {
             var host = BuildWebHost(args);
-
+ 
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -21,10 +20,9 @@ namespace Accountant
                     var context = services.GetRequiredService<AccountantContext>();
                     DbInitializer.Initialize(context);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occured while seeding the database.");
+                    Console.WriteLine("An error occured while seeding the database.");
                 }
             }
 

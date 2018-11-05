@@ -5,7 +5,10 @@ namespace Accountant.Data
 {
     public class AccountantContext : DbContext
     {
-        public AccountantContext(DbContextOptions<AccountantContext> options) : base(options) { }
+        public AccountantContext(DbContextOptions<AccountantContext> options) : base(options)
+        {
+            this.Database.EnsureCreated();
+        }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }

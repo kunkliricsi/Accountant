@@ -19,17 +19,24 @@ namespace Accountant
  
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = "";
-
+            services.AddCors();
+            
+            var connectionString = "Data Source=Accountant.db";
             services.AddDbContext<AccountantContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString(connectionString)));
+                options.UseSqlite(connectionString));
 
             services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
  
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+
             app.UseMvc();
         }
     }

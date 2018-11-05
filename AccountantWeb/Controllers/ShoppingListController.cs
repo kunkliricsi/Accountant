@@ -6,8 +6,8 @@ using System.Linq;
 
 namespace Accountant.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class ShoppingListController : ControllerBase
     {
         private readonly AccountantContext context;
@@ -18,13 +18,13 @@ namespace Accountant.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ICollection<ShoppingListItem>> GetAll()
+        public ActionResult<ICollection<ShoppingListItem>> Get()
         {
             return context.ShoppingList.ToList();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ShoppingListItem> GetById(int id)
+        public ActionResult<ShoppingListItem> Get(int id)
         {
             var item = context.ShoppingList.Find(id);
             if (item == null)
@@ -36,7 +36,7 @@ namespace Accountant.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, ShoppingListItem item)
+        public IActionResult Put(int id, ShoppingListItem item)
         {
             var itemToUpdate = context.ShoppingList.Find(id);
             if (itemToUpdate == null)

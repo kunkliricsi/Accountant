@@ -7,8 +7,8 @@ using System.Linq;
 
 namespace Accountant.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly AccountantContext context;
@@ -19,13 +19,13 @@ namespace Accountant.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ICollection<User>> GetAll()
+        public ActionResult<ICollection<User>> Get()
         {
             return context.Users.ToList();
         }
 
-        [HttpGet("{id}", Name = "GetUser")]
-        public ActionResult<User> GetById(int id)
+        [HttpGet("{id}")]
+        public ActionResult<User> Get(int id)
         {
             var item = context.Users.Find(id);
             if (item == null) 
@@ -37,16 +37,16 @@ namespace Accountant.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(User user)
+        public IActionResult Post(User user)
         {
             context.Users.Add(user);
             context.SaveChanges();
 
-            return CreatedAtRoute("GetUser", new { id = user.ID }, user);
+            return CreatedAtRoute(nameof(Get), new { id = user.ID }, user);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, User user)
+        public IActionResult Put(int id, User user)
         {
             var userToUpdate = context.Users.Find(id);
             if (userToUpdate == null)
