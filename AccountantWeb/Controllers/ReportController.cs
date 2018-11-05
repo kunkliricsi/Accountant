@@ -53,6 +53,8 @@ namespace Accountant.Controllers
                 return NotFound();
             }
 
+            reportToUpdate.Start = report.Start;
+            reportToUpdate.End = report.End;
             reportToUpdate.Evaluated = report.Evaluated;
             reportToUpdate.DateOfEvaluation = report.DateOfEvaluation;
 

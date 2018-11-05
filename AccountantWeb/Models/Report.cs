@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Accountant.Models
 {
@@ -7,7 +8,18 @@ namespace Accountant.Models
     {
         public int ID { get; set; }
         public ICollection<Expense> Expenses { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime Start { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime End { get; set; }
         public bool Evaluated { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
         public DateTime DateOfEvaluation { get; set; }
     }
 }
