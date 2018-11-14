@@ -7,6 +7,11 @@ namespace Accountant.Data
     {
         public static void Initialize(AccountantContext context)
         {
+            InitializeCategories(context);
+        }
+
+        private static void InitializeCategories(AccountantContext context)
+        {
             if (context.Categories.Any())
             {
                 return;
