@@ -7,7 +7,7 @@ namespace Accountant.Models
     public class Report
     {
         public int ID { get; set; }
-        public ICollection<Expense> Expenses { get; set; }
+        public IQueryable<Expense> Expenses { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
