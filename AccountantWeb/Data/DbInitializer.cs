@@ -10,10 +10,33 @@ namespace Accountant.Data
     {
         public static void Initialize(AccountantContext context)
         {
+            InitializeChanges(context);
             InitializeUsers(context);
             InitializeCategories(context);
             InitializeReports(context);
             InitializeExpenses(context);
+        }
+
+        private static void InitializeChanges(AccountantContext context)
+        {
+            var change = new Changes()
+            {
+                Category = DateTime.UtcNow,
+                Expense = DateTime.UtcNow,
+                Report = DateTime.UtcNow,
+                ShoppingListItem = DateTime.UtcNow,
+                User = DateTime.UtcNow
+            };
+
+            if (context.Changes.Any())
+            {
+                context.Changes.Update(change);
+            }
+            else
+            {
+                context.Changes.Add(change);
+            }
+            context.SaveChanges();
         }
 
         private static void InitializeUsers(AccountantContext context)
