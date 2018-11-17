@@ -109,7 +109,31 @@ namespace Accountant.Data
                     ItemsPurchased = new List<ShoppingListItem>() },  
 
                 new Expense { Amount = 2723, PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 11, 04),
-                    Purchaser = ricsi, 
+                    Purchaser = ricsi,
+                    Report = report,
+                    Category = category,
+                    ItemsPurchased = new List<ShoppingListItem>() },
+
+                new Expense { Amount = 7835, PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 11, 02),
+                    Purchaser = ricsi,
+                    Report = report,
+                    Category = category,
+                    ItemsPurchased = new List<ShoppingListItem>() },
+
+                new Expense { Amount = 2508, PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 10, 17),
+                    Purchaser = ricsi,
+                    Report = report,
+                    Category = category,
+                    ItemsPurchased = new List<ShoppingListItem>() },
+
+                new Expense { Amount = 1385, PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 10, 28),
+                    Purchaser = ricsi,
+                    Report = report,
+                    Category = category,
+                    ItemsPurchased = new List<ShoppingListItem>() },
+
+                new Expense { Amount = 3260, PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 10, 28),
+                    Purchaser = ricsi,
                     Report = report,
                     Category = category,
                     ItemsPurchased = new List<ShoppingListItem>() }
