@@ -19,14 +19,26 @@ namespace Accountant.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().ToTable("User");
-            modelBuilder.Entity<Category>().ToTable("Category");
-            modelBuilder.Entity<ShoppingListItem>().ToTable("ShoppingListItem");
             modelBuilder.Entity<Report>().ToTable("Report");
+            modelBuilder.Entity<Category>().ToTable("Category");
+
+            modelBuilder.Entity<ShoppingListItem>().ToTable("ShoppingListItem")
+                .HasOne<Expense>(i => i.Expense)
+                .WithMany(e => e.ItemsPurchased);
 
             modelBuilder.Entity<Expense>().ToTable("Expense")
                 .HasOne<Report>(e => e.Report)
                 .WithMany(r => r.Expenses)
-                .HasForeignKey(e => e.ReportID);
+                .IsRequired();
+
+            modelBuilder.Entity<Expense>()
+                .HasOne<User>(e => e.Purchaser)
+                .WithMany(u => u.Expenses)
+                .IsRequired();
+
+            modelBuilder.Entity<Expense>()
+                .HasOne<Category>(e => e.Category)
+                .WithMany(c => c.Expenses);
         }
     }
 }

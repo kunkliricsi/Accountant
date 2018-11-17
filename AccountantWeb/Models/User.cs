@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace Accountant.Models
 {
@@ -11,5 +12,7 @@ namespace Accountant.Models
 
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
+        public virtual ICollection<Expense> Expenses { get; set; }
     }
 }

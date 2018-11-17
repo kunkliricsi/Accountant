@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Accountant.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Proxies;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Accountant
 {
@@ -23,10 +25,13 @@ namespace Accountant
             
             var connectionString = "Data Source=Accountant.db";
             services.AddDbContext<AccountantContext>(options =>
-                options.UseSqlite(connectionString));
+                options.UseSqlite(connectionString)
+                       .UseLazyLoadingProxies());
 
             services.AddMvc()
-                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                 .AddJsonOptions(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
         }
  
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

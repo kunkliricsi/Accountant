@@ -13,5 +13,7 @@ namespace Accountant.Models
 
         [DataType(DataType.Date)]
         public DateTime DateOfCreation { get; set; }
+
+        public virtual Expense Expense { get; set; }
     }
 }
