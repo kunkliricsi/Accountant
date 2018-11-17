@@ -6,12 +6,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/GreyLight"
+    android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-    <fragment android:name="com.kunkliricsi.accountant.fragments.AddExpenseFragment"
-        android:id="@+id/expense_fragment"
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginBottom="55dp">
+
+    </FrameLayout>
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fab_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        app:menu_icon="@drawable/ic_all_inclusive_black_24dp"
+        app:menu_labels_ellipsize="end"
+        app:menu_labels_singleLine="true"
+        app:menu_fab_label="Cancel"
+        app:menu_backgroundColor="#cc373740"
+        app:menu_animationDelayPerItem="0"
+        app:menu_colorNormal="@color/Orange"
+        app:menu_colorPressed="@color/GreenDark"
+        app:menu_colorRipple="@color/Green"
+        android:padding="8dp"
+        android:layout_marginBottom="55dp">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_shopping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_playlist_add_black_24dp"
+            app:backgroundTint="@color/Orange"
+            app:menu_colorPressed="@color/GreenDark"
+            app:fab_colorRipple="@color/Green"
+            app:fab_size="mini"
+            app:fab_label="Add Shopping Item"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_expense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_euro_symbol_black_24dp"
+            app:menu_colorPressed="@color/GreenDark"
+            app:fab_colorRipple="@color/Green"
+            app:fab_size="mini"
+            app:fab_label="Add Expense"/>
+
+    </com.github.clans.fab.FloatingActionMenu>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

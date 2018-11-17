@@ -4,21 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/navigation_settings"
-        android:icon="@drawable/ic_settings_black_24dp"
-        android:title="@string/title_settings"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/navigation_shopping_list"
         android:icon="@drawable/ic_format_list_numbered_black_24dp"
         android:title="@string/title_shopping_list"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/navigation_add_expense"
-        android:icon="@drawable/ic_add_black_24dp"
-        android:title="@string/title_add_expense"
         app:showAsAction="ifRoom" />
 
     <item
