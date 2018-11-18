@@ -35,6 +35,15 @@ namespace Accountant.Controllers
             return item;
         }
 
+        [HttpPost]
+        public IActionResult Post(ShoppingListItem item)
+        {
+            context.ShoppingList.Add(item);
+            context.SaveChanges();
+
+            return CreatedAtAction(nameof(Get), new { id = item.ID }, item);
+        }
+
         [HttpPut("{id}")]
         public IActionResult Put(int id, ShoppingListItem item)
         {
