@@ -18,4 +18,5 @@
     <string name="add">Add</string>
     <string name="choose_category">Choose Category</string>
     <string name="shopping_list">Shopping List</string>
+    <string name="pick_category">Choose Category</string>
 </resources>

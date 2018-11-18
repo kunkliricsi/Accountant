@@ -8,14 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.kunkliricsi.accountant.R;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.util.Locale;
 
 public class AddExpenseDialogFragment extends DialogFragment {
@@ -23,6 +24,12 @@ public class AddExpenseDialogFragment extends DialogFragment {
     private ToggleButton Cash;
     private ToggleButton Credit;
     private EditText Amount;
+    private TextView CategoryText;
+    private Button Category;
+    private TextView ShoppingText;
+    private Button Shopping;
+    private TextView Add;
+    private TextView Cancel;
 
     private String formattedAmount;
     private Number amount;
@@ -35,23 +42,11 @@ public class AddExpenseDialogFragment extends DialogFragment {
             = new ToggleButton.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (((ToggleButton) v) == Cash) {
-                if (Cash.isChecked()) {
-                    Credit.setChecked(false);
-                }
-                else {
-                    Cash.setChecked(true);
-                }
-            }
-            else {
-                if (Credit.isChecked()) {
-                    Cash.setChecked(false);
-                }
-                else {
-                    Credit.setChecked(true);
-                }
-            }
+            Cash.setChecked(false);
+            Credit.setChecked(false);
+            ((ToggleButton)v).setChecked(true);
         }
+
     };
 
     EditText.OnFocusChangeListener amountFocusChangeListener
@@ -95,11 +90,16 @@ public class AddExpenseDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_add_expense, container, false);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
-        EditText amount = (EditText) view.findViewById(R.id.expense_amount);
-
-        Cash = (ToggleButton) view.findViewById(R.id.expense_cash);
-        Credit = (ToggleButton) view.findViewById(R.id.expense_credit);
-        Amount = (EditText) view.findViewById(R.id.expense_amount);
+        Amount = view.findViewById(R.id.expense_amount);
+        Cash = view.findViewById(R.id.expense_cash);
+        Credit = view.findViewById(R.id.expense_credit);
+        Amount = view.findViewById(R.id.expense_amount);
+        CategoryText = view.findViewById(R.id.expense_category_text);
+        Category = view.findViewById(R.id.expense_category);
+        ShoppingText = view.findViewById(R.id.expense_shopping_list_text);
+        Shopping = view.findViewById(R.id.expense_shopping_list);
+        Add = view.findViewById(R.id.expense_add);
+        Cancel = view.findViewById(R.id.expense_cancel);
 
         Cash.setOnClickListener(toggleListener);
         Credit.setOnClickListener(toggleListener);
