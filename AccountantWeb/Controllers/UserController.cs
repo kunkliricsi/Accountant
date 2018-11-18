@@ -61,20 +61,6 @@ namespace Accountant.Controllers
             context.SaveChanges();
             return NoContent();
         }
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            var userToDelete = context.Users.Find(id);
-            if (userToDelete == null)
-            {
-                return NotFound();
-            }
-
-            context.Users.Remove(userToDelete);
-            context.SaveChanges();
-            return NoContent();
-        }
     }
 }
 
