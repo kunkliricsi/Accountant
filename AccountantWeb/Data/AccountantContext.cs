@@ -14,9 +14,9 @@ namespace Accountant.Data
 
         public DbSet<Changes> Changes { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Report> Reports { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ShoppingListItem> ShoppingList { get; set; }
-        public DbSet<Report> Reports { get; set; }
         public DbSet<Expense> Expenses { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,24 +25,8 @@ namespace Accountant.Data
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Report>().ToTable("Report");
             modelBuilder.Entity<Category>().ToTable("Category");
-
-            modelBuilder.Entity<ShoppingListItem>().ToTable("ShoppingListItem")
-                .HasOne<Expense>(i => i.Expense)
-                .WithMany(e => e.ItemsPurchased);
-
-            modelBuilder.Entity<Expense>().ToTable("Expense")
-                .HasOne<Report>(e => e.Report)
-                .WithMany(r => r.Expenses)
-                .IsRequired();
-
-            modelBuilder.Entity<Expense>()
-                .HasOne<User>(e => e.Purchaser)
-                .WithMany(u => u.Expenses)
-                .IsRequired();
-
-            modelBuilder.Entity<Expense>()
-                .HasOne<Category>(e => e.Category)
-                .WithMany(c => c.Expenses);
+            modelBuilder.Entity<ShoppingListItem>().ToTable("ShoppingListItem");
+            modelBuilder.Entity<Expense>().ToTable("Expense");
         }
 
         public override int SaveChanges()

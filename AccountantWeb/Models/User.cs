@@ -12,7 +12,5 @@ namespace Accountant.Models
 
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-
-        public virtual ICollection<Expense> Expenses { get; set; }
     }
 }

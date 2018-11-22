@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Collections.Generic;
 using Accountant.Models;
 using Accountant.Models.Enums;
 using System;
@@ -48,7 +47,7 @@ namespace Accountant.Data
 
             var users = new User[]
             {
-                new User { Name = "Ricsi", Email = "kunkli.ricsi@gmail.com", Expenses = new List<Expense>() }
+                new User { Name = "Ricsi", Email = "kunkli.ricsi@gmail.com" }
             };
 
             foreach (var u in users)
@@ -67,12 +66,12 @@ namespace Accountant.Data
 
             var categories = new Category[]
             {
-                new Category { Name = "Food", Description = "If someone orders food for others too.", Expenses = new List<Expense>() },
-                new Category { Name = "Grocery", Expenses = new List<Expense>() },
-                new Category { Name = "Electronic", Expenses = new List<Expense>() },
-                new Category { Name = "Household", Expenses = new List<Expense>() },
-                new Category { Name = "Internet", Description = "Bill for the service provider.", Expenses = new List<Expense>() },
-                new Category { Name = "Vape", Description = "Buying vape stuff.", Expenses = new List<Expense>() }
+                new Category { Name = "Food", Description = "If someone orders food for others too." },
+                new Category { Name = "Grocery" },
+                new Category { Name = "Electronic" },
+                new Category { Name = "Household" },
+                new Category { Name = "Internet", Description = "Bill for the service provider." },
+                new Category { Name = "Vape", Description = "Buying vape stuff." }
             };
 
             foreach (var c in categories)
@@ -92,8 +91,7 @@ namespace Accountant.Data
             var reports = new Report[]
             {
                 new Report { Start = new DateTime(2018, 10, 11), End = new DateTime(2018, 11, 10), 
-                    Evaluated = true, DateOfEvaluation = new DateTime(2018, 11, 10),
-                    Expenses = new List<Expense>() }
+                    Evaluated = true, DateOfEvaluation = new DateTime(2018, 11, 10) }
             };
 
             foreach (var r in reports)
@@ -116,62 +114,48 @@ namespace Accountant.Data
 
             var expenses = new Expense[]
             {
-                new Expense { Purchaser = ricsi, Amount = 1539, Category = category,
+                new Expense {  PurchaserID = ricsi.ID, Amount = 1539, CategoryID = category.ID,
                     PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 11, 07), 
-                    Report = report,
-                    ItemsPurchased = new List<ShoppingListItem>() },
+                    ReportID = report.ID },
                     
-                new Expense { Purchaser = ricsi, Amount = 4423, Category = category,
+                new Expense {  PurchaserID = ricsi.ID, Amount = 4423, CategoryID = category.ID,
                     PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 10, 15), 
-                    Report = report,
-                    ItemsPurchased = new List<ShoppingListItem>() },
+                    ReportID = report.ID },
 
-                new Expense { Purchaser = ricsi, Amount = 4400, Category = category,
+                new Expense {  PurchaserID = ricsi.ID, Amount = 4400, CategoryID = category.ID,
                     PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 11, 01), 
-                    Report = report,
-                    ItemsPurchased = new List<ShoppingListItem>() },  
+                    ReportID = report.ID },  
 
                 new Expense { Amount = 2723, PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 11, 04),
-                    Purchaser = ricsi,
-                    Report = report,
-                    Category = category,
-                    ItemsPurchased = new List<ShoppingListItem>() },
+                     PurchaserID = ricsi.ID,
+                    ReportID = report.ID,
+                    CategoryID = category.ID },
 
                 new Expense { Amount = 7835, PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 11, 02),
-                    Purchaser = ricsi,
-                    Report = report,
-                    Category = category,
-                    ItemsPurchased = new List<ShoppingListItem>() },
+                     PurchaserID = ricsi.ID,
+                    ReportID = report.ID,
+                    CategoryID = category.ID },
 
                 new Expense { Amount = 2508, PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 10, 17),
-                    Purchaser = ricsi,
-                    Report = report,
-                    Category = category,
-                    ItemsPurchased = new List<ShoppingListItem>() },
+                     PurchaserID = ricsi.ID,
+                    ReportID = report.ID,
+                    CategoryID = category.ID },
 
                 new Expense { Amount = 1385, PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 10, 28),
-                    Purchaser = ricsi,
-                    Report = report,
-                    Category = category,
-                    ItemsPurchased = new List<ShoppingListItem>() },
+                     PurchaserID = ricsi.ID,
+                    ReportID = report.ID,
+                    CategoryID = category.ID },
 
                 new Expense { Amount = 3260, PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 10, 28),
-                    Purchaser = ricsi,
-                    Report = report,
-                    Category = category,
-                    ItemsPurchased = new List<ShoppingListItem>() }
+                     PurchaserID = ricsi.ID,
+                    ReportID = report.ID,
+                    CategoryID = category.ID }
             };
 
             foreach (var e in expenses)
             {
                 context.Expenses.Add(e);
-                report.Expenses.Add(e);
-                category.Expenses.Add(e);
-                ricsi.Expenses.Add(e);
             }
-            context.Reports.Update(report);
-            context.Categories.Update(category);
-            context.Users.Update(ricsi);
             context.SaveChanges();
         }
     }

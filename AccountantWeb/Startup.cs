@@ -25,13 +25,10 @@ namespace Accountant
             
             var connectionString = "Data Source=Accountant.db";
             services.AddDbContext<AccountantContext>(options =>
-                options.UseSqlite(connectionString)
-                       .UseLazyLoadingProxies());
+                options.UseSqlite(connectionString));
 
             services.AddMvc()
-                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                 .AddJsonOptions(options =>
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
  
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
