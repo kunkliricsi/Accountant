@@ -1,11 +1,11 @@
 package com.kunkliricsi.accountant.network;
 
-import com.kunkliricsi.accountant.model.Category;
-import com.kunkliricsi.accountant.model.Changes;
-import com.kunkliricsi.accountant.model.Expense;
-import com.kunkliricsi.accountant.model.Report;
-import com.kunkliricsi.accountant.model.ShoppingListItem;
-import com.kunkliricsi.accountant.model.User;
+import com.kunkliricsi.accountant.model.entities.Category;
+import com.kunkliricsi.accountant.model.entities.Changes;
+import com.kunkliricsi.accountant.model.entities.Expense;
+import com.kunkliricsi.accountant.model.entities.Report;
+import com.kunkliricsi.accountant.model.entities.ShoppingListItem;
+import com.kunkliricsi.accountant.model.entities.User;
 
 import java.util.List;
 

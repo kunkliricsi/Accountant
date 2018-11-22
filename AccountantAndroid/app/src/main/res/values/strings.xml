@@ -19,4 +19,5 @@
     <string name="choose_category">Choose Category</string>
     <string name="shopping_list">Shopping List</string>
     <string name="pick_category">Choose Category</string>
+    <string name="account_type">some.account.type.com</string>
 </resources>
