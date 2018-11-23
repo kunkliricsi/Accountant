@@ -115,7 +115,7 @@ namespace Accountant.Data
             var expenses = new Expense[]
             {
                 new Expense {  PurchaserID = ricsi.ID, Amount = 1539, CategoryID = category.ID,
-                    PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 11, 07), 
+                    PayOption = PayOption.Cash, DateOfPurchase = new DateTime(2018, 11, 07), 
                     ReportID = report.ID },
                     
                 new Expense {  PurchaserID = ricsi.ID, Amount = 4423, CategoryID = category.ID,
@@ -141,7 +141,7 @@ namespace Accountant.Data
                     ReportID = report.ID,
                     CategoryID = category.ID },
 
-                new Expense { Amount = 1385, PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 10, 28),
+                new Expense { Amount = 1385, PayOption = PayOption.Cash, DateOfPurchase = new DateTime(2018, 10, 28),
                      PurchaserID = ricsi.ID,
                     ReportID = report.ID,
                     CategoryID = category.ID },
