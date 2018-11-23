@@ -57,7 +57,7 @@ namespace Accountant.Controllers
             expenseToUpdate.CategoryID = expense.CategoryID;
             expenseToUpdate.DateOfPurchase = expense.DateOfPurchase;
             expenseToUpdate.PayOption = expense.PayOption;
-            expenseToUpdate. PurchaserID = expense. PurchaserID;
+            expenseToUpdate.PurchaserID = expense.PurchaserID;
 
             context.Expenses.Update(expenseToUpdate);
             context.SaveChanges();
