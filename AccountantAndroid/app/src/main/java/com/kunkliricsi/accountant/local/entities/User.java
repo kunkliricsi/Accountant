@@ -1,11 +1,11 @@
-package com.kunkliricsi.accountant.model.entities;
+package com.kunkliricsi.accountant.local.entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "categories")
-public class Category {
+@Entity(tableName = "users")
+public class User {
 
     @PrimaryKey
     public int id;
@@ -13,6 +13,6 @@ public class Category {
     @ColumnInfo(name = "name")
     public String Name;
 
-    @ColumnInfo(name = "description")
-    public String Description;
+    @ColumnInfo(name = "email")
+    public String Email;
 }

@@ -1,4 +1,4 @@
-package com.kunkliricsi.accountant.model.entities;
+package com.kunkliricsi.accountant.local.entities;
 
 import java.util.Date;
 

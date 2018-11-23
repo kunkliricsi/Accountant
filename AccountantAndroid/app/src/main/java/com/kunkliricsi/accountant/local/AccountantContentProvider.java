@@ -5,16 +5,41 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
-import android.text.TextUtils;
 
-import com.kunkliricsi.accountant.model.entities.enums.PayOption;
+import com.kunkliricsi.accountant.local.daos.CategoryDao;
+import com.kunkliricsi.accountant.local.daos.ChangesDao;
+import com.kunkliricsi.accountant.local.daos.ExpenseDao;
+import com.kunkliricsi.accountant.local.daos.ReportDao;
+import com.kunkliricsi.accountant.local.daos.ShoppingListItemDao;
+import com.kunkliricsi.accountant.local.daos.UserDao;
+
+import androidx.room.Room;
 
 public class AccountantContentProvider extends ContentProvider {
 
-    private AppDatabase appDatabase;
+    private AccountantDatabase database;
+
+    private CategoryDao categoryDao;
+    private ChangesDao changesDao;
+    private ExpenseDao expenseDao;
+    private ReportDao reportDao;
+    private ShoppingListItemDao shoppingListItemDao;
+    private UserDao userDao;
+
+    private static final String DBNAME = "Accountant";
 
     @Override
     public boolean onCreate() {
+
+        database = Room.databaseBuilder(getContext(), AccountantDatabase.class, DBNAME).build();
+
+        categoryDao = database.categoryDao();
+        changesDao = database.changesDao();
+        expenseDao = database.expenseDao();
+        reportDao = database.reportDao();
+        shoppingListItemDao = database.shoppingListItemDao();
+        userDao = database.userDao();
+
         return true;
     }
 
@@ -26,12 +51,12 @@ public class AccountantContentProvider extends ContentProvider {
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        uriMatcher.addURI("com.example.app.provider", "category", 1);
+        uriMatcher.addURI("com.example.app.provider", "categories", 1);
         uriMatcher.addURI("com.example.app.provider", "changes", 2);
-        uriMatcher.addURI("com.example.app.provider", "expense", 3);
-        uriMatcher.addURI("com.example.app.provider", "report", 4);
-        uriMatcher.addURI("com.example.app.provider", "shoppinglistitem", 5);
-        uriMatcher.addURI("com.example.app.provider", "user", 6);
+        uriMatcher.addURI("com.example.app.provider", "expenses", 3);
+        uriMatcher.addURI("com.example.app.provider", "reports", 4);
+        uriMatcher.addURI("com.example.app.provider", "shoppinglist", 5);
+        uriMatcher.addURI("com.example.app.provider", "users", 6);
     }
 
     public Cursor query(
@@ -42,38 +67,89 @@ public class AccountantContentProvider extends ContentProvider {
             String sortOrder) {
 
         switch (uriMatcher.match(uri)) {
-
-
             case 1:
-                if (TextUtils.isEmpty(sortOrder)) sortOrder = "_ID ASC";
                 break;
-
             case 2:
-
-                selection = selection + "_ID = " + uri.getLastPathSegment();
                 break;
-
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
             default:
-
+                throw new IllegalArgumentException("Unknown URI: " + uri);
         }
-        // call the code to actually do the query
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
-        return null;
-    }
-
-    @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
-    }
-
     public int update(
             Uri uri,
             ContentValues values,
             String selection,
             String[] selectionArgs) {
+
+        switch (uriMatcher.match(uri)) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+    }
+
+    @Override
+    public Uri insert(Uri uri, ContentValues values) {
+
+        switch (uriMatcher.match(uri)) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+    }
+
+    @Override
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+
+        switch (uriMatcher.match(uri)) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+        
         return 0;
     }
 }

@@ -1,6 +1,6 @@
-package com.kunkliricsi.accountant.model.daos;
+package com.kunkliricsi.accountant.local.daos;
 
-import com.kunkliricsi.accountant.model.entities.User;
+import com.kunkliricsi.accountant.local.entities.User;
 
 import androidx.room.Dao;
 import androidx.room.Insert;

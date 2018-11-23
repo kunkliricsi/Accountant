@@ -1,4 +1,4 @@
-package com.kunkliricsi.accountant.model.entities.enums;
+package com.kunkliricsi.accountant.local.entities.enums;
 
 public class PayOption {
 

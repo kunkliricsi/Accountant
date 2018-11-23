@@ -1,9 +1,8 @@
-package com.kunkliricsi.accountant.model.daos;
+package com.kunkliricsi.accountant.local.daos;
 
-import com.kunkliricsi.accountant.model.entities.ShoppingListItem;
+import com.kunkliricsi.accountant.local.entities.ShoppingListItem;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;

@@ -1,8 +1,5 @@
-package com.kunkliricsi.accountant.model.entities;
+package com.kunkliricsi.accountant.local.entities;
 
-import com.kunkliricsi.accountant.model.entities.enums.PayOption;
-
-import java.io.PushbackReader;
 import java.util.Date;
 
 import androidx.room.ColumnInfo;
