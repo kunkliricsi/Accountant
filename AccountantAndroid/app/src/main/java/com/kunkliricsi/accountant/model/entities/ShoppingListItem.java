@@ -4,13 +4,19 @@ import java.util.Date;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "shoppinglist",
+        foreignKeys = @ForeignKey(
+                            entity = Expense.class,
+                            parentColumns = "id",
+                            childColumns = "expense")
+)
 public class ShoppingListItem {
 
     @PrimaryKey
-    public int ID;
+    public int id;
 
     @ColumnInfo(name = "name")
     public String Name;

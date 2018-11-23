@@ -6,11 +6,11 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "changes")
 public class Changes {
 
     @PrimaryKey
-    public int ID;
+    public int id;
 
     @ColumnInfo(name = "category")
     public Date Category;

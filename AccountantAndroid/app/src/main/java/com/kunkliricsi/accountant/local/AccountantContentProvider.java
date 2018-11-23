@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.kunkliricsi.accountant.model.entities.enums.PayOption;
+
 public class AccountantContentProvider extends ContentProvider {
 
     private AppDatabase appDatabase;
@@ -43,7 +45,6 @@ public class AccountantContentProvider extends ContentProvider {
 
 
             case 1:
-
                 if (TextUtils.isEmpty(sortOrder)) sortOrder = "_ID ASC";
                 break;
 
