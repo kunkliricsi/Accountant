@@ -46,6 +46,7 @@ namespace Accountant.Data
         private void SetChange(string name)
         {
             var now = DateTime.UtcNow;
+            now = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second, now.Kind);
             var change = Changes.Find(1);
 
             typeof(Changes).GetProperty(name).SetValue(change, now, null);

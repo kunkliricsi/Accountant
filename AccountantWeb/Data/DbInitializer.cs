@@ -18,13 +18,16 @@ namespace Accountant.Data
 
         private static void InitializeChanges(AccountantContext context)
         {
+            var now = DateTime.UtcNow;
+            now = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second, now.Kind);
+
             var change = new Changes()
             {
-                Category = DateTime.UtcNow,
-                Expense = DateTime.UtcNow,
-                Report = DateTime.UtcNow,
-                ShoppingListItem = DateTime.UtcNow,
-                User = DateTime.UtcNow
+                Category = now,
+                Expense = now,
+                Report = now,
+                ShoppingListItem = now,
+                User = now
             };
 
             if (context.Changes.Any())
