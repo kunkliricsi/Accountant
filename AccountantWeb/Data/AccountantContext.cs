@@ -35,21 +35,23 @@ namespace Accountant.Data
 
             var modifiedEntities = ChangeTracker.Entries()
                 .Where(p => p.State == EntityState.Modified).ToList();
+            
+            var now = DateTime.UtcNow;
+            now = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second, now.Kind);
 
             foreach (var change in modifiedEntities)
             {
                 var entityName = change.Entity.GetType().Name;
-                this.SetChange(ref changeEntity, entityName);
+                this.SetChange(ref changeEntity, entityName, now);
             }
+            
+            changeEntity.lastModified = now;
             Changes.Update(changeEntity);
             return base.SaveChanges();
         }
 
-        private void SetChange(ref Changes change, string name)
+        private void SetChange(ref Changes change, string name, DateTime now)
         {
-            var now = DateTime.UtcNow;
-            now = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second, now.Kind);
-
             typeof(Changes).GetProperty(name).SetValue(change, now, null);
         }
     }
