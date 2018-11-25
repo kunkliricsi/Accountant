@@ -31,26 +31,26 @@ namespace Accountant.Data
 
         public override int SaveChanges()
         {
+            var changeEntity = Changes.Find(1);
+
             var modifiedEntities = ChangeTracker.Entries()
                 .Where(p => p.State == EntityState.Modified).ToList();
 
             foreach (var change in modifiedEntities)
             {
                 var entityName = change.Entity.GetType().Name;
-                this.SetChange(entityName);
+                this.SetChange(ref changeEntity, entityName);
             }
-
+            Changes.Update(changeEntity);
             return base.SaveChanges();
         }
 
-        private void SetChange(string name)
+        private void SetChange(ref Changes change, string name)
         {
             var now = DateTime.UtcNow;
             now = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second, now.Kind);
-            var change = Changes.Find(1);
 
             typeof(Changes).GetProperty(name).SetValue(change, now, null);
-            Changes.Update(change);
         }
     }
 }
