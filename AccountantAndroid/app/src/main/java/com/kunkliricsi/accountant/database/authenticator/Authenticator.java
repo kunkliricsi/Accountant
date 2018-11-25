@@ -1,4 +1,4 @@
-package com.kunkliricsi.accountant.authenticator;
+package com.kunkliricsi.accountant.database.authenticator;
 
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;

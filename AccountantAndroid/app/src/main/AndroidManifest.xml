@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <service android:name="com.kunkliricsi.accountant.authenticator.AuthenticatorService">
+        <service android:name="com.kunkliricsi.accountant.database.authenticator.AuthenticatorService">
 
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
@@ -28,7 +28,7 @@
         </service>
 
         <provider
-            android:name="com.kunkliricsi.accountant.local.AccountantContentProvider"
+            android:name="com.kunkliricsi.accountant.database.local.StubProvider"
             android:authorities="@string/authority"
             android:exported="false"
             android:syncable="true" />

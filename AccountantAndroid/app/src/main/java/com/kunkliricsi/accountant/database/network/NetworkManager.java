@@ -1,11 +1,13 @@
-package com.kunkliricsi.accountant.network;
+package com.kunkliricsi.accountant.database.network;
 
-import com.kunkliricsi.accountant.local.entities.Category;
-import com.kunkliricsi.accountant.local.entities.Changes;
-import com.kunkliricsi.accountant.local.entities.Expense;
-import com.kunkliricsi.accountant.local.entities.Report;
-import com.kunkliricsi.accountant.local.entities.ShoppingListItem;
-import com.kunkliricsi.accountant.local.entities.User;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.kunkliricsi.accountant.database.local.entities.Category;
+import com.kunkliricsi.accountant.database.local.entities.Changes;
+import com.kunkliricsi.accountant.database.local.entities.Expense;
+import com.kunkliricsi.accountant.database.local.entities.Report;
+import com.kunkliricsi.accountant.database.local.entities.ShoppingListItem;
+import com.kunkliricsi.accountant.database.local.entities.User;
 
 import java.util.List;
 
@@ -32,18 +34,18 @@ public class NetworkManager {
     private AccountantApi api;
 
     private NetworkManager() {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss").create();
+
         retrofit = new Retrofit.Builder()
                 .baseUrl(SERVICE_URL)
                 .client(new OkHttpClient.Builder().build())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         api = retrofit.create(AccountantApi.class);
     }
 
-    public Call<Changes> getChanges() {
-        return api.getChanges();
-    }
+    public Call<Changes> getChanges() { return api.getChanges(); }
 
     public Call<List<Category>> getCategories() {
         return api.getCategories();

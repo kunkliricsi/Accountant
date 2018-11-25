@@ -1,6 +1,6 @@
-package com.kunkliricsi.accountant.local.daos;
+package com.kunkliricsi.accountant.database.local.daos;
 
-import com.kunkliricsi.accountant.local.entities.ShoppingListItem;
+import com.kunkliricsi.accountant.database.local.entities.ShoppingListItem;
 
 import androidx.room.Dao;
 import androidx.room.Insert;

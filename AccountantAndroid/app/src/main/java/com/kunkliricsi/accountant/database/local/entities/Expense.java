@@ -1,4 +1,6 @@
-package com.kunkliricsi.accountant.local.entities;
+package com.kunkliricsi.accountant.database.local.entities;
+
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
@@ -30,21 +32,31 @@ public class Expense {
     @PrimaryKey
     public int id;
 
+    @SerializedName("amount")
     @ColumnInfo(name = "amount")
     public int Amount;
 
+    @SerializedName("payOptions")
     @ColumnInfo(name = "payoption")
     public int PayOption;
 
+    @SerializedName("dateOfPurchase")
     @ColumnInfo(name = "dateofpurchase")
     public Date DateOfPurchase;
 
+    @SerializedName("reportID")
     @ColumnInfo(name = "report")
     public int ReportID;
 
+    @SerializedName("categoryID")
     @ColumnInfo(name = "category")
     public int CategoryID;
 
+    @SerializedName("purchaserID")
     @ColumnInfo(name = "purchaser")
     public int PurchaserID;
+
+    @SerializedName("lastModified")
+    @ColumnInfo(name = "lastmodified")
+    public Date lastModified;
 }

@@ -1,4 +1,6 @@
-package com.kunkliricsi.accountant.local.entities;
+package com.kunkliricsi.accountant.database.local.entities;
+
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
@@ -12,15 +14,23 @@ public class Report {
     @PrimaryKey
     public int id;
 
+    @SerializedName("start")
     @ColumnInfo(name = "start")
     public Date Start;
 
+    @SerializedName("end")
     @ColumnInfo(name = "end")
     public Date End;
 
+    @SerializedName("evaluated")
     @ColumnInfo(name = "evaluated")
     public boolean Evaluated;
 
+    @SerializedName("dateOfEvaluation")
     @ColumnInfo(name = "dateofevaluation")
     public Date DateOfEvaluation;
+
+    @SerializedName("lastModified")
+    @ColumnInfo(name = "lastmodified")
+    public Date lastModified;
 }

@@ -1,6 +1,6 @@
-package com.kunkliricsi.accountant.local.daos;
+package com.kunkliricsi.accountant.database.local.daos;
 
-import com.kunkliricsi.accountant.local.entities.Category;
+import com.kunkliricsi.accountant.database.local.entities.Category;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

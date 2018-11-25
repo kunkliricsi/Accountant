@@ -1,4 +1,4 @@
-package com.kunkliricsi.accountant.local;
+/*package com.kunkliricsi.accountant.local;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -6,12 +6,12 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.kunkliricsi.accountant.local.daos.CategoryDao;
-import com.kunkliricsi.accountant.local.daos.ChangesDao;
-import com.kunkliricsi.accountant.local.daos.ExpenseDao;
-import com.kunkliricsi.accountant.local.daos.ReportDao;
-import com.kunkliricsi.accountant.local.daos.ShoppingListItemDao;
-import com.kunkliricsi.accountant.local.daos.UserDao;
+import CategoryDao;
+import ChangesDao;
+import ExpenseDao;
+import ReportDao;
+import ShoppingListItemDao;
+import UserDao;
 
 import androidx.room.Room;
 
@@ -149,7 +149,7 @@ public class AccountantContentProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
-        
+
         return 0;
     }
-}
+}*/
