@@ -56,6 +56,7 @@ namespace Accountant.Controllers
 
             userToUpdate.Name = user.Name;
             userToUpdate.Email = user.Email;
+            userToUpdate.lastModified = user.lastModified;
 
             context.Users.Update(userToUpdate);
             context.SaveChanges();

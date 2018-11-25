@@ -56,6 +56,7 @@ namespace Accountant.Controllers
             itemToUpdate.Name = item.Name;
             itemToUpdate.DateOfCreation = item.DateOfCreation;
             itemToUpdate.Comment = item.Comment;
+            itemToUpdate.lastModified = item.lastModified;
 
             context.ShoppingList.Update(itemToUpdate);
             context.SaveChanges();
