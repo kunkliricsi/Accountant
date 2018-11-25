@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
+using System;
 
 namespace Accountant.Models
 {
@@ -10,5 +10,7 @@ namespace Accountant.Models
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
+
+        public DateTime lastModified { get; set; }
     }
 }

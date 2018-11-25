@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Accountant.Models
 {
@@ -10,5 +11,7 @@ namespace Accountant.Models
         public DateTime Report { get; set; }
         public DateTime ShoppingListItem { get; set; }
         public DateTime User { get; set; }
+
+        public DateTime lastModified { get; set; }
     }
 }

@@ -15,5 +15,7 @@ namespace Accountant.Models
         public DateTime DateOfCreation { get; set; }
 
         public int ExpenseID { get; set; }
+
+        public DateTime lastModified { get; set; }
     }
 }

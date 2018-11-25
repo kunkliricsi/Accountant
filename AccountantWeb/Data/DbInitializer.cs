@@ -7,8 +7,13 @@ namespace Accountant.Data
 {
     public static class DbInitializer
     {
+        static DateTime now;
+
         public static void Initialize(AccountantContext context)
         {
+            now = DateTime.UtcNow;
+            now = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second, now.Kind);
+
             InitializeChanges(context);
             InitializeUsers(context);
             InitializeCategories(context);
@@ -18,16 +23,14 @@ namespace Accountant.Data
 
         private static void InitializeChanges(AccountantContext context)
         {
-            var now = DateTime.UtcNow;
-            now = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second, now.Kind);
-
             var change = new Changes()
             {
                 Category = now,
                 Expense = now,
                 Report = now,
                 ShoppingListItem = now,
-                User = now
+                User = now,
+                lastModified = now,
             };
 
             if (context.Changes.Any())
@@ -50,7 +53,7 @@ namespace Accountant.Data
 
             var users = new User[]
             {
-                new User { Name = "Ricsi", Email = "kunkli.ricsi@gmail.com" }
+                new User { Name = "Ricsi", Email = "kunkli.ricsi@gmail.com", lastModified = now }
             };
 
             foreach (var u in users)
@@ -69,12 +72,12 @@ namespace Accountant.Data
 
             var categories = new Category[]
             {
-                new Category { Name = "Food", Description = "If someone orders food for others too." },
-                new Category { Name = "Grocery" },
-                new Category { Name = "Electronic" },
-                new Category { Name = "Household" },
-                new Category { Name = "Internet", Description = "Bill for the service provider." },
-                new Category { Name = "Vape", Description = "Buying vape stuff." }
+                new Category { Name = "Food", Description = "If someone orders food for others too.", lastModified = now},
+                new Category { Name = "Grocery", lastModified = now },
+                new Category { Name = "Electronic", lastModified = now },
+                new Category { Name = "Household", lastModified = now },
+                new Category { Name = "Internet", Description = "Bill for the service provider.", lastModified = now },
+                new Category { Name = "Vape", Description = "Buying vape stuff.", lastModified = now }
             };
 
             foreach (var c in categories)
@@ -94,7 +97,7 @@ namespace Accountant.Data
             var reports = new Report[]
             {
                 new Report { Start = new DateTime(2018, 10, 11), End = new DateTime(2018, 11, 10), 
-                    Evaluated = true, DateOfEvaluation = new DateTime(2018, 11, 10) }
+                    Evaluated = true, DateOfEvaluation = new DateTime(2018, 11, 10), lastModified = now }
             };
 
             foreach (var r in reports)
@@ -119,40 +122,40 @@ namespace Accountant.Data
             {
                 new Expense {  PurchaserID = ricsi.ID, Amount = 1539, CategoryID = category.ID,
                     PayOption = PayOption.Cash, DateOfPurchase = new DateTime(2018, 11, 07), 
-                    ReportID = report.ID },
+                    ReportID = report.ID, lastModified = now },
                     
                 new Expense {  PurchaserID = ricsi.ID, Amount = 4423, CategoryID = category.ID,
                     PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 10, 15), 
-                    ReportID = report.ID },
+                    ReportID = report.ID, lastModified = now },
 
                 new Expense {  PurchaserID = ricsi.ID, Amount = 4400, CategoryID = category.ID,
                     PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 11, 01), 
-                    ReportID = report.ID },  
+                    ReportID = report.ID, lastModified = now },  
 
                 new Expense { Amount = 2723, PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 11, 04),
                      PurchaserID = ricsi.ID,
                     ReportID = report.ID,
-                    CategoryID = category.ID },
+                    CategoryID = category.ID, lastModified = now },
 
                 new Expense { Amount = 7835, PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 11, 02),
                      PurchaserID = ricsi.ID,
                     ReportID = report.ID,
-                    CategoryID = category.ID },
+                    CategoryID = category.ID, lastModified = now },
 
-                new Expense { Amount = 2508, PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 10, 17),
+                new Expense { Amount = 2508, PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 10, 17, 16, 05, 00),
                      PurchaserID = ricsi.ID,
                     ReportID = report.ID,
-                    CategoryID = category.ID },
+                    CategoryID = category.ID, lastModified = now },
 
-                new Expense { Amount = 1385, PayOption = PayOption.Cash, DateOfPurchase = new DateTime(2018, 10, 28),
+                new Expense { Amount = 1385, PayOption = PayOption.Cash, DateOfPurchase = new DateTime(2018, 10, 28, 10, 55, 53),
                      PurchaserID = ricsi.ID,
                     ReportID = report.ID,
-                    CategoryID = category.ID },
+                    CategoryID = category.ID, lastModified = now },
 
-                new Expense { Amount = 3260, PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 10, 28),
+                new Expense { Amount = 3260, PayOption = PayOption.Credit, DateOfPurchase = new DateTime(2018, 10, 28, 18, 26, 13),
                      PurchaserID = ricsi.ID,
                     ReportID = report.ID,
-                    CategoryID = category.ID }
+                    CategoryID = category.ID, lastModified = now }
             };
 
             foreach (var e in expenses)

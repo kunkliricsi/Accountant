@@ -19,5 +19,7 @@ namespace Accountant.Models
 
         [DataType(DataType.Date)]
         public DateTime DateOfEvaluation { get; set; }
+
+        public DateTime lastModified { get; set; }
     }
 }
