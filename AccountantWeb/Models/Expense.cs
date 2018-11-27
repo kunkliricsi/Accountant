@@ -21,7 +21,5 @@ namespace Accountant.Models
 
         [Required]
         public int PurchaserID { get; set; }
-
-        public DateTime lastModified { get; set; }
     }
 }

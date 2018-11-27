@@ -21,12 +21,34 @@ namespace Accountant.Data
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Changes>().ToTable("Changes");
-            modelBuilder.Entity<User>().ToTable("User");
-            modelBuilder.Entity<Report>().ToTable("Report");
-            modelBuilder.Entity<Category>().ToTable("Category");
-            modelBuilder.Entity<ShoppingListItem>().ToTable("ShoppingListItem");
-            modelBuilder.Entity<Expense>().ToTable("Expense");
+            modelBuilder.Entity<Changes>().ToTable("Changes")
+                .Property(c => c.ID)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<User>().ToTable("User")
+                .Property(u => u.ID)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Report>().ToTable("Report")
+                .Property(r => r.ID)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Category>().ToTable("Category")
+                .Property(c => c.ID)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<ShoppingListItem>().ToTable("ShoppingListItem")
+                .Property(s => s.ID)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Expense>().ToTable("Expense")
+                .Property(e => e.ID)
+                .ValueGeneratedOnAdd();
+        }
+
+        public int FirstSave()
+        {
+            return base.SaveChanges();
         }
 
         public override int SaveChanges()

@@ -57,7 +57,6 @@ namespace Accountant.Controllers
             reportToUpdate.End = report.End;
             reportToUpdate.Evaluated = report.Evaluated;
             reportToUpdate.DateOfEvaluation = report.DateOfEvaluation;
-            reportToUpdate.lastModified = report.lastModified;
 
             context.Reports.Update(reportToUpdate);
             context.SaveChanges();
