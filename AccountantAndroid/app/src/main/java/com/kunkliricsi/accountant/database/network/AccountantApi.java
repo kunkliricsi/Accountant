@@ -31,7 +31,7 @@ public interface AccountantApi {
     Call<Category> getCategory(@Path("id") int ID);
 
     @POST("/category")
-    Call<ResponseBody> createCategory(@Body Category category);
+    Call<ResponseBody> addCategory(@Body Category category);
 
     @DELETE("/category/{id}")
     Call<ResponseBody> deleteCategory(@Path("id") int ID);

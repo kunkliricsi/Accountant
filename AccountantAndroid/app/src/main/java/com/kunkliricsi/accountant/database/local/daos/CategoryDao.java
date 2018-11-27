@@ -18,8 +18,11 @@ public interface CategoryDao {
     public Category getCategory(int id);
 
     @Insert(onConflict = OnConflictStrategy.FAIL)
-    public void insertCategory(Category... categories);
+    public void addCategory(Category... categories);
 
     @Delete
     public void deleteCategory(Category... categories);
+
+    @Query("DELETE FROM categories")
+    public void deleteAll();
 }

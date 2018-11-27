@@ -29,8 +29,4 @@ public class Report {
     @SerializedName("dateOfEvaluation")
     @ColumnInfo(name = "dateofevaluation")
     public Date DateOfEvaluation;
-
-    @SerializedName("lastModified")
-    @ColumnInfo(name = "lastmodified")
-    public Date lastModified;
 }

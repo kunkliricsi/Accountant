@@ -3,6 +3,7 @@ package com.kunkliricsi.accountant.database.local.daos;
 import com.kunkliricsi.accountant.database.local.entities.Report;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -25,4 +26,10 @@ public interface ReportDao {
 
     @Insert(onConflict = OnConflictStrategy.FAIL)
     public void addReport(Report... reports);
+
+    @Delete
+    public void deleteReport(Report... reports);
+
+    @Query("DELETE FROM reports")
+    public void deleteAll();
 }

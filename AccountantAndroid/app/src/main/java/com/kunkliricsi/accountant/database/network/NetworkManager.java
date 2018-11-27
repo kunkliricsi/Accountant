@@ -55,8 +55,8 @@ public class NetworkManager {
         return api.getCategory(ID);
     }
 
-    public Call<ResponseBody> createCategory(Category category) {
-        return api.createCategory(category);
+    public Call<ResponseBody> addCategory(Category category) {
+        return api.addCategory(category);
     }
 
     public Call<ResponseBody> deleteCategory(int ID) {

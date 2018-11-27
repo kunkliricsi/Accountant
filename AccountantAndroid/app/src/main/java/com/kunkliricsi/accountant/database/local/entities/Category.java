@@ -21,8 +21,4 @@ public class Category {
     @SerializedName("description")
     @ColumnInfo(name = "description")
     public String Description;
-
-    @SerializedName("lastModified")
-    @ColumnInfo(name = "lastmodified")
-    public Date lastModified;
 }

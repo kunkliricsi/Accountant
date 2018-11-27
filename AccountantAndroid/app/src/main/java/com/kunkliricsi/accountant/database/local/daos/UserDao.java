@@ -3,6 +3,7 @@ package com.kunkliricsi.accountant.database.local.daos;
 import com.kunkliricsi.accountant.database.local.entities.User;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -22,4 +23,10 @@ public interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.FAIL)
     public void addUser(User... users);
+
+    @Delete
+    public void deleteUser(User... users);
+
+    @Query("DELETE FROM users")
+    public void deleteAll();
 }

@@ -18,8 +18,10 @@ import com.kunkliricsi.accountant.database.local.entities.Expense;
 import com.kunkliricsi.accountant.database.local.entities.Report;
 import com.kunkliricsi.accountant.database.local.entities.ShoppingListItem;
 import com.kunkliricsi.accountant.database.local.entities.User;
+import com.kunkliricsi.accountant.database.local.synchelper.SyncDatabase;
 import com.kunkliricsi.accountant.database.network.NetworkManager;
 
+import java.net.UnknownServiceException;
 import java.util.Date;
 import java.util.List;
 
@@ -30,81 +32,178 @@ import retrofit2.Response;
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     AccountantDatabase database;
+    SyncDatabase syncDatabase;
     NetworkManager manager;
 
     public SyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
 
         database = AccountantDatabase.getInstance(context);
+        syncDatabase = SyncDatabase.getInstance(context);
         manager = NetworkManager.getInstance();
     }
 
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
-        Changes local = database.changesDao().getChanges();
-
         try {
+            Changes local = database.changesDao().getChanges();
             Call<Changes> call = manager.getChanges();
-            Changes change = call.execute().body();
+            Changes server = call.execute().body();
 
-            if (local.lastModified.compareTo(change.lastModified) != 0)) {
-                syncChanges(change);
+            if ((local == null || local.lastModified.compareTo(server.lastModified) != 0) && syncChanges(local, server)) {
+                Call<Changes> update = manager.getChanges();
+                database.changesDao().updateChanges(update.execute().body());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+        } finally {
+            database.close();
+            syncDatabase.close();
         }
-
     }
 
-    private void syncChanges(Changes change) {
-        Changes localChange = database.changesDao().getChanges();
+    private boolean syncChanges(Changes local, Changes server) {
 
         try {
 
-            if (localChange.Category.compareTo(change.Category) != 0) {
-                Call<List<Category>> call = manager.getCategories();
-                List<Category> categories = call.execute().body();
-                syncCategories(categories);
+            if (local == null || local.Category.compareTo(server.Category) != 0) {
+                syncCategories();
             }
 
-            if (localChange.Expense.compareTo(change.Expense) != 0) {
-                Call<List<Expense>> call = manager.getExpenses();
-                List<Expense> expenses = call.execute().body();
+            if (local == null || local.Expense.compareTo(server.Expense) != 0) {
+                syncExpenses();
             }
 
-            if (localChange.Report.compareTo(change.Report) != 0) {
-                Call<List<Report>> call = manager.getReports();
+            if (local == null || local.Report.compareTo(server.Report) != 0) {
+                syncReports();
             }
 
-            if (localChange.ShoppingListItem.compareTo(change.ShoppingListItem) != 0) {
-                Call<List<ShoppingListItem>> call = manager.getShoppingList();
+            if (local == null || local.ShoppingListItem.compareTo(server.ShoppingListItem) != 0) {
+                syncShoppingList();
             }
 
-            if (localChange.User.compareTo(change.User) != 0) {
-                Call<List<User>> call = manager.getUsers();
+            if (local == null || local.User.compareTo(server.User) != 0) {
+                syncUsers();
             }
+
         } catch (Exception ex) {
-            ex.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void syncCategories() throws Exception {
+        int[] postIds = syncDatabase.Dao().getPostCategories();
+        for (int id : postIds) {
+            Category c = database.categoryDao().getCategory(id);
+            c.id = 0;
+            manager.addCategory(c).execute();
+            syncDatabase.Dao().deletePostCategory(id);
+        }
+
+        int[] deleteIds = syncDatabase.Dao().getDeleteCategories();
+        for (int id : deleteIds) {
+            manager.deleteCategory(id);
+            syncDatabase.Dao().deleteDeleteCategory(id);
+        }
+
+        database.categoryDao().deleteAll();
+        List<Category> cs = manager.getCategories().execute().body();
+        for (Category c : cs ) {
+            database.categoryDao().addCategory(c);
         }
     }
 
-    private void syncCategories(List<Category> categories) {
-        Category[] local = database.categoryDao().getAllCategories();
+    private void syncExpenses() throws Exception{
+        int[] postIds = syncDatabase.Dao().getPostExpenses();
+        for (int id : postIds) {
+            Expense e = database.expenseDao().getExpense(id);
+            e.id = 0;
+            manager.addExpense(e).execute();
+            syncDatabase.Dao().deletePostExpense(id);
+        }
+
+        int[] putIds = syncDatabase.Dao().getPutExpenses();
+        for (int id : putIds) {
+            Expense e = database.expenseDao().getExpense(id);
+            manager.updateExpense(e.id, e);
+            syncDatabase.Dao().deletePutExpense(id);
+        }
+
+        database.expenseDao().deleteAll();
+        List<Expense> es = manager.getExpenses().execute().body();
+        for (Expense e : es) {
+            database.expenseDao().addExpense(e);
+        }
     }
 
-    private void syncExpenses(List<Expense> expenses) {
+    private void syncReports() throws Exception {
+        int[] postIds = syncDatabase.Dao().getPostReports();
+        for (int id : postIds) {
+            Report r = database.reportDao().getReport(id);
+            r.id = 0;
+            manager.addReport(r);
+            syncDatabase.Dao().deletePostReport(id);
+        }
 
+        int[] putIds = syncDatabase.Dao().getPutReports();
+        for (int id : putIds) {
+            Report r = database.reportDao().getReport(id);
+            manager.updateReport(r.id, r);
+            syncDatabase.Dao().deletePutReport(id);
+        }
+
+        database.reportDao().deleteAll();
+        List<Report> rs = manager.getReports().execute().body();
+        for (Report r : rs) {
+            database.reportDao().addReport(r);
+        }
     }
 
-    private void syncReports(List<Report> reports) {
+    private void syncShoppingList() throws Exception {
+        int[] postIds = syncDatabase.Dao().getPostShoppingList();
+        for (int id : postIds) {
+            ShoppingListItem s = database.shoppingListItemDao().getShoppingListItem(id);
+            s.id = 0;
+            manager.addShoppingListItem(s);
+            syncDatabase.Dao().deletePostShoppingListItem(id);
+        }
 
+        int[] putIds = syncDatabase.Dao().getPutShoppingList();
+        for (int id : putIds) {
+            ShoppingListItem s = database.shoppingListItemDao().getShoppingListItem(id);
+            manager.updateShoppingListItem(s.id, s);
+            syncDatabase.Dao().deletePutShoppingListItem(id);
+        }
+
+        database.shoppingListItemDao().deleteAll();
+        List<ShoppingListItem> ss = manager.getShoppingList().execute().body();
+        for (ShoppingListItem s : ss) {
+            database.shoppingListItemDao().addShoppingListItem(s);
+        }
     }
 
-    private void syncShoppingList(List<ShoppingListItem> shoppinglist) {
+    private void syncUsers() throws Exception {
+        int[] postIds = syncDatabase.Dao().getPostUsers();
+        for (int id : postIds) {
+            User u = database.userDao().getUser(id);
+            u.id = 0;
+            manager.addUser(u);
+            syncDatabase.Dao().deletePostUser(id);
+        }
 
-    }
+        int[] putIds = syncDatabase.Dao().getPutUsers();
+        for (int id : putIds) {
+            User u = database.userDao().getUser(id);
+            manager.updateUser(u.id, u);
+            syncDatabase.Dao().deletePutUser(id);
+        }
 
-    private void syncUsers(List<User> users) {
-
+        database.userDao().deleteAll();
+        List<User> us = manager.getUsers().execute().body();
+        for (User u : us) {
+            database.userDao().addUser(u);
+        }
     }
 }

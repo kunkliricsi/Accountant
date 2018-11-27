@@ -3,6 +3,7 @@ package com.kunkliricsi.accountant.database.local.daos;
 import com.kunkliricsi.accountant.database.local.entities.ShoppingListItem;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -28,4 +29,10 @@ public interface ShoppingListItemDao {
 
     @Insert(onConflict = OnConflictStrategy.FAIL)
     public void addShoppingListItem(ShoppingListItem... items);
+
+    @Delete
+    public void deleteShoppingListItem(ShoppingListItem... items);
+
+    @Query("DELETE FROM shoppinglist")
+    public void deleteAll();
 }

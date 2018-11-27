@@ -20,5 +20,5 @@ public abstract class SyncDatabase extends RoomDatabase {
             instance = Room.databaseBuilder(context.getApplicationContext(), SyncDatabase.class, "Sync").build();
 
         return instance;
-    }
+    }j
 }

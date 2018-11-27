@@ -35,8 +35,4 @@ public class ShoppingListItem {
     @SerializedName("expenseID")
     @ColumnInfo(name = "expense")
     public int ExpenseID;
-
-    @SerializedName("lastModified")
-    @ColumnInfo(name = "lastmodified")
-    public Date lastModified;
 }

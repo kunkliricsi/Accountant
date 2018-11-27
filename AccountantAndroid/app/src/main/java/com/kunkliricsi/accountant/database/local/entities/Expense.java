@@ -55,8 +55,4 @@ public class Expense {
     @SerializedName("purchaserID")
     @ColumnInfo(name = "purchaser")
     public int PurchaserID;
-
-    @SerializedName("lastModified")
-    @ColumnInfo(name = "lastmodified")
-    public Date lastModified;
 }

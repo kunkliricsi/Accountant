@@ -21,8 +21,4 @@ public class User {
     @SerializedName("email")
     @ColumnInfo(name = "email")
     public String Email;
-
-    @SerializedName("lastModified")
-    @ColumnInfo(name = "lastmodified")
-    public Date lastModified;
 }
