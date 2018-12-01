@@ -12,6 +12,10 @@ import android.os.Bundle;
  * of its methods
  */
 public class Authenticator extends AbstractAccountAuthenticator {
+
+    public static final String ACCOUNT = "default_account";
+    public static final String AUTHORITY = "com.kunkliricsi.accountant.database.local.StubProvider";
+
     // Simple constructor
     public Authenticator(Context context) {
         super(context);

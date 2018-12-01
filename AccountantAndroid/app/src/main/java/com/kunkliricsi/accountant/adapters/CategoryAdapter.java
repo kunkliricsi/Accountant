@@ -1,24 +1,64 @@
 package com.kunkliricsi.accountant.adapters;
 
-import android.support.annotation.NonNull;
-import android.support.v7.recyclerview.extensions.ListAdapter;
-import android.support.v7.util.DiffUtil;
-import android.support.v7.widget.RecyclerView;
+import android.database.DataSetObserver;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SpinnerAdapter;
 
-public class CategoryAdapter extends ListAdapter {
-    protected CategoryAdapter(@NonNull DiffUtil.ItemCallback diffCallback) {
-        super(diffCallback);
-    }
+public class CategoryAdapter implements SpinnerAdapter {
 
-    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public View getDropDownView(int position, View convertView, ViewGroup parent) {
         return null;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+    public void registerDataSetObserver(DataSetObserver observer) {
 
+    }
+
+    @Override
+    public void unregisterDataSetObserver(DataSetObserver observer) {
+
+    }
+
+    @Override
+    public int getCount() {
+        return 0;
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return null;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return false;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        return null;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return 0;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 0;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
     }
 }

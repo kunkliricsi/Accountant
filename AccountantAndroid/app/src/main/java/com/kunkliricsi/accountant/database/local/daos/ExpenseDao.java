@@ -18,6 +18,9 @@ public interface ExpenseDao {
     @Query("SELECT * FROM expenses WHERE id = :id")
     public Expense getExpense(int id);
 
+    @Query("SELECT * FROM expenses ORDER BY id DESC LIMIT 1")
+    public Expense getLastExpense();
+
     @Query("SELECT * FROM expenses WHERE report = :id")
     public Expense[] getAllExpensesOfReport(int id);
 

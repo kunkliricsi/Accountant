@@ -18,6 +18,9 @@ public interface ShoppingListItemDao {
     @Query("SELECT * FROM shoppinglist WHERE id = :id")
     public ShoppingListItem getShoppingListItem(int id);
 
+    @Query("SELECT * FROM shoppinglist ORDER BY id DESC LIMIT 1")
+    public ShoppingListItem getLastShoppingListItem();
+
     @Query("SELECT * FROM shoppinglist WHERE expense = :id")
     public ShoppingListItem[] getShoppingListOfExpense(int id);
 

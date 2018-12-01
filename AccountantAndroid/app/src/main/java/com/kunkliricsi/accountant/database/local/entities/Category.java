@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "categories")
 public class Category {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int id;
 
     @SerializedName("name")

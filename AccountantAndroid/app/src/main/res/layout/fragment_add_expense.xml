@@ -87,66 +87,13 @@
             android:layout_height="wrap_content"
             android:background="@color/GreyLight"
             android:layout_marginBottom="12dp"
-            android:padding="8dp"
-            android:weightSum="2">
-
-            <TextView
-                android:id="@+id/expense_category_text"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:padding="4dp"
-                android:gravity="center_vertical"
-                android:text="Grocery"
-                android:textColor="@color/Green"
-                android:textSize="18sp" />
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="32dp"
-                android:background="@drawable/expense_pay_option_button_background_stroke">
-
-                <Button
-                    android:id="@+id/expense_category"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:background="@drawable/ripple_effect"
-                    android:text="@string/choose_category"
-                    android:textColor="@color/Green" />
-            </FrameLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/GreyLight"
-            android:layout_marginBottom="12dp"
             android:weightSum="1"
             android:padding="8dp">
 
-            <TextView
-                android:id="@+id/expense_shopping_list_text"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="0.5"
-                android:textSize="18sp"
-                android:padding="4dp"
-                android:gravity="center_vertical"
-                android:textColor="@color/Green"
-                android:text="Selected Items: 0" />
-
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
                 android:background="@drawable/expense_pay_option_button_background_stroke">
 
                 <Button
@@ -156,7 +103,16 @@
                     android:background="@drawable/ripple_effect"
                     android:textColor="@color/Green"
                     android:text="@string/shopping_list" />
+
             </FrameLayout>
+
+            <Spinner
+                android:id="@+id/spinner_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5">
+
+            </Spinner>
 
 
         </LinearLayout>

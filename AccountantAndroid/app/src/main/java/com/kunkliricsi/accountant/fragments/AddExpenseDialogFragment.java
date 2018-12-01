@@ -1,35 +1,45 @@
 package com.kunkliricsi.accountant.fragments;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.kunkliricsi.accountant.R;
+import com.kunkliricsi.accountant.database.DatabaseApi;
+import com.kunkliricsi.accountant.database.local.entities.Category;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class AddExpenseDialogFragment extends DialogFragment {
 
+    private DatabaseApi api;
+
     private ToggleButton Cash;
     private ToggleButton Credit;
     private EditText Amount;
-    private TextView CategoryText;
-    private Button Category;
-    private TextView ShoppingText;
     private Button Shopping;
     private TextView Add;
     private TextView Cancel;
+    private Spinner Spinner;
 
     private String formattedAmount;
     private Number amount;
@@ -90,14 +100,27 @@ public class AddExpenseDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_add_expense, container, false);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
+        try {
+            api = DatabaseApi.getInstance();
+        } catch(Exception ex) {
+            Snackbar snackbar = Snackbar.make(view, ex.getMessage(), BaseTransientBottomBar.LENGTH_SHORT);
+            snackbar.show();
+        }
+
         Amount = view.findViewById(R.id.expense_amount);
         Cash = view.findViewById(R.id.expense_cash);
         Credit = view.findViewById(R.id.expense_credit);
         Amount = view.findViewById(R.id.expense_amount);
-        CategoryText = view.findViewById(R.id.expense_category_text);
-        Category = view.findViewById(R.id.expense_category);
-        ShoppingText = view.findViewById(R.id.expense_shopping_list_text);
         Shopping = view.findViewById(R.id.expense_shopping_list);
+
+        Spinner = view.findViewById(R.id.spinner_category);
+        String[] categories = api.getCategoryNames();
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,
+                categories);
+
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner.setAdapter(spinnerAdapter);
+
         Add = view.findViewById(R.id.expense_add);
         Cancel = view.findViewById(R.id.expense_cancel);
 

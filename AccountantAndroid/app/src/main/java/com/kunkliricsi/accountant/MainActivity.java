@@ -1,5 +1,8 @@
 package com.kunkliricsi.accountant;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.ContentResolver;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,14 +15,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.kunkliricsi.accountant.database.DatabaseApi;
+import com.kunkliricsi.accountant.database.authenticator.Authenticator;
+import com.kunkliricsi.accountant.database.local.entities.User;
 import com.kunkliricsi.accountant.fragments.AddExpenseDialogFragment;
 import com.kunkliricsi.accountant.fragments.ReportsFragment;
 import com.kunkliricsi.accountant.fragments.ShoppingListFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+    implements DatabaseApi.Syncer {
 
     private com.github.clans.fab.FloatingActionButton fab_expense;
     private TextView mTextMessage;
+
+    private DatabaseApi databaseApi;
+
+    public static final long SECONDS_PER_MINUTE = 60L;
+    public static final long SYNC_INTERVAL_IN_MINUTES = 60L;
+    public static final long SYNC_INTERVAL =
+            SYNC_INTERVAL_IN_MINUTES *
+                    SECONDS_PER_MINUTE;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -65,6 +80,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AccountManager manager = AccountManager.get(this);
+        final Account account = new Account(Authenticator.ACCOUNT, getPackageName());
+        if (manager.addAccountExplicitly(account, null, null)) {
+            ContentResolver.setIsSyncable(account, Authenticator.AUTHORITY, 1);
+            ContentResolver.setSyncAutomatically(account, Authenticator.AUTHORITY, true);
+            ContentResolver.addPeriodicSync(account, Authenticator.AUTHORITY, new Bundle(), SYNC_INTERVAL);
+        }
+
+        DatabaseApi.Initialize(getApplicationContext(), this, null);
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -73,6 +97,11 @@ public class MainActivity extends AppCompatActivity {
 
         fab_expense = findViewById(R.id.fab_expense);
         fab_expense.setOnClickListener(onFab_ExpenseClickListener);
+    }
 
+    @Override
+    public void requestSync() {
+        final Account account = new Account(Authenticator.ACCOUNT, getPackageName());
+        ContentResolver.requestSync(account, Authenticator.AUTHORITY, new Bundle());
     }
 }

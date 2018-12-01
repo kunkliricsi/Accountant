@@ -18,6 +18,9 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE id = :id")
     public User getUser(int id);
 
+    @Query("SELECT * FROM users ORDER BY id DESC LIMIT 1")
+    public User getLastUser();
+
     @Update
     public void updateUser(User... users);
 

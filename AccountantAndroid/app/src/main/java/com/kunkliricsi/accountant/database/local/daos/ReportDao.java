@@ -18,6 +18,9 @@ public interface ReportDao {
     @Query("SELECT * FROM reports WHERE id = :id")
     public Report getReport(int id);
 
+    @Query("SELECT * FROM reports ORDER BY id DESC LIMIT 1")
+    public Report getLastReport();
+
     @Query("SELECT * FROM reports WHERE evaluated = :evaluated")
     public Report[] getReportsByEvaluation(boolean evaluated);
 

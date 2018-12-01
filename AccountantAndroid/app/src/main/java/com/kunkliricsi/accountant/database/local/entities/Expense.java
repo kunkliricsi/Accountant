@@ -29,7 +29,7 @@ import androidx.room.PrimaryKey;
 })
 public class Expense {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int id;
 
     @SerializedName("amount")

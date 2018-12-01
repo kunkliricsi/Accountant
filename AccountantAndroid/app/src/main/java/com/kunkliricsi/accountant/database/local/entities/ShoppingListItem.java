@@ -17,7 +17,7 @@ import androidx.room.PrimaryKey;
 )
 public class ShoppingListItem {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int id;
 
     @SerializedName("name")
