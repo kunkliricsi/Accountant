@@ -13,7 +13,7 @@ import ReportDao;
 import ShoppingListItemDao;
 import UserDao;
 
-import androidx.room.Room;
+import android.arch.persistence.room.Room;
 
 public class AccountantContentProvider extends ContentProvider {
 

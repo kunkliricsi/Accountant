@@ -2,10 +2,10 @@ package com.kunkliricsi.accountant.database.local.synchelper;
 
 import com.kunkliricsi.accountant.database.local.entities.Expense;
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.Query;
 
 @Dao
 public interface SyncDao {

@@ -8,7 +8,7 @@
     <color name="Blue">#72deff</color>
     <color name="White">#FFFFFF</color>
     <color name="WhiteDark">#adadb1</color>
-    <color name="Grey">#33333d</color>
-    <color name="GreyDark">#27272f</color>
-    <color name="GreyLight">#373740</color>
+    <color name="Gray">#33333d</color>
+    <color name="GrayDark">#27272f</color>
+    <color name="GrayLight">#373740</color>
 </resources>

@@ -50,7 +50,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             Call<Changes> call = manager.getChanges();
             Changes server = call.execute().body();
 
-            if ((local == null || local.lastModified.compareTo(server.lastModified) != 0) && syncChanges(local, server)) {
+            if (local.lastModified.compareTo(server.lastModified) != 0 && syncChanges(local, server)) {
                 Call<Changes> update = manager.getChanges();
                 database.changesDao().updateChanges(update.execute().body());
             }
@@ -66,23 +66,23 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
         try {
 
-            if (local == null || local.Category.compareTo(server.Category) != 0) {
+            if (local.Category.compareTo(server.Category) != 0) {
                 syncCategories();
             }
 
-            if (local == null || local.Expense.compareTo(server.Expense) != 0) {
+            if (local.Expense.compareTo(server.Expense) != 0) {
                 syncExpenses();
             }
 
-            if (local == null || local.Report.compareTo(server.Report) != 0) {
+            if (local.Report.compareTo(server.Report) != 0) {
                 syncReports();
             }
 
-            if (local == null || local.ShoppingListItem.compareTo(server.ShoppingListItem) != 0) {
+            if (local.ShoppingListItem.compareTo(server.ShoppingListItem) != 0) {
                 syncShoppingList();
             }
 
-            if (local == null || local.User.compareTo(server.User) != 0) {
+            if (local.User.compareTo(server.User) != 0) {
                 syncUsers();
             }
 

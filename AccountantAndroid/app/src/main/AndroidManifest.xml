@@ -29,12 +29,15 @@
         </service>
 
         <service
-            android:name=".database.SyncService"
+            android:name="com.kunkliricsi.accountant.database.SyncService"
             android:exported="true"
             android:process=":sync">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
+            <meta-data
+                android:name="android.content.Syncadapter"
+                android:resource="@xml/sync"/>
 
         </service>
 

@@ -1,64 +1,59 @@
 package com.kunkliricsi.accountant.adapters;
 
+import android.content.Context;
 import android.database.DataSetObserver;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 
-public class CategoryAdapter implements SpinnerAdapter {
+import com.kunkliricsi.accountant.R;
+import com.kunkliricsi.accountant.database.local.entities.Category;
 
-    @Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        return null;
+import java.util.List;
+
+public class CategoryAdapter extends ArrayAdapter<String> {
+
+    private final LayoutInflater mInflater;
+    private final Context mContext;
+    private final List<Category> items;
+    private final int mResource;
+
+    public CategoryAdapter(@NonNull Context context, @LayoutRes int resource,
+                              @NonNull List objects) {
+        super(context, resource, 0, objects);
+
+        mContext = context;
+        mInflater = LayoutInflater.from(context);
+        mResource = resource;
+        items = objects;
     }
 
     @Override
-    public void registerDataSetObserver(DataSetObserver observer) {
-
+    public View getDropDownView(int position, @Nullable View convertView,
+                                @NonNull ViewGroup parent) {
+        return createItemView(position, convertView, parent);
     }
 
     @Override
-    public void unregisterDataSetObserver(DataSetObserver observer) {
-
+    public @NonNull View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        return createItemView(position, convertView, parent);
     }
 
-    @Override
-    public int getCount() {
-        return 0;
-    }
+    private View createItemView(int position, View convertView, ViewGroup parent){
+        final View view = mInflater.inflate(mResource, parent, false);
 
-    @Override
-    public Object getItem(int position) {
-        return null;
-    }
+        TextView categoryText = (TextView) view.findViewById(R.id.spinner_category_item);
 
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
+        Category category = items.get(position);
 
-    @Override
-    public boolean hasStableIds() {
-        return false;
-    }
+        categoryText.setText(category.Name);
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return 0;
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return 0;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
+        return view;
     }
 }

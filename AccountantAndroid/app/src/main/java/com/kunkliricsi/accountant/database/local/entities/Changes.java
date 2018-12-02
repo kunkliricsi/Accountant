@@ -1,14 +1,17 @@
 package com.kunkliricsi.accountant.database.local.entities;
 
 import com.google.gson.annotations.SerializedName;
+import com.kunkliricsi.accountant.database.local.utils.Converters;
 
 import java.util.Date;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
 @Entity(tableName = "changes")
+@TypeConverters(Converters.class)
 public class Changes {
 
     @PrimaryKey

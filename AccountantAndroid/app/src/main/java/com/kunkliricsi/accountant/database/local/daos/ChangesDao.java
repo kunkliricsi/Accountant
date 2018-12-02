@@ -2,9 +2,10 @@ package com.kunkliricsi.accountant.database.local.daos;
 
 import com.kunkliricsi.accountant.database.local.entities.Changes;
 
-import androidx.room.Dao;
-import androidx.room.Query;
-import androidx.room.Update;
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 @Dao
 public interface ChangesDao {
@@ -14,4 +15,7 @@ public interface ChangesDao {
 
     @Update
     public void updateChanges(Changes change);
+
+    @Insert
+    public void addChange(Changes... change);
 }

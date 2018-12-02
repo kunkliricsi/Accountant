@@ -1,7 +1,7 @@
 package com.kunkliricsi.accountant.database.local.synchelper;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "reportsync")
 public class ReportSync {

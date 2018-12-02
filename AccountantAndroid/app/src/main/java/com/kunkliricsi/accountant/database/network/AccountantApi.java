@@ -20,7 +20,7 @@ import retrofit2.http.Path;
 
 public interface AccountantApi {
 
-    @GET()
+    @GET("/")
     Call<Changes> getChanges();
 
 

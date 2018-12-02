@@ -6,7 +6,7 @@ import android.os.IBinder;
 
 import java.io.PushbackReader;
 
-import androidx.annotation.Nullable;
+import android.support.annotation.Nullable;
 
 public class SyncService extends Service {
 
