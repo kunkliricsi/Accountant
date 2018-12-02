@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Accountant.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Proxies;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Accountant
 {

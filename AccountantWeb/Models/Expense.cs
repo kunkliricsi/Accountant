@@ -8,19 +8,18 @@ namespace Accountant.Models
     public class Expense
     {
         public int ID { get; set; }
-
-        [Required]
-        public User Purchaser { get; set; }
         
         [Required]
         [DataType(DataType.Currency)]
         public int Amount { get; set; }
-        public Category Category { get; set; }
-        public ICollection<ShoppingListItem> ItemsPurchased { get; set; }
         public PayOption? PayOption { get; set; }
         public DateTime DateOfPurchase { get; set; }
 
+        [Required]
         public int ReportID { get; set; }
-        public Report Report { get; set; }
+        public int CategoryID { get; set; }
+
+        [Required]
+        public int PurchaserID { get; set; }
     }
 }

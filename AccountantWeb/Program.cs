@@ -20,9 +20,9 @@ namespace Accountant
                     var context = services.GetRequiredService<AccountantContext>();
                     DbInitializer.Initialize(context);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    Console.WriteLine("An error occured while seeding the database.");
+                    Console.WriteLine($"{ex}");
                 }
             }
 
@@ -32,6 +32,7 @@ namespace Accountant
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseKestrel()
                 .Build();
     }
 }

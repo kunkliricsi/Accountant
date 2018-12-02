@@ -10,6 +10,10 @@ namespace Accountant.Models
         [Required]
         public string Name { get; set; }
         public string Comment { get; set; }
+
+        [DataType(DataType.Date)]
         public DateTime DateOfCreation { get; set; }
+
+        public int ExpenseID { get; set; }
     }
 }

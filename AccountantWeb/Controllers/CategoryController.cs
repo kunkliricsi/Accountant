@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Accountant.Data;
 using Accountant.Models;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace Accountant.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Category>> Get()
+        public ActionResult<ICollection<Category>> Get()
         {
             return context.Categories.ToList();
         }

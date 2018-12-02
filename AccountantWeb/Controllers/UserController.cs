@@ -8,7 +8,7 @@ using System.Linq;
 namespace Accountant.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class UserController : ControllerBase
     {
         private readonly AccountantContext context;
@@ -58,20 +58,6 @@ namespace Accountant.Controllers
             userToUpdate.Email = user.Email;
 
             context.Users.Update(userToUpdate);
-            context.SaveChanges();
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            var userToDelete = context.Users.Find(id);
-            if (userToDelete == null)
-            {
-                return NotFound();
-            }
-
-            context.Users.Remove(userToDelete);
             context.SaveChanges();
             return NoContent();
         }
