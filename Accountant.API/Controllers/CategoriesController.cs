@@ -14,13 +14,13 @@ namespace Accountant.API.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly ICategoryService _categoryService;
+        private readonly ICategoryService _service;
         private readonly IMapper _mapper;
         private readonly ILogger<CategoriesController> _logger;
 
         public CategoriesController(ICategoryService service, IMapper mapper, ILogger<CategoriesController> logger)
         {
-            _categoryService = service;
+            _service = service;
             _mapper = mapper;
             _logger = logger;
         }
@@ -30,7 +30,7 @@ namespace Accountant.API.Controllers
         {
             _logger.LogInformation("Getting all categories...");
 
-            return _mapper.Map<List<Category>>(await _categoryService.GetAllCategoriesAsync());
+            return _mapper.Map<List<Category>>(await _service.GetAllCategoriesAsync());
         }
 
         [HttpPost]
@@ -38,14 +38,13 @@ namespace Accountant.API.Controllers
         {
             _logger.LogInformation("Creating category...");
 
-            var created = await _categoryService.CreateCategoryAsync(
+            var created = await _service.CreateCategoryAsync(
                 _mapper.Map<DAL.Entities.Category>(category));
 
-            _logger.LogInformation($"Created category: [{category.Id}].");
+            _logger.LogInformation($"Created category: [{created.Id}].");
 
             return CreatedAtAction(
                 nameof(GetAllAsync),
-                new { id = created.Id },
                 _mapper.Map<Category>(created));
         }
 
@@ -54,7 +53,7 @@ namespace Accountant.API.Controllers
         {
             _logger.LogInformation($"Updating category: [{category.Id}]...");
 
-            await _categoryService.UpdateCategoryAsync(
+            await _service.UpdateCategoryAsync(
                 _mapper.Map<DAL.Entities.Category>(category));
 
             return NoContent();
@@ -65,7 +64,7 @@ namespace Accountant.API.Controllers
         {
             _logger.LogInformation($"Deleting category: [{id}]...");
 
-            await _categoryService.DeleteCategoryAsync(id);
+            await _service.DeleteCategoryAsync(id);
 
             return NoContent();
         }
