@@ -41,6 +41,7 @@ namespace Accountant.API
             services.AddTransient<IGroupService, GroupService>();
             services.AddTransient<IReportService, ReportService>();
             services.AddTransient<IShoppingListService, ShoppingListService>();
+            services.AddTransient<IUserGroupService, UserGroupService>();
             services.AddTransient<IUserService, UserService>();
 
             services.AddAutoMapper(typeof(Startup));

@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 namespace Accountant.API.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class ExpensesController : ControllerBase
     {
         private readonly IExpenseService _service;
@@ -29,13 +29,11 @@ namespace Accountant.API.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<ActionResult<List<Expense>>> GetAllAsync([FromQuery(Name = "id")] string[] ids)
+        public async Task<ActionResult<List<Expense>>> GetAllAsync([FromQuery(Name = "reportId")] int[] reportIds)
         {
-            _logger.LogInformation($"Getting all expenses for report with ID: [{string.Join(", ", ids)}]...");
+            _logger.LogInformation($"Getting all expenses of report(s) with ID(s): [{string.Join(", ", reportIds)}]...");
 
-            var intIds = ids.Select(id => int.Parse(id)).ToArray();
-
-            return _mapper.Map<List<Expense>>(await _service.GetExpensesAsync(intIds));
+            return _mapper.Map<List<Expense>>(await _service.GetExpensesAsync(reportIds));
         }
 
         [HttpPost]
@@ -46,7 +44,7 @@ namespace Accountant.API.Controllers
             var created = await _service.CreateExpenseAsync(
                 _mapper.Map<DAL.Entities.Expense>(expense));
 
-            _logger.LogInformation($"Created expese: [{created.Id}].");
+            _logger.LogInformation($"Created expense [{created.Id}].");
 
             return CreatedAtAction(
                 nameof(GetAllAsync),
@@ -56,7 +54,7 @@ namespace Accountant.API.Controllers
         [HttpPut]
         public async Task<IActionResult> PutAsync([FromBody] Expense expense)
         {
-            _logger.LogInformation($"Updating expense: [{expense.Id}]...");
+            _logger.LogInformation($"Updating expense [{expense.Id}]...");
 
             await _service.UpdateExpenseAsync(
                 _mapper.Map<DAL.Entities.Expense>(expense));
@@ -67,7 +65,7 @@ namespace Accountant.API.Controllers
         [HttpDelete("{id")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            _logger.LogInformation($"Deleting expense: [{id}]...");
+            _logger.LogInformation($"Deleting expense [{id}]...");
 
             await _service.DeleteExpenseAsync(id);
 

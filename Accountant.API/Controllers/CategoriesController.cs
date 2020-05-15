@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 namespace Accountant.API.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _service;
@@ -41,7 +41,7 @@ namespace Accountant.API.Controllers
             var created = await _service.CreateCategoryAsync(
                 _mapper.Map<DAL.Entities.Category>(category));
 
-            _logger.LogInformation($"Created category: [{created.Id}].");
+            _logger.LogInformation($"Created category [{created.Id}].");
 
             return CreatedAtAction(
                 nameof(GetAllAsync),
@@ -51,7 +51,7 @@ namespace Accountant.API.Controllers
         [HttpPut]
         public async Task<IActionResult> PutAsync([FromBody] Category category)
         {
-            _logger.LogInformation($"Updating category: [{category.Id}]...");
+            _logger.LogInformation($"Updating category [{category.Id}]...");
 
             await _service.UpdateCategoryAsync(
                 _mapper.Map<DAL.Entities.Category>(category));
@@ -62,7 +62,7 @@ namespace Accountant.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            _logger.LogInformation($"Deleting category: [{id}]...");
+            _logger.LogInformation($"Deleting category [{id}]...");
 
             await _service.DeleteCategoryAsync(id);
 
