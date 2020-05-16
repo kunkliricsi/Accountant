@@ -10,6 +10,9 @@ namespace Accountant.DAL.Entities
 
         public string Name { get; set; }
 
+        public int GroupId { get; set; }
+        public Group Group { get; set; }
+
         public ICollection<ShoppingListItem> ShoppingListItems { get; } = new List<ShoppingListItem>();
     }
 }

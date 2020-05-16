@@ -10,6 +10,11 @@ namespace Accountant.DAL.Entities.Configurations
             builder.Property(sl => sl.Name)
                 .IsRequired();
 
+            builder.HasOne(sl => sl.Group)
+                .WithMany(g => g.ShoppingLists)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.HasMany(sl => sl.ShoppingListItems)
                 .WithOne(sli => sli.ShoppingList)
                 .OnDelete(DeleteBehavior.Cascade);

@@ -21,7 +21,7 @@ namespace Accountant.BLL.Services
         {
             var (user, group) = await GetUserAndGroupAsync(userId, groupId);
 
-            if (!user.UserGroups.Any(ug => ug.Group == group))
+            if (!user.UserGroups.Any(ug => ug.User == user && ug.Group == group))
             {
                 var ug = new UserGroup
                 {
