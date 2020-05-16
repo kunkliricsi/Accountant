@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using NSwag.Generation.Processors.Security;
 using System;
 using System.Text;
 
@@ -79,6 +80,19 @@ namespace Accountant.API
                         ValidateAudience = false
                     };
                 });
+
+            services.AddSwaggerDocument(opt =>
+            {
+                opt.OperationProcessors.Add(new OperationSecurityScopeProcessor("Jwt Token"));
+                opt.AddSecurity("Jwt Token", new string[] { },
+                    new NSwag.OpenApiSecurityScheme
+                    {
+                        Type = NSwag.OpenApiSecuritySchemeType.ApiKey,
+                        Name = "Authorization",
+                        In = NSwag.OpenApiSecurityApiKeyLocation.Header,
+                        Description = "Bearer {token}",
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,6 +102,9 @@ namespace Accountant.API
             //{
             //    app.UseDeveloperExceptionPage();
             //}
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 
