@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accountant.API", "src\web\Accountant.API\Accountant.API.csproj", "{05AE5EDA-1CBB-44EA-BAF9-1D059D180ABE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accountant.APP.Android", "src\app\Accountant.APP\Accountant.APP.Android\Accountant.APP.Android.csproj", "{69C9E2BA-B984-4104-9E17-D4DF1407940C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accountant.APP.Android", "src\app\Accountant.APP.Android\Accountant.APP.Android.csproj", "{69C9E2BA-B984-4104-9E17-D4DF1407940C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accountant.APP.iOS", "src\app\Accountant.APP\Accountant.APP.iOS\Accountant.APP.iOS.csproj", "{DB10B44C-EA26-4B48-AA63-BE86BAE7413B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accountant.APP.iOS", "src\app\Accountant.APP.iOS\Accountant.APP.iOS.csproj", "{DB10B44C-EA26-4B48-AA63-BE86BAE7413B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accountant.APP", "src\app\Accountant.APP\Accountant.APP\Accountant.APP.csproj", "{66F0EAAC-78C5-4869-9CD7-C7A0CA933735}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accountant.APP", "src\app\Accountant.APP\Accountant.APP.csproj", "{66F0EAAC-78C5-4869-9CD7-C7A0CA933735}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accountant.DAL", "src\web\Accountant.DAL\Accountant.DAL.csproj", "{04BD67C6-AE9B-48B6-98F4-89E77DB9D765}"
 EndProject
