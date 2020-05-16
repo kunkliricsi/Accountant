@@ -39,6 +39,21 @@ namespace Accountant.BLL.Services
             return _context.SaveChangesAsync();
         }
 
+        public Task EvaluateReportAsync(int reportId, DateTime evaluationDate)
+        {
+            var report = _context.Reports.Find(reportId)
+                ?? throw new EntityNotFoundException($"Cannot find report with ID: {reportId}");
+
+            if (report.IsEvaluated)
+                return Task.CompletedTask;
+
+            report.IsEvaluated = true;
+            report.EvaluationDate = evaluationDate;
+
+            _context.Reports.Update(report);
+            return _context.SaveChangesAsync();
+        }
+
         public Task<Report> GetCurrentReportAsync(int groupId)
         {
             return _context.Reports

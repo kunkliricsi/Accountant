@@ -79,6 +79,18 @@ namespace Accountant.API.Controllers
             return NoContent();
         }
 
+        [HttpPut("{id}/evaluate")]
+        public async Task<IActionResult> PutAsync(int reportId, [FromBody] DateTime evaluationDate)
+        {
+            _logger.LogInformation($"Evaluating report [{reportId}]...");
+
+            await _service.EvaluateReportAsync(reportId, evaluationDate);
+
+            _logger.LogInformation($"Report [{reportId}] evaluated: {evaluationDate}.");
+
+            return NoContent();
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {

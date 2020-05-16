@@ -1,4 +1,5 @@
 ﻿using Accountant.DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace Accountant.BLL.Interfaces
         Task<Report> GetReportAsync(int reportId);
         Task<Report> CreateReportAsync(Report report);
         Task UpdateReportAsync(Report report);
+        Task EvaluateReportAsync(int reportId, DateTime evaluationDate);
         Task DeleteReportAsync(int reportId);
     }
 }
