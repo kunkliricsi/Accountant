@@ -26,7 +26,7 @@ namespace Accountant.BLL.Services
                 throw new ArgumentException("Username or password cannot be null or empty.");
 
             var user = await _context.Users.SingleOrDefaultAsync(u => u.Name == username)
-                ?? throw new EntityNotFoundException($"User \"{username}\" not found.");
+                ?? throw new AuthenticationException();
 
             if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
                 throw new AuthenticationException();
@@ -37,7 +37,7 @@ namespace Accountant.BLL.Services
         public async Task<User> CreateUserAsync(User user, string password)
         {
             if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be null or empty.", "password");
-            if (_context.Users.Any(u => u.Name == user.Name)) throw new EntityAlreadyExistsException($"Username \"{user.Name}\" is already taken.");
+            if (_context.Users.Any(u => u.Name == user.Name)) throw new EntityAlreadyExistsException($"Username '{user.Name}' is already taken.");
 
             UpdateUserPassword(ref user, password);
 

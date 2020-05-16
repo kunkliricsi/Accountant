@@ -28,7 +28,9 @@ namespace Accountant.API
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.AddDbContext<AccountantContext>(o =>
                 o.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 

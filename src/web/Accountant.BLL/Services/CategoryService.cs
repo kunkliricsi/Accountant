@@ -21,7 +21,7 @@ namespace Accountant.BLL.Services
         public async Task<Category> CreateCategoryAsync(Category category)
         {
             if (_context.Categories.Any(c => c.Name == category.Name))
-                throw new EntityAlreadyExistsException($"Category \"{category.Name}\" already exists.");
+                throw new EntityAlreadyExistsException($"Category '{category.Name}' already exists.");
 
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();

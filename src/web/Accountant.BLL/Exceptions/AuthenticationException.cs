@@ -5,7 +5,7 @@ namespace Accountant.BLL.Exceptions
     public class AuthenticationException : Exception
     {
         public AuthenticationException()
-            : base("Authentication failed.")
+            : base("Username or password is incorrect.")
         {
         }
     }

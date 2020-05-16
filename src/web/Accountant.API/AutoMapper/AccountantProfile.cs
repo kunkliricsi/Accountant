@@ -22,7 +22,12 @@ namespace Accountant.API.AutoMapper
                     opt.MapFrom(sl => sl.ShoppingListItems))
                 .ReverseMap();
             CreateMap<ShoppingListItem, DTOs.ShoppingListItem>().ReverseMap();
-            CreateMap<User, DTOs.User>().ReverseMap();
+            CreateMap<User, DTOs.User>()
+                .ForMember(dto => dto.Groups, opt => opt.Ignore())
+                .AfterMap((u, dto, ctx) =>
+                dto.Groups = u.UserGroups.Select(ug =>
+                    ctx.Mapper.Map<DTOs.Group>(ug.Group)).ToList())
+                .ReverseMap();
 
             CreateMap<User, DTOs.UserModels.UpdateModel>().ReverseMap();
         }

@@ -1,5 +1,6 @@
 ﻿using Accountant.BLL.Exceptions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -10,10 +11,12 @@ namespace Accountant.API.Middlewares
     public class ExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<ExceptionHandlerMiddleware> _logger;
 
-        public ExceptionHandlerMiddleware(RequestDelegate next)
+        public ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
@@ -28,8 +31,10 @@ namespace Accountant.API.Middlewares
             }
         }
 
-        private static Task HandleException(HttpContext context, Exception ex)
+        private Task HandleException(HttpContext context, Exception ex)
         {
+            _logger.LogWarning(ex, "");
+
             var code = ex switch
             {
                 AuthenticationException _ => HttpStatusCode.Unauthorized,
@@ -39,10 +44,10 @@ namespace Accountant.API.Middlewares
                 _ => HttpStatusCode.InternalServerError,
             };
 
-            var result = JsonConvert.SerializeObject(new { statusCode = code, errorMessage = ex.Message });
+            var result = JsonConvert.SerializeObject(new { error = ex.Message });
 
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.OK;
+            context.Response.StatusCode = (int)code;
 
             return context.Response.WriteAsync(result);
         }
