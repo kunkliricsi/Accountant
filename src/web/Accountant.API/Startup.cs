@@ -83,6 +83,7 @@ namespace Accountant.API
 
             services.AddSwaggerDocument(opt =>
             {
+                opt.Title = "Accountant";
                 opt.OperationProcessors.Add(new OperationSecurityScopeProcessor("Jwt Token"));
                 opt.AddSecurity("Jwt Token", new string[] { },
                     new NSwag.OpenApiSecurityScheme
