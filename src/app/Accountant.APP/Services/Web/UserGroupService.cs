@@ -8,21 +8,21 @@ namespace Accountant.APP.Services.Web
 {
     public class UserGroupService : IUserGroupService
     {
-        private readonly UserGroupClient _client;
+        private readonly IServiceClientFactory<IUserGroupClient> _clientFactory;
 
-        public UserGroupService(UserGroupClient client)
+        public UserGroupService(IServiceClientFactory<IUserGroupClient> clientFactory)
         {
-            _client = client;
+            _clientFactory = clientFactory;
         }
 
         public Task<User> CreateUserGroupAsync(int userId, int groupId)
         {
-            return _client.PostUserGroupAsync(new UserGroup { UserId = userId, GroupId = groupId });
+            return _clientFactory.CreateClient().PostUserGroupAsync(new UserGroup { UserId = userId, GroupId = groupId });
         }
 
         public Task DeleteUserGroupAsync(int userId, int groupId)
         {
-            return _client.DeleteUserGroupAsync(new UserGroup { UserId = userId, GroupId = groupId });
+            return _clientFactory.CreateClient().DeleteUserGroupAsync(new UserGroup { UserId = userId, GroupId = groupId });
         }
     }
 }

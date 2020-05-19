@@ -1,5 +1,4 @@
-﻿using eShopOnContainers.Core.Services.Settings;
-using eShopOnContainers.Services;
+﻿using eShopOnContainers.Services;
 using System.Threading.Tasks;
 
 namespace Accountant.APP.ViewModels.Base
@@ -14,7 +13,6 @@ namespace Accountant.APP.ViewModels.Base
         public bool IsBusy
         {
             get =>_isBusy;
-
             set
             {
                 _isBusy = value;

@@ -10,46 +10,46 @@ namespace Accountant.APP.Services.Web
 {
     public class ShoppingListService : IShoppingListService
     {
-        private readonly ShoppingListsClient _client;
+        private readonly IServiceClientFactory<IShoppingListsClient> _clientFactory;
 
-        public ShoppingListService(ShoppingListsClient client)
+        public ShoppingListService(IServiceClientFactory<IShoppingListsClient> clientFactory)
         {
-            _client = client;
+            _clientFactory = clientFactory;
         }
 
         public Task<ShoppingList> CreateShoppingListAsync(ShoppingList shoppingList, int groupId)
         {
-            return _client.PostAsync(shoppingList, groupId);
+            return _clientFactory.CreateClient().PostAsync(shoppingList, groupId);
         }
 
         public Task<ShoppingListItem> CreateShoppingListItemAsync(ShoppingListItem listItem)
         {
-            return _client.Post2Async(listItem);
+            return _clientFactory.CreateClient().Post2Async(listItem);
         }
 
         public Task DeleteShoppingListAsync(int shoppingListId)
         {
-            return _client.DeleteAsync(shoppingListId);
+            return _clientFactory.CreateClient().DeleteAsync(shoppingListId);
         }
 
         public Task DeleteShoppingListItemAsync(int listItemId)
         {
-            return _client.DeleteItemAsync(listItemId);
+            return _clientFactory.CreateClient().DeleteItemAsync(listItemId);
         }
 
         public Task<ShoppingList> GetShoppingListAsync(int shoppingListId)
         {
-            return _client.GetAsync(shoppingListId);
+            return _clientFactory.CreateClient().GetAsync(shoppingListId);
         }
 
         public Task UpdateShoppingListAsync(ShoppingList shoppingList)
         {
-            return _client.PutAsync(shoppingList);
+            return _clientFactory.CreateClient().PutAsync(shoppingList);
         }
 
         public Task UpdateShoppingListItemAsync(ShoppingListItem listItem)
         {
-            return _client.Put2Async(listItem);
+            return _clientFactory.CreateClient().Put2Async(listItem);
         }
     }
 }

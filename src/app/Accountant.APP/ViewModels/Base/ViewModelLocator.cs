@@ -1,5 +1,12 @@
-﻿using System;
+﻿using Accountant.APP.Services.Settings;
+using Accountant.APP.Services.Settings.Interfaces;
+using Accountant.APP.Services.Web;
+using Accountant.APP.Services.Web.Interfaces;
+using Accountant.APP.Services.Web.Providers;
+using eShopOnContainers.Services;
+using System;
 using System.Globalization;
+using System.Net.Http;
 using System.Reflection;
 using TinyIoC;
 using Xamarin.Forms;
@@ -55,7 +62,25 @@ namespace Accountant.APP.ViewModels.Base
             //_container.Register<IBasketService, BasketMockService>();
             //_container.Register<IOrderService, OrderMockService>();
             //_container.Register<IUserService, UserMockService>();
-            //_container.Register<ICampaignService, CampaignMockService>();
+
+            // Client Factory
+            _container.Register(typeof(IServiceClientFactory<>), typeof(ServiceClientFactory<>)).AsMultiInstance();
+
+            // Web Services
+            _container.Register<ICategoryService, CategoryService>();
+            _container.Register<IExpenseService, ExpenseService>();
+            _container.Register<IGroupService, GroupService>();
+            _container.Register<IReportService, ReportService>();
+            _container.Register<IShoppingListService, ShoppingListService>();
+            _container.Register<IUserGroupService, UserGroupService>();
+            _container.Register<IUserService, UserService>();
+
+            // UI Services
+            _container.Register<INavigationService, NavigationService>();
+            _container.Register<IDialogService, DialogService>();
+
+            // Settings Service
+            _container.Register<ISettingsService, SettingsService>();
         }
 
         public static void RegisterSingleton<TInterface, T>() where TInterface : class where T : class, TInterface

@@ -8,31 +8,31 @@ namespace Accountant.APP.Services.Web
 {
     public class CategoryService : ICategoryService
     {
-        private readonly CategoriesClient _client;
+        private readonly IServiceClientFactory<ICategoriesClient> _clientFactory;
 
-        public CategoryService(CategoriesClient client)
+        public CategoryService(IServiceClientFactory<ICategoriesClient> clientFactory)
         {
-            _client = client;
+            _clientFactory = clientFactory;
         }
 
         public Task<Category> CreateCategoryAsync(Category category)
         {
-            return _client.PostAsync(category);
+            return _clientFactory.CreateClient().PostAsync(category);
         }
 
         public Task DeleteCategoryAsync(int categoryId)
         {
-            return _client.DeleteAsync(categoryId);
+            return _clientFactory.CreateClient().DeleteAsync(categoryId);
         }
 
         public Task<ICollection<Category>> GetAllCategoriesAsync()
         {
-            return _client.GetAllAsync();
+            return _clientFactory.CreateClient().GetAllAsync();
         }
 
         public Task UpdateCategoryAsync(Category category)
         {
-            return _client.PutAsync(category);
+            return _clientFactory.CreateClient().PutAsync(category);
         }
     }
 }

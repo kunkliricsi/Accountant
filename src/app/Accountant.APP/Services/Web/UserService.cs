@@ -11,41 +11,41 @@ namespace Accountant.APP.Services.Web
 {
     public class UserService : IUserService
     {
-        private readonly UsersClient _client;
+        private readonly IServiceClientFactory<IUsersClient> _clientFactory;
 
-        public UserService(UsersClient client)
+        public UserService(IServiceClientFactory<IUsersClient> clientFactory)
         {
-            _client = client;
+            _clientFactory = clientFactory;
         }
 
         public Task AuthenticateUserAsync(string username, string password)
         {
-            return _client.LoginAsync(new LoginModel { Name = username, Password = password });
+            return _clientFactory.CreateClient().LoginAsync(new LoginModel { Name = username, Password = password });
         }
 
         public Task CreateUserAsync(UpdateModel user)
         {
-            return _client.RegisterAsync(user);
+            return _clientFactory.CreateClient().RegisterAsync(user);
         }
 
         public Task DeleteUserAsync(int userId)
         {
-            return _client.DeleteAsync(userId);
+            return _clientFactory.CreateClient().DeleteAsync(userId);
         }
 
         public Task<User> GetUserAsync(int userId)
         {
-            return _client.GetAsync(userId);
+            return _clientFactory.CreateClient().GetAsync(userId);
         }
 
         public Task<ICollection<User>> GetUsersAsync(params int[] groupIds)
         {
-            return _client.GetAllAsync(groupIds);
+            return _clientFactory.CreateClient().GetAllAsync(groupIds);
         }
 
         public Task UpdateUserAsync(UpdateModel user)
         {
-            return _client.PutAsync(user);
+            return _clientFactory.CreateClient().PutAsync(user);
         }
     }
 }

@@ -8,31 +8,31 @@ namespace Accountant.APP.Services.Web
 {
     public class ExpenseService : IExpenseService
     {
-        private readonly ExpensesClient _client;
+        private readonly IServiceClientFactory<IExpensesClient> _clientFactory;
 
-        public ExpenseService(ExpensesClient client)
+        public ExpenseService(IServiceClientFactory<IExpensesClient> clientFactory)
         {
-            _client = client;
+            _clientFactory = clientFactory;
         }
 
         public Task<Expense> CreateExpenseAsync(Expense expense)
         {
-            return _client.PostAsync(expense);
+            return _clientFactory.CreateClient().PostAsync(expense);
         }
 
         public Task DeleteExpenseAsync(int expenseId)
         {
-            return _client.DeleteAsync(expenseId);
+            return _clientFactory.CreateClient().DeleteAsync(expenseId);
         }
 
         public Task<ICollection<Expense>> GetExpensesAsync(params int[] reportIds)
         {
-            return _client.GetAllAsync(reportIds);
+            return _clientFactory.CreateClient().GetAllAsync(reportIds);
         }
 
         public Task UpdateExpenseAsync(Expense expense)
         {
-            return _client.PutAsync(expense);
+            return _clientFactory.CreateClient().PutAsync(expense);
         }
     }
 }

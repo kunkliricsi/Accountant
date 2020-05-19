@@ -10,46 +10,46 @@ namespace Accountant.APP.Services.Web
 {
     public class ReportService : IReportService
     {
-        private readonly ReportsClient _client;
+        private readonly IServiceClientFactory<IReportsClient> _clientFactory;
 
-        public ReportService(ReportsClient client)
+        public ReportService(IServiceClientFactory<IReportsClient> clientFactory)
         {
-            _client = client;
+            _clientFactory = clientFactory;
         }
 
         public Task<Report> CreateReportAsync(Report report)
         {
-            return _client.PostCurrentAsync(report);
+            return _clientFactory.CreateClient().PostCurrentAsync(report);
         }
 
         public Task DeleteReportAsync(int reportId)
         {
-            return _client.DeleteAsync(reportId);
+            return _clientFactory.CreateClient().DeleteAsync(reportId);
         }
 
         public Task EvaluateReportAsync(int reportId, DateTime evaluationDate)
         {
-            return _client.Put2Async(reportId, evaluationDate);
+            return _clientFactory.CreateClient().Put2Async(reportId, evaluationDate);
         }
 
         public Task<Report> GetCurrentReportAsync(int groupId)
         {
-            return _client.GetCurrentAsync(groupId);
+            return _clientFactory.CreateClient().GetCurrentAsync(groupId);
         }
 
         public Task<Report> GetReportAsync(int reportId)
         {
-            return _client.GetAsync(reportId);
+            return _clientFactory.CreateClient().GetAsync(reportId);
         }
 
         public Task<ICollection<Report>> GetReportsAsync(int groupId)
         {
-            return _client.GetAllAsync(groupId);
+            return _clientFactory.CreateClient().GetAllAsync(groupId);
         }
 
         public Task UpdateReportAsync(Report report)
         {
-            return _client.PutAsync(report);
+            return _clientFactory.CreateClient().PutAsync(report);
         }
     }
 }

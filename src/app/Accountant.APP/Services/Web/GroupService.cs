@@ -10,36 +10,36 @@ namespace Accountant.APP.Services.Web
 {
     public class GroupService : IGroupService
     {
-        private readonly GroupsClient _client;
+        private readonly IServiceClientFactory<IGroupsClient> _clientFactory;
 
-        public GroupService(GroupsClient client)
+        public GroupService(IServiceClientFactory<IGroupsClient> clientFactory)
         {
-            _client = client;
+            _clientFactory = clientFactory;
         }
 
         public Task<Group> CreateGroupAsync(Group group)
         {
-            return _client.PostAsync(group);
+            return _clientFactory.CreateClient().PostAsync(group);
         }
 
         public Task DeleteGroupAsync(int groupId)
         {
-            return _client.DeleteAsync(groupId);
+            return _clientFactory.CreateClient().DeleteAsync(groupId);
         }
 
         public Task<Group> GetGroupAsync(int groupId)
         {
-            return _client.GetAsync(groupId);
+            return _clientFactory.CreateClient().GetAsync(groupId);
         }
 
         public Task<ICollection<Group>> GetGroupsAsync(params int[] userIds)
         {
-            return _client.GetAllAsync(userIds);
+            return _clientFactory.CreateClient().GetAllAsync(userIds);
         }
 
         public Task UpdateGroupAsync(Group group)
         {
-            return _client.PutAsync(group);
+            return _clientFactory.CreateClient().PutAsync(group);
         }
     }
 }
