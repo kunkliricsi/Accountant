@@ -10,7 +10,7 @@
 #pragma warning disable 1573 // Disable "CS1573 Parameter '...' has no matching param tag in the XML comment for ...
 #pragma warning disable 1591 // Disable "CS1591 Missing XML comment for publicly visible type or member ..."
 
-namespace Accountant.APP.Services.Providers
+namespace Accountant.APP.Services.Web.Providers
 {
     using Accountant.APP.Models;
     using Accountant.APP.Models.Helpers;
@@ -943,14 +943,14 @@ namespace Accountant.APP.Services.Providers
         }
     
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<FileResponse> CreateAsync(Group group)
+        public System.Threading.Tasks.Task<Group> PostAsync(Group group)
         {
-            return CreateAsync(group, System.Threading.CancellationToken.None);
+            return PostAsync(group, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<FileResponse> CreateAsync(Group group, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Group> PostAsync(Group group, System.Threading.CancellationToken cancellationToken)
         {
             if (group == null)
                 throw new System.ArgumentNullException("group");
@@ -967,7 +967,7 @@ namespace Accountant.APP.Services.Providers
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/octet-stream"));
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -987,12 +987,10 @@ namespace Accountant.APP.Services.Providers
                         ProcessResponse(client_, response_);
     
                         var status_ = ((int)response_.StatusCode).ToString();
-                        if (status_ == "200" || status_ == "206") 
+                        if (status_ == "200") 
                         {
-                            var responseStream_ = response_.Content == null ? System.IO.Stream.Null : await response_.Content.ReadAsStreamAsync().ConfigureAwait(false);
-                            var fileResponse_ = new FileResponse((int)response_.StatusCode, headers_, responseStream_, null, response_); 
-                            client_ = null; response_ = null; // response and client are disposed by FileResponse
-                            return fileResponse_;
+                            var objectResponse_ = await ReadObjectResponseAsync<Group>(response_, headers_).ConfigureAwait(false);
+                            return objectResponse_.Object;
                         }
                         else
                         if (status_ != "200" && status_ != "204")
@@ -1001,7 +999,7 @@ namespace Accountant.APP.Services.Providers
                             throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
                         }
             
-                        return default(FileResponse);
+                        return default(Group);
                     }
                     finally
                     {
@@ -1710,14 +1708,14 @@ namespace Accountant.APP.Services.Providers
         }
     
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<FileResponse> Put2Async(int? reportId, System.DateTimeOffset evaluationDate, string id)
+        public System.Threading.Tasks.Task<FileResponse> Put2Async(int id, System.DateTimeOffset evaluationDate)
         {
-            return Put2Async(reportId, evaluationDate, id, System.Threading.CancellationToken.None);
+            return Put2Async(id, evaluationDate, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<FileResponse> Put2Async(int? reportId, System.DateTimeOffset evaluationDate, string id, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<FileResponse> Put2Async(int id, System.DateTimeOffset evaluationDate, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1726,13 +1724,8 @@ namespace Accountant.APP.Services.Providers
                 throw new System.ArgumentNullException("evaluationDate");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Reports/{id}/evaluate?");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Reports/{id}/evaluate");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
-            if (reportId != null) 
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("reportId") + "=").Append(System.Uri.EscapeDataString(ConvertToString(reportId, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            urlBuilder_.Length--;
     
             var client_ = _httpClient;
             try
@@ -1992,26 +1985,21 @@ namespace Accountant.APP.Services.Providers
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
     
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<ShoppingList> GetAsync(int? listId, string id)
+        public System.Threading.Tasks.Task<ShoppingList> GetAsync(int id)
         {
-            return GetAsync(listId, id, System.Threading.CancellationToken.None);
+            return GetAsync(id, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<ShoppingList> GetAsync(int? listId, string id, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ShoppingList> GetAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ShoppingLists/{id}?");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/ShoppingLists/{id}");
             urlBuilder_.Replace("{id}", System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
-            if (listId != null) 
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("listId") + "=").Append(System.Uri.EscapeDataString(ConvertToString(listId, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            urlBuilder_.Length--;
     
             var client_ = _httpClient;
             try

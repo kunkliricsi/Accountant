@@ -45,7 +45,7 @@ namespace Accountant.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] Group group)
+        public async Task<ActionResult<Group>> PostAsync([FromBody] Group group)
         {
             _logger.LogInformation("Creating group...");
 

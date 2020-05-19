@@ -28,11 +28,11 @@ namespace Accountant.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ShoppingList>> GetAsync(int listId)
+        public async Task<ActionResult<ShoppingList>> GetAsync(int id)
         {
-            _logger.LogInformation($"Getting shopping list [{listId}]...");
+            _logger.LogInformation($"Getting shopping list [{id}]...");
 
-            return _mapper.Map<ShoppingList>(await _service.GetShoppingListAsync(listId));
+            return _mapper.Map<ShoppingList>(await _service.GetShoppingListAsync(id));
         }
 
         [HttpPost("{groupId}")]

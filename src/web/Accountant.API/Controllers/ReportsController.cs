@@ -80,13 +80,13 @@ namespace Accountant.API.Controllers
         }
 
         [HttpPut("{id}/evaluate")]
-        public async Task<IActionResult> PutAsync(int reportId, [FromBody] DateTime evaluationDate)
+        public async Task<IActionResult> PutAsync(int id, [FromBody] DateTime evaluationDate)
         {
-            _logger.LogInformation($"Evaluating report [{reportId}]...");
+            _logger.LogInformation($"Evaluating report [{id}]...");
 
-            await _service.EvaluateReportAsync(reportId, evaluationDate);
+            await _service.EvaluateReportAsync(id, evaluationDate);
 
-            _logger.LogInformation($"Report [{reportId}] evaluated: {evaluationDate}.");
+            _logger.LogInformation($"Report [{id}] evaluated: {evaluationDate}.");
 
             return NoContent();
         }
