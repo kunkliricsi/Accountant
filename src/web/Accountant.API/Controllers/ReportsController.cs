@@ -28,7 +28,7 @@ namespace Accountant.API.Controllers
             _logger = logger;
         }
 
-        [HttpGet("{groupId}")]
+        [HttpGet("{groupId}/all")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<List<Report>>> GetAllReportsAsync(int groupId)
         {

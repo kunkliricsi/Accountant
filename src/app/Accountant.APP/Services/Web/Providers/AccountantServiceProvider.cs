@@ -1493,7 +1493,7 @@ namespace Accountant.APP.Services.Web.Providers
                 throw new System.ArgumentNullException("groupId");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Reports/{groupId}");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Reports/{groupId}/all");
             urlBuilder_.Replace("{groupId}", System.Uri.EscapeDataString(ConvertToString(groupId, System.Globalization.CultureInfo.InvariantCulture)));
     
             var client_ = _httpClient;
