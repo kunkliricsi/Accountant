@@ -14,9 +14,8 @@ namespace Accountant.APP.Services.Web.Providers
 {
     using Accountant.APP.Models;
     using Accountant.APP.Models.Helpers;
+    using System.Net.Http;
     using System = global::System;
-
-    public interface IServiceClient { }
     
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.5.0.0 (NJsonSchema v10.1.15.0 (Newtonsoft.Json v12.0.0.0))")]
     public partial interface ICategoriesClient : IServiceClient

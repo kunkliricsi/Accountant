@@ -7,6 +7,7 @@ using eShopOnContainers.Services;
 using System;
 using System.Globalization;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using TinyIoC;
 using Xamarin.Forms;
@@ -62,6 +63,16 @@ namespace Accountant.APP.ViewModels.Base
             //_container.Register<IBasketService, BasketMockService>();
             //_container.Register<IOrderService, OrderMockService>();
             //_container.Register<IUserService, UserMockService>();
+
+            // Clients
+            _container.Register<HttpClient>();
+            _container.Register<ICategoriesClient, CategoriesClient>();
+            _container.Register<IExpensesClient, ExpensesClient>();
+            _container.Register<IGroupsClient, GroupsClient>();
+            _container.Register<IReportsClient, ReportsClient>();
+            _container.Register<IShoppingListsClient, ShoppingListsClient>();
+            _container.Register<IUserGroupClient, UserGroupClient>();
+            _container.Register<IUsersClient, UsersClient>();
 
             // Client Factory
             _container.Register(typeof(IServiceClientFactory<>), typeof(ServiceClientFactory<>)).AsMultiInstance();

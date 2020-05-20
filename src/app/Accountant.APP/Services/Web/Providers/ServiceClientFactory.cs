@@ -1,29 +1,16 @@
 ﻿using Accountant.APP.Services.Settings.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
+using Accountant.APP.ViewModels.Base;
 using System.Net.Http.Headers;
 
 namespace Accountant.APP.Services.Web.Providers
 {
-    public class ServiceClientFactory<T> : IServiceClientFactory<T> where T : IServiceClient
+    public interface IServiceClientFactory<T> where T : class, IServiceClient
     {
-        private static readonly Dictionary<Type, Type> _container;
+        T CreateClient();
+    }
 
-        static ServiceClientFactory()
-        {
-            _container = new Dictionary<Type, Type>()
-            {
-                [typeof(ICategoriesClient)] = typeof(CategoriesClient),
-                [typeof(IExpensesClient)] = typeof(ExpensesClient),
-                [typeof(IGroupsClient)] = typeof(GroupsClient),
-                [typeof(IReportsClient)] = typeof(ReportsClient),
-                [typeof(IShoppingListsClient)] = typeof(ShoppingListsClient),
-                [typeof(IUserGroupClient)] = typeof(UserGroupClient),
-                [typeof(IUsersClient)] = typeof(UsersClient),
-            };
-        }
-
+    public class ServiceClientFactory<T> : IServiceClientFactory<T> where T : class, IServiceClient
+    {
         private readonly ISettingsService _settings;
 
         public ServiceClientFactory(ISettingsService settings)
@@ -33,11 +20,11 @@ namespace Accountant.APP.Services.Web.Providers
 
         public T CreateClient()
         {
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue(_settings.AuthToken);
+            var serviceClient = ViewModelLocator.Resolve<T>();
+            serviceClient.Client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", _settings.AuthToken);
 
-            return (T)Activator.CreateInstance(_container[typeof(T)], client);
+            return serviceClient;
         }
     }
 }
