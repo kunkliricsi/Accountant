@@ -8,7 +8,8 @@
              xmlns:behaviors="clr-namespace:Accountant.APP.Behaviors"
              xmlns:templates="clr-namespace:Accountant.APP.Views.Templates"
             xmlns:viewModelBase="clr-namespace:Accountant.APP.ViewModels.Base"
-            viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+            viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+             x:Name="ProfileViewName">
     <ContentPage.Content>
         <Grid>
             <ActivityIndicator      
@@ -31,20 +32,24 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <SwipeView>
-                                    <SwipeView.LeftItems>
-                                        <SwipeItem Text="Delete"
-                                                   Command="{Binding DeleteGroupCommand}"
-                                                   CommandParameter="{Binding .}"/>
-                                    </SwipeView.LeftItems>
-                                    <templates:GroupTemplate/>
-                                </SwipeView>
+                                <ViewCell.ContextActions>
+                                    <MenuItem Command="{Binding Path=BindingContext.EditGroupCommand, Source={x:Reference ProfileViewName}}"
+                                              CommandParameter="{Binding .}"
+                                              Text="Edit"/>
+                                    <MenuItem Command="{Binding Path=BindingContext.DeleteGroupCommand, Source={x:Reference ProfileViewName}}"
+                                              CommandParameter="{Binding .}"
+                                              Text="Delete" IsDestructive="True" />
+                                </ViewCell.ContextActions>
+                                <templates:GroupTemplate/>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button Text="Add new group" Margin="10" Command="{Binding NewGroupCommand}"/>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="50">
+                    <Button Text="Add new group" Margin="10" Command="{Binding NewGroupCommand}"/>
+                    <Button Text="Join group" Margin="10" Command="{Binding JoinGroupCommand}"/>
+                </StackLayout>
             </StackLayout>
         </Grid>
     </ContentPage.Content>
-</ContentPage>
+</ContentPage>  

@@ -44,11 +44,11 @@ namespace Accountant.APP.ViewModels
 
             try
             {
-                var result = await _dialogService.ShowPromptAsync("Add new category", "What should be the category's name?", "Next", "Cancel", "Category name");
+                var result = await _dialogService.ShowPromptAsync("What should be the category's name?", "Add new category", "Next", "Cancel", "Category name");
                 if (result.Ok)
                 {
                     var category = new Category { Name = result.Text };
-                    var descResult = await _dialogService.ShowPromptAsync("Add new category", "Do you want to add a description?", "Add", "Add without description");
+                    var descResult = await _dialogService.ShowPromptAsync("Do you want to add a description?", "Add new category", "Add", "Add without description");
                     if (descResult.Ok)
                     {
                         category.Description = descResult.Text;

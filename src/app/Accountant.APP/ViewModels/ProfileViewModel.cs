@@ -8,6 +8,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -66,7 +67,9 @@ namespace Accountant.APP.ViewModels
 
         public ICommand LogoutCommand => new Command(async () => await LogoutAsync());
         public ICommand NewGroupCommand => new Command(async () => await NewGroupAsync());
+        public ICommand JoinGroupCommand => new Command(async () => await JoinGroupAsync());
         public ICommand DeleteGroupCommand => new Command<Group>(async g => await DeleteGroupAsync(g));
+        public ICommand EditGroupCommand => new Command<Group>(async g => await EditGroupAsync(g));
 
         private async Task LogoutAsync()
         {
@@ -84,7 +87,7 @@ namespace Accountant.APP.ViewModels
 
             try
             {
-                var result = await _dialogService.ShowPromptAsync("Add new group", "What should be the group's name?", "Add", "Cancel", "Group name");
+                var result = await _dialogService.ShowPromptAsync("What should be the group's name?", "Add new group", "Add", "Cancel", "Group name");
                 if (result.Ok)
                 {
                     var created = await _groupService.CreateGroupAsync(new Group()
@@ -93,9 +96,7 @@ namespace Accountant.APP.ViewModels
                     });
 
                     await _userGroupService.CreateUserGroupAsync(User.Id, created.Id);
-                    
-                    // Update Usergroups
-                    await InitializeAsync(null);
+                    await RefreshGroups();
                 }
             }
             catch (Exception ex)
@@ -106,7 +107,34 @@ namespace Accountant.APP.ViewModels
             {
                 IsBusy = false;
             }
+        }
 
+        private async Task JoinGroupAsync()
+        {
+            IsBusy = true;
+
+            try
+            {
+                var groups = await _groupService.GetGroupsAsync(Enumerable.Range(1, 3).ToArray());
+                var result = await _dialogService.ShowActionSheetAsync("Groups", "", "Cancel", null, groups.Select(g => g.Name).ToArray());
+                if (result != "Cancel")
+                {
+                    var group = groups.SingleOrDefault(g => g.Name == result);
+                    if (group != null)
+                    {
+                        await _userGroupService.CreateUserGroupAsync(_settingsService.UserId.Value, group.Id);
+                        await RefreshGroups();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await _dialogService.ShowAlertAsync($"{ex}", "Cannot join group.", "Hmm");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         private async Task DeleteGroupAsync(Group group)
@@ -115,9 +143,12 @@ namespace Accountant.APP.ViewModels
 
             try
             {
-                var result = await _dialogService.ShowConfirmAsync("Are you sure?", $"Do you really want to delete group {group.Name}", "Yes, confirm", "No");
+                var result = await _dialogService.ShowConfirmAsync($"Do you really want to delete group '{group.Name}'", "Are you sure?", "Yes, confirm", "No");
                 if (result)
+                {
                     await _groupService.DeleteGroupAsync(group.Id);
+                    await RefreshGroups();
+                }
             }
             catch (Exception ex)
             {
@@ -128,6 +159,32 @@ namespace Accountant.APP.ViewModels
                 IsBusy = false;
             }
         }
+
+        private async Task EditGroupAsync(Group group)
+        {
+            IsBusy = true;
+
+            try
+            {
+
+                var result = await _dialogService.ShowPromptAsync("What should be the group's name?", $"Edit group '{group.Name}'.", "Add", "Cancel", $"{group.Name}");
+                if (result.Ok)
+                {
+                    group.Name = result.Text;
+                    await _groupService.UpdateGroupAsync(group);
+                    await RefreshGroups();
+                }
+            }
+            catch (Exception ex)
+            {
+                await _dialogService.ShowAlertAsync($"{ex}", "Cannot edit group.", "Hmm");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+
+        }
         
         public override async Task InitializeAsync(object navigationData)
         {
@@ -135,14 +192,7 @@ namespace Accountant.APP.ViewModels
 
             try
             {
-                User = await _userService.GetUserAsync(_settingsService.UserId.Value);
-                UserGroups = User.Groups;
-
-                var settingsGroupId = _settingsService.GroupId;
-                if (settingsGroupId != null)
-                {
-                    SelectedGroup = UserGroups.FirstOrDefault(g => g.Id == settingsGroupId);
-                }
+                await RefreshGroups();
             }
             catch (Exception ex)
             {
@@ -151,6 +201,18 @@ namespace Accountant.APP.ViewModels
             }
 
             IsBusy = false;
+        }
+
+        private async Task RefreshGroups()
+        {
+            User = await _userService.GetUserAsync(_settingsService.UserId.Value);
+            UserGroups = User.Groups;
+
+            var settingsGroupId = _settingsService.GroupId;
+            if (settingsGroupId != null)
+            {
+                SelectedGroup = UserGroups.FirstOrDefault(g => g.Id == settingsGroupId);
+            }
         }
     }
 }

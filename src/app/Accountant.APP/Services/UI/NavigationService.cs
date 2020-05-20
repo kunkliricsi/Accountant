@@ -31,10 +31,10 @@ namespace eShopOnContainers.Services
 
         public Task InitializeAsync()
         {
-            //if (string.IsNullOrEmpty(_settingsService.AuthToken))
+            if (string.IsNullOrEmpty(_settingsService.AuthToken))
                 return NavigateToAsync<LoginViewModel>();
-            //else
-                //return NavigateToAsync<MainViewModel>();
+            else
+                return NavigateToAsync<MainViewModel>();
         }
 
         public Task NavigateToAsync<TViewModel>() where TViewModel : ViewModelBase
