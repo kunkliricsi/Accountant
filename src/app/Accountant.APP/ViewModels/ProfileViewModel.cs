@@ -115,7 +115,8 @@ namespace Accountant.APP.ViewModels
 
             try
             {
-                var groups = await _groupService.GetGroupsAsync(Enumerable.Range(1, 3).ToArray());
+                // Ugly hack...
+                var groups = await _groupService.GetGroupsAsync(Enumerable.Range(1, 100).ToArray());
                 var result = await _dialogService.ShowActionSheetAsync("Groups", "", "Cancel", null, groups.Select(g => g.Name).ToArray());
                 if (result != "Cancel")
                 {
