@@ -8,9 +8,5 @@ namespace Accountant.APP.ViewModels
 {
     public class ShoppingListViewModel : ViewModelBase
     {
-        public override async Task InitializeAsync(object navigationData)
-        {
-
-        }
     }
 }

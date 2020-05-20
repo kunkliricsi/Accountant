@@ -11,6 +11,7 @@ namespace Accountant.APP.Services.Settings
         private const string _UserId = "user_id";
         private const string _GroupId = "group_id";
 
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         public string AuthToken
         {
             get => GetValueOrDefaultInternal(_AccessToken, string.Empty);
@@ -28,6 +29,7 @@ namespace Accountant.APP.Services.Settings
             get => GetValueOrDefaultInternal<int?>(_GroupId);
             set => AddOrUpdateValueInternal(_GroupId, value);
         }
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
         async Task AddOrUpdateValueInternal<T>(string key, T value)
         {

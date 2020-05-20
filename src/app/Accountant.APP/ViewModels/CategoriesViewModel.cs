@@ -36,9 +36,11 @@ namespace Accountant.APP.ViewModels
             set => Set(ref _categories, value);
         }
 
-        public ICommand AddCategoryCommand => new Command(async () => await AddCategory());
+        public ICommand AddCategoryCommand => new Command(async () => await AddCategoryAsync());
+        public ICommand EditCategoryCommand => new Command<Category>(async c => await EditCategoryAsync(c));
+        public ICommand DeleteCategoryCommand => new Command<Category>(async c => await DeleteCategoryAsync(c));
 
-        private async Task AddCategory()
+        private async Task AddCategoryAsync()
         {
             IsBusy = true;
 
@@ -67,7 +69,65 @@ namespace Accountant.APP.ViewModels
             }
         }
 
-        public override async Task InitializeAsync(object navigationData)
+        private async Task EditCategoryAsync(Category category)
+        {
+            IsBusy = true;
+
+            try
+            {
+                var result = await _dialogService.ShowPromptAsync("What should be the category's name?", $"Edit category '{category.Name}'.", "OK", "Cancel", $"{category.Name}");
+                if (result.Ok)
+                {
+                    category.Name = result.Text;
+                    var descResult = await _dialogService.ShowPromptAsync("Do you want to add a description?", "Edit description", "OK", "NO description change");
+                    if (descResult.Ok)
+                    {
+                        category.Description = descResult.Text;
+                    }
+
+                    await _categoryService.UpdateCategoryAsync(category);
+                    await RefrestCategories();
+                }
+            }
+            catch (Exception ex)
+            {
+                await _dialogService.ShowAlertAsync($"{ex}", "Could not edit category", "Hmm");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        private async Task DeleteCategoryAsync(Category category)
+        {
+            IsBusy = true;
+
+            try
+            {
+                var result = await _dialogService.ShowConfirmAsync($"Do you really want to delete category '{category.Name}'", "Are you sure?", "Yes, confirm", "No");
+                if (result)
+                {
+                    await _categoryService.DeleteCategoryAsync(category.Id);
+                    await RefrestCategories();
+                }
+            }
+            catch (Exception ex)
+            {
+                await _dialogService.ShowAlertAsync($"{ex}", "Could not delete category", "Hmm");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        public override Task InitializeAsync(object navigationData)
+        {
+            return RefrestCategories();
+        }
+
+        private async Task RefrestCategories()
         {
             IsBusy = true;
             Categories = await _categoryService.GetAllCategoriesAsync();

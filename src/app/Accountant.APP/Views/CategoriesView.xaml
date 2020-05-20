@@ -5,13 +5,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Accountant.APP.Views.CategoriesView"
+             xmlns:templates="clr-namespace:Accountant.APP.Views.Templates"
             xmlns:viewModelBase="clr-namespace:Accountant.APP.ViewModels.Base"
-            viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+            viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+             x:Name="CategoriesViewName">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Categories"
-                VerticalOptions="CenterAndExpand" 
+            <Label Text="Categories" FontSize="Title"
+                VerticalOptions="Start" 
                 HorizontalOptions="CenterAndExpand" />
+            <ListView ItemsSource="{Binding Categories}" SelectionMode="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell Height="30">
+                            <ViewCell.ContextActions>
+                                <MenuItem Command="{Binding Path=BindingContext.EditCategoryCommand, Source={x:Reference CategoriesViewName}}"
+                                              CommandParameter="{Binding .}"
+                                              Text="Edit"/>
+                                <MenuItem Command="{Binding Path=BindingContext.DeleteCategoryCommand, Source={x:Reference CategoriesViewName}}"
+                                              CommandParameter="{Binding .}"
+                                              Text="Delete" IsDestructive="True" />
+                            </ViewCell.ContextActions>
+                            <templates:CategoryTemplate/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="Add new category" Command="{Binding AddCategoryCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

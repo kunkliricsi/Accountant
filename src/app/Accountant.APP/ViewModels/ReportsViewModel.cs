@@ -8,9 +8,5 @@ namespace Accountant.APP.ViewModels
 {
     public class ReportsViewModel : ViewModelBase
     {
-        public override async Task InitializeAsync(object navigationData)
-        {
-
-        }
     }
 }

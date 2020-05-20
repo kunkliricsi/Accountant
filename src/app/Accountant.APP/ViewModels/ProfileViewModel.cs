@@ -167,7 +167,6 @@ namespace Accountant.APP.ViewModels
 
             try
             {
-
                 var result = await _dialogService.ShowPromptAsync("What should be the group's name?", $"Edit group '{group.Name}'.", "Add", "Cancel", $"{group.Name}");
                 if (result.Ok)
                 {
