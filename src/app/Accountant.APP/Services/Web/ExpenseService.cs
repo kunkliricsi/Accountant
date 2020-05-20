@@ -1,4 +1,4 @@
-﻿using Accountant.APP.Models;
+﻿using Accountant.APP.Models.Web;
 using Accountant.APP.Services.Web.Interfaces;
 using Accountant.APP.Services.Web.Providers;
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ namespace Accountant.APP.Services.Web
 
         public Task<ICollection<Expense>> GetExpensesAsync(params int[] reportIds)
         {
-            return _clientFactory.CreateClient().GetAllAsync(reportIds);
+            return _clientFactory.CreateClient().GetAllExpensesAsync(reportIds);
         }
 
         public Task UpdateExpenseAsync(Expense expense)

@@ -3,6 +3,7 @@ using Accountant.API.DTOs.UserModels;
 using Accountant.BLL.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -40,6 +41,7 @@ namespace Accountant.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
+        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
         public async Task<IActionResult> LoginAsync([FromBody] LoginModel model)
         {
             _logger.LogInformation($"Authenticating user [{model.Name}] with password [*******]...");
@@ -62,16 +64,18 @@ namespace Accountant.API.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
-            return Ok(new
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Token = tokenString
-            });
+            return Ok(
+                new
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Token = tokenString
+                });
         }
 
         [AllowAnonymous]
         [HttpPost("register")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> RegisterAsync([FromBody] UpdateModel user)
         {
             _logger.LogInformation($"Registering user [{user.Name}]...");
@@ -86,15 +90,17 @@ namespace Accountant.API.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<ActionResult<List<User>>> GetAllAsync([FromQuery(Name = "groupId")] int[] groupIds)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<User>>> GetAllUsersAsync([FromQuery(Name = "groupId")] int[] groupIds)
         {
             _logger.LogInformation($"Getting all users in group(s): {string.Join(", ", groupIds)}.");
 
             return _mapper.Map<List<User>>(await _service.GetUsersAsync(groupIds));
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetAsync(int id)
+        [HttpGet("{id}", Name = "GetUser")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<User>> GetUserAsync(int id)
         {
             _logger.LogInformation($"Getting user [{id}]...");
 
@@ -102,6 +108,7 @@ namespace Accountant.API.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> PutAsync([FromBody] UpdateModel user)
         {
             _logger.LogInformation($"Updating user [{user.Name}]...");
@@ -114,6 +121,7 @@ namespace Accountant.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             _logger.LogInformation($"Deleting user [{id}]...");

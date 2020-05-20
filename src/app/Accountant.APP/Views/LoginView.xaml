@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Accountant.APP.Views.LoginView"
+            xmlns:viewModelBase="clr-namespace:Accountant.APP.ViewModels.Base"
+            viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <ContentPage.Content>
+        <Grid VerticalOptions="Start">
+            <ActivityIndicator      
+                    Color="Black"
+                    IsRunning="{Binding IsBusy}"
+                    IsVisible="{Binding IsBusy}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    WidthRequest="100"/>
+            <StackLayout>
+                <StackLayout Margin="100"
+                    VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+                    <Entry Placeholder="Username" Text="{Binding Username}"/>
+                    <Entry Placeholder="Password" Text="{Binding Password}" IsPassword="True"/>
+                    <StackLayout Orientation="Horizontal" 
+                                 HorizontalOptions="Center"
+                                 Spacing="10">
+                        <Button Text="Login" Command="{Binding LoginCommand}"/>
+                        <Button Text="Register" Command="{Binding RegisterCommand}"/>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

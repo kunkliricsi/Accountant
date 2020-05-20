@@ -7,12 +7,26 @@ namespace Accountant.APP.Services.Settings
 {
     public class SettingsService : ISettingsService
     {
-        private const string AccessToken = "access_token";
+        private const string _AccessToken = "access_token";
+        private const string _UserId = "user_id";
+        private const string _GroupId = "group_id";
 
         public string AuthToken
         {
-            get => GetValueOrDefaultInternal(AccessToken, string.Empty);
-            set => AddOrUpdateValueInternal(AccessToken, value);
+            get => GetValueOrDefaultInternal(_AccessToken, string.Empty);
+            set => AddOrUpdateValueInternal(_AccessToken, value);
+        }
+
+        public int? UserId
+        {
+            get => GetValueOrDefaultInternal<int?>(_UserId);
+            set => AddOrUpdateValueInternal(_UserId, value);
+        }
+
+        public int? GroupId
+        {
+            get => GetValueOrDefaultInternal<int?>(_GroupId);
+            set => AddOrUpdateValueInternal(_GroupId, value);
         }
 
         async Task AddOrUpdateValueInternal<T>(string key, T value)

@@ -1,4 +1,4 @@
-﻿using Accountant.APP.Models;
+﻿using Accountant.APP.Models.Web;
 using System.Threading.Tasks;
 
 namespace Accountant.APP.Services.Web.Interfaces

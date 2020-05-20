@@ -1,5 +1,5 @@
-﻿using Accountant.APP.Models;
-using Accountant.APP.Models.Helpers;
+﻿using Accountant.APP.Models.Web;
+using Accountant.APP.Models.Web.Helpers;
 using Accountant.APP.Services.Web.Interfaces;
 using Accountant.APP.Services.Web.Providers;
 using System.Threading.Tasks;

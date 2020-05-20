@@ -2,6 +2,7 @@
 using Accountant.BLL.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -28,6 +29,7 @@ namespace Accountant.API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<User>> PostUserGroupAsync([FromBody] UserGroup userGroup)
         {
             _logger.LogInformation($"Creating user[{userGroup.UserId}] group[{userGroup.GroupId}] connection...");
@@ -36,6 +38,7 @@ namespace Accountant.API.Controllers
         }
 
         [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteUserGroupAsync([FromBody] UserGroup userGroup)
         {
             _logger.LogInformation($"Deleting user[{userGroup.UserId}] group[{userGroup.GroupId}] connection...");

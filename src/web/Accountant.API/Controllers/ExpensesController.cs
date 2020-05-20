@@ -2,6 +2,7 @@
 using Accountant.BLL.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -27,9 +28,9 @@ namespace Accountant.API.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        [Route("")]
-        public async Task<ActionResult<List<Expense>>> GetAllAsync([FromQuery(Name = "reportId")] int[] reportIds)
+        [HttpGet(Name = "GetAllExpenses")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<Expense>>> GetAllExpensesAsync([FromQuery(Name = "reportId")] int[] reportIds)
         {
             _logger.LogInformation($"Getting all expenses of report(s) with ID(s): [{string.Join(", ", reportIds)}]...");
 
@@ -37,6 +38,7 @@ namespace Accountant.API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<Expense>> PostAsync([FromBody] Expense expense)
         {
             _logger.LogInformation("Creating expense...");
@@ -47,11 +49,12 @@ namespace Accountant.API.Controllers
             _logger.LogInformation($"Created expense [{created.Id}].");
 
             return CreatedAtAction(
-                nameof(GetAllAsync),
+                "GetAllExpenses",
                 _mapper.Map<Expense>(created));
         }
 
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> PutAsync([FromBody] Expense expense)
         {
             _logger.LogInformation($"Updating expense [{expense.Id}]...");
@@ -63,6 +66,7 @@ namespace Accountant.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             _logger.LogInformation($"Deleting expense [{id}]...");

@@ -1,19 +1,20 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Accountant.APP.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CustomNavigationView : NavigationPage
+    public partial class ReportsView : ContentPage
     {
-        public CustomNavigationView() : base()
+        public ReportsView()
         {
             InitializeComponent();
-        }
-
-        public CustomNavigationView(Page root) : base(root)
-        {
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Accountant.APP.Models;
+﻿using Accountant.APP.Models.Web;
 using Accountant.APP.Services.Web.Interfaces;
 using Accountant.APP.Services.Web.Providers;
 using System;
@@ -29,12 +29,12 @@ namespace Accountant.APP.Services.Web
 
         public Task<Group> GetGroupAsync(int groupId)
         {
-            return _clientFactory.CreateClient().GetAsync(groupId);
+            return _clientFactory.CreateClient().GetGroupAsync(groupId);
         }
 
         public Task<ICollection<Group>> GetGroupsAsync(params int[] userIds)
         {
-            return _clientFactory.CreateClient().GetAllAsync(userIds);
+            return _clientFactory.CreateClient().GetAllGroupsAsync(userIds);
         }
 
         public Task UpdateGroupAsync(Group group)

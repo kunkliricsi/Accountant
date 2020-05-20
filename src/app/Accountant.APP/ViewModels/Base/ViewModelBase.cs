@@ -1,4 +1,6 @@
 ﻿using eShopOnContainers.Services;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Accountant.APP.ViewModels.Base
@@ -13,11 +15,7 @@ namespace Accountant.APP.ViewModels.Base
         public bool IsBusy
         {
             get =>_isBusy;
-            set
-            {
-                _isBusy = value;
-                RaisePropertyChanged(() => IsBusy);
-            }
+            set => Set(ref _isBusy, value);
         }
 
         public ViewModelBase()
@@ -29,6 +27,23 @@ namespace Accountant.APP.ViewModels.Base
         public virtual Task InitializeAsync(object navigationData)
         {
             return Task.FromResult(false);
+        }
+
+        protected bool Set<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+        {
+            return Set(propertyName, ref field, newValue);
+        }
+
+        private bool Set<T>(string propertyName, ref T field, T newValue)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, newValue))
+                return false;
+
+            field = newValue;
+
+            RaisePropertyChanged(propertyName);
+
+            return true;
         }
     }
 }

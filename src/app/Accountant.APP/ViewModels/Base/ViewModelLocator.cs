@@ -3,6 +3,7 @@ using Accountant.APP.Services.Settings.Interfaces;
 using Accountant.APP.Services.Web;
 using Accountant.APP.Services.Web.Interfaces;
 using Accountant.APP.Services.Web.Providers;
+using Accountant.APP.Views;
 using eShopOnContainers.Services;
 using System;
 using System.Globalization;
@@ -35,44 +36,26 @@ namespace Accountant.APP.ViewModels.Base
         {
             _container = new TinyIoCContainer();
 
-            // View models - by default, TinyIoC will register concrete classes as multi-instance.
-
-            //_container.Register<BasketViewModel>();
-            //_container.Register<CatalogViewModel>();
-            //_container.Register<CheckoutViewModel>();
-            //_container.Register<LoginViewModel>();
-            //_container.Register<MainViewModel>();
-            //_container.Register<OrderDetailViewModel>();
-            //_container.Register<ProfileViewModel>();
-            //_container.Register<SettingsViewModel>();
-            //_container.Register<CampaignViewModel>();
-            //_container.Register<CampaignDetailsViewModel>();
-
-            // Services - by default, TinyIoC will register interface registrations as singletons.
-
-            //_container.Register<INavigationService, NavigationService>();
-            //_container.Register<IDialogService, DialogService>();
-            //_container.Register<IOpenUrlService, OpenUrlService>();
-            //_container.Register<IIdentityService, IdentityService>();
-            //_container.Register<IRequestProvider, RequestProvider>();
-            //_container.Register<IDependencyService, Services.Dependency.DependencyService>();
-            //_container.Register<ISettingsService, SettingsService>();
-            //_container.Register<IFixUriService, FixUriService>();
-            //_container.Register<ILocationService, LocationService>();
-            //_container.Register<ICatalogService, CatalogMockService>();
-            //_container.Register<IBasketService, BasketMockService>();
-            //_container.Register<IOrderService, OrderMockService>();
-            //_container.Register<IUserService, UserMockService>();
+            // View models
+            _container.Register<CategoriesViewModel>();
+            _container.Register<ExpensesViewModel>();
+            _container.Register<GroupsViewModel>();
+            _container.Register<LoginViewModel>();
+            _container.Register<MainViewModel>();
+            _container.Register<ProfileViewModel>();
+            _container.Register<RegisterViewModel>();
+            _container.Register<ReportsViewModel>();
+            _container.Register<ShoppingListViewModel>();
 
             // Clients
-            _container.Register<HttpClient>();
-            _container.Register<ICategoriesClient, CategoriesClient>();
-            _container.Register<IExpensesClient, ExpensesClient>();
-            _container.Register<IGroupsClient, GroupsClient>();
-            _container.Register<IReportsClient, ReportsClient>();
-            _container.Register<IShoppingListsClient, ShoppingListsClient>();
-            _container.Register<IUserGroupClient, UserGroupClient>();
-            _container.Register<IUsersClient, UsersClient>();
+            _container.Register<HttpClient>().UsingConstructor(() => new HttpClient());
+            _container.Register<ICategoriesClient, CategoriesClient>().AsMultiInstance();
+            _container.Register<IExpensesClient, ExpensesClient>().AsMultiInstance();
+            _container.Register<IGroupsClient, GroupsClient>().AsMultiInstance();
+            _container.Register<IReportsClient, ReportsClient>().AsMultiInstance();
+            _container.Register<IShoppingListsClient, ShoppingListsClient>().AsMultiInstance();
+            _container.Register<IUserGroupClient, UserGroupClient>().AsMultiInstance();
+            _container.Register<IUsersClient, UsersClient>().AsMultiInstance();
 
             // Client Factory
             _container.Register(typeof(IServiceClientFactory<>), typeof(ServiceClientFactory<>)).AsMultiInstance();

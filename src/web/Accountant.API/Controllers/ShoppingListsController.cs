@@ -2,6 +2,7 @@
 using Accountant.BLL.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -27,8 +28,9 @@ namespace Accountant.API.Controllers
             _logger = logger;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ShoppingList>> GetAsync(int id)
+        [HttpGet("{id}", Name = "GetShoppingList")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<ShoppingList>> GetShoppingListAsync(int id)
         {
             _logger.LogInformation($"Getting shopping list [{id}]...");
 
@@ -36,6 +38,7 @@ namespace Accountant.API.Controllers
         }
 
         [HttpPost("{groupId}")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<ShoppingList>> PostAsync([FromBody] ShoppingList list, int groupId)
         {
             _logger.LogInformation("Creating shopping list...");
@@ -47,12 +50,13 @@ namespace Accountant.API.Controllers
             _logger.LogInformation($"Created shopping list [{created.Id}].");
 
             return CreatedAtAction(
-                nameof(GetAsync),
+                "Get",
                 new { id = created.Id },
                 _mapper.Map<ShoppingList>(created));
         }
 
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> PutAsync([FromBody] ShoppingList list)
         {
             _logger.LogInformation($"Updating shopping list [{list.Id}]...");
@@ -64,6 +68,7 @@ namespace Accountant.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             _logger.LogInformation($"Deleting shopping list [{id}]...");
@@ -74,6 +79,7 @@ namespace Accountant.API.Controllers
         }
 
         [HttpPost("items")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<ShoppingListItem>> PostAsync([FromBody] ShoppingListItem listItem)
         {
             _logger.LogInformation($"Creating shopping list item...");
@@ -84,12 +90,13 @@ namespace Accountant.API.Controllers
             _logger.LogInformation($"Created shopping list item [{created.Id}].");
 
             return CreatedAtAction(
-                nameof(GetAsync),
+                "GetShoppingList",
                 new { id = created.ShoppingListId },
                 _mapper.Map<ShoppingListItem>(created));
         }
 
         [HttpPut("items")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> PutAsync([FromBody] ShoppingListItem listItem)
         {
             _logger.LogInformation($"Updating shopping list item [{listItem.Id}]...");
@@ -101,6 +108,7 @@ namespace Accountant.API.Controllers
         }
 
         [HttpDelete("items/{itemId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteItemAsync(int itemId)
         {
             _logger.LogInformation($"Deleting shopping list item [{itemId}]...");

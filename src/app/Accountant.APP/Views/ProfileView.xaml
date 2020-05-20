@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Accountant.APP.Views.ProfileView"
+             xmlns:behaviors="clr-namespace:Accountant.APP.Behaviors"
+             xmlns:templates="clr-namespace:Accountant.APP.Views.Templates"
+            xmlns:viewModelBase="clr-namespace:Accountant.APP.ViewModels.Base"
+            viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <ContentPage.Content>
+        <Grid>
+            <ActivityIndicator      
+                    Color="Black"
+                    IsRunning="{Binding IsBusy}"
+                    IsVisible="{Binding IsBusy}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    WidthRequest="200"/>
+            <StackLayout VerticalOptions="Start">
+                <StackLayout VerticalOptions="Start" Margin="50" Orientation="Horizontal">
+                    <Label Grid.Column="1" Text="Username: "/>
+                    <Label Grid.Column="2" Text="{Binding User.Name, Mode=OneWay}"/>
+                </StackLayout>
+                <Button HorizontalOptions="Fill" Margin="10"
+                    Text="Logout" Command="{Binding LogoutCommand}"/>
+                <Label Text="Groups" FontSize="Large" HorizontalOptions="Center"/>
+                <ListView HorizontalOptions="Center" ItemsSource="{Binding UserGroups}"
+                          SelectedItem="{Binding SelectedGroup}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <SwipeView>
+                                    <SwipeView.LeftItems>
+                                        <SwipeItem Text="Delete"
+                                                   Command="{Binding DeleteGroupCommand}"
+                                                   CommandParameter="{Binding .}"/>
+                                    </SwipeView.LeftItems>
+                                    <templates:GroupTemplate/>
+                                </SwipeView>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Text="Add new group" Margin="10" Command="{Binding NewGroupCommand}"/>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

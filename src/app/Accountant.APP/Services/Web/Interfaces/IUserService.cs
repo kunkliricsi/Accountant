@@ -1,5 +1,5 @@
-﻿using Accountant.APP.Models;
-using Accountant.APP.Models.Helpers;
+﻿using Accountant.APP.Models.Web;
+using Accountant.APP.Models.Web.Helpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,7 +7,7 @@ namespace Accountant.APP.Services.Web.Interfaces
 {
     public interface IUserService
     {
-        Task AuthenticateUserAsync(string username, string password);
+        Task<UserToken> AuthenticateUserAsync(string username, string password);
         Task<User> GetUserAsync(int userId);
         Task<ICollection<User>> GetUsersAsync(params int[] groupIds);
         Task CreateUserAsync(UpdateModel user);

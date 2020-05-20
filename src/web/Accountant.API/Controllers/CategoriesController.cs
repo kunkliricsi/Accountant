@@ -2,6 +2,7 @@
 using Accountant.BLL.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -25,8 +26,9 @@ namespace Accountant.API.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<Category>>> GetAllAsync()
+        [HttpGet(Name = "GetAllCategories")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<Category>>> GetAllCategoriesAsync()
         {
             _logger.LogInformation("Getting all categories...");
 
@@ -34,6 +36,7 @@ namespace Accountant.API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<Category>> PostAsync([FromBody] Category category)
         {
             _logger.LogInformation("Creating category...");
@@ -44,11 +47,12 @@ namespace Accountant.API.Controllers
             _logger.LogInformation($"Created category [{created.Id}].");
 
             return CreatedAtAction(
-                nameof(GetAllAsync),
+                "GetAllCategories",
                 _mapper.Map<Category>(created));
         }
 
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> PutAsync([FromBody] Category category)
         {
             _logger.LogInformation($"Updating category [{category.Id}]...");
@@ -60,6 +64,7 @@ namespace Accountant.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             _logger.LogInformation($"Deleting category [{id}]...");

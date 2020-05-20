@@ -1,4 +1,4 @@
-﻿using Accountant.APP.Models;
+﻿using Accountant.APP.Models.Web;
 using Accountant.APP.Services.Web.Interfaces;
 using Accountant.APP.Services.Web.Providers;
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ namespace Accountant.APP.Services.Web
 
         public Task<ICollection<Category>> GetAllCategoriesAsync()
         {
-            return _clientFactory.CreateClient().GetAllAsync();
+            return _clientFactory.CreateClient().GetAllCategoriesAsync();
         }
 
         public Task UpdateCategoryAsync(Category category)

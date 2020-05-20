@@ -1,4 +1,4 @@
-﻿using Accountant.APP.Models;
+﻿using Accountant.APP.Models.Web;
 using Accountant.APP.Services.Web.Interfaces;
 using Accountant.APP.Services.Web.Providers;
 using System;
@@ -39,7 +39,7 @@ namespace Accountant.APP.Services.Web
 
         public Task<ShoppingList> GetShoppingListAsync(int shoppingListId)
         {
-            return _clientFactory.CreateClient().GetAsync(shoppingListId);
+            return _clientFactory.CreateClient().GetShoppingListAsync(shoppingListId);
         }
 
         public Task UpdateShoppingListAsync(ShoppingList shoppingList)

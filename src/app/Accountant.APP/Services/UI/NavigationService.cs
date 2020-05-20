@@ -1,4 +1,5 @@
 ﻿using Accountant.APP.Services.Settings.Interfaces;
+using Accountant.APP.ViewModels;
 using Accountant.APP.ViewModels.Base;
 using Accountant.APP.Views;
 using System;
@@ -17,7 +18,7 @@ namespace eShopOnContainers.Services
         {
             get
             {
-                var mainPage = Application.Current.MainPage as CustomNavigationView;
+                var mainPage = Application.Current.MainPage as NavigationPage;
                 var viewModel = mainPage.Navigation.NavigationStack[mainPage.Navigation.NavigationStack.Count - 2].BindingContext;
                 return viewModel as ViewModelBase;
             }
@@ -30,10 +31,10 @@ namespace eShopOnContainers.Services
 
         public Task InitializeAsync()
         {
-            if (string.IsNullOrEmpty(_settingsService.AuthToken))
+            //if (string.IsNullOrEmpty(_settingsService.AuthToken))
                 return NavigateToAsync<LoginViewModel>();
-            else
-                return NavigateToAsync<MainViewModel>();
+            //else
+                //return NavigateToAsync<MainViewModel>();
         }
 
         public Task NavigateToAsync<TViewModel>() where TViewModel : ViewModelBase
@@ -48,9 +49,7 @@ namespace eShopOnContainers.Services
 
         public Task RemoveLastFromBackStackAsync()
         {
-            var mainPage = Application.Current.MainPage as CustomNavigationView;
-
-            if (mainPage != null)
+            if (Application.Current.MainPage is NavigationPage mainPage)
             {
                 mainPage.Navigation.RemovePage(
                     mainPage.Navigation.NavigationStack[mainPage.Navigation.NavigationStack.Count - 2]);
@@ -61,9 +60,7 @@ namespace eShopOnContainers.Services
 
         public Task RemoveBackStackAsync()
         {
-            var mainPage = Application.Current.MainPage as CustomNavigationView;
-
-            if (mainPage != null)
+            if (Application.Current.MainPage is NavigationPage mainPage)
             {
                 for (int i = 0; i < mainPage.Navigation.NavigationStack.Count - 1; i++)
                 {
@@ -81,18 +78,17 @@ namespace eShopOnContainers.Services
 
             if (page is LoginView)
             {
-                Application.Current.MainPage = new CustomNavigationView(page);
+                Application.Current.MainPage = new NavigationPage(page);
             }
             else
             {
-                var navigationPage = Application.Current.MainPage as CustomNavigationView;
-                if (navigationPage != null)
+                if (Application.Current.MainPage is NavigationPage navigationPage)
                 {
                     await navigationPage.PushAsync(page);
                 }
                 else
                 {
-                    Application.Current.MainPage = new CustomNavigationView(page);
+                    Application.Current.MainPage = new NavigationPage(page);
                 }
             }
 
@@ -110,11 +106,8 @@ namespace eShopOnContainers.Services
 
         private Page CreatePage(Type viewModelType, object parameter)
         {
-            Type pageType = GetPageTypeForViewModel(viewModelType);
-            if (pageType == null)
-            {
-                throw new Exception($"Cannot locate page type for {viewModelType}");
-            }
+            var pageType = GetPageTypeForViewModel(viewModelType)
+                ?? throw new Exception($"Cannot locate page type for {viewModelType}");
 
             Page page = Activator.CreateInstance(pageType) as Page;
             return page;

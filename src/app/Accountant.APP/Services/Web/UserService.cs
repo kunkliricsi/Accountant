@@ -1,10 +1,10 @@
-﻿using Accountant.APP.Models;
-using Accountant.APP.Models.Helpers;
+﻿using Accountant.APP.Extensions;
+using Accountant.APP.Models.Web;
+using Accountant.APP.Models.Web.Helpers;
 using Accountant.APP.Services.Web.Interfaces;
 using Accountant.APP.Services.Web.Providers;
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Accountant.APP.Services.Web
@@ -18,10 +18,12 @@ namespace Accountant.APP.Services.Web
             _clientFactory = clientFactory;
         }
 
-        public Task AuthenticateUserAsync(string username, string password)
+        public async Task<UserToken> AuthenticateUserAsync(string username, string password)
         {
-            return _clientFactory.CreateClient().LoginAsync(new LoginModel { Name = username, Password = password });
-        }
+            var response = await _clientFactory.CreateClient().LoginAsync(new LoginModel { Name = username, Password = password });
+            //var result = await response.Stream.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<UserToken>(response.ToString());
+        }                                                         
 
         public Task CreateUserAsync(UpdateModel user)
         {
@@ -35,12 +37,12 @@ namespace Accountant.APP.Services.Web
 
         public Task<User> GetUserAsync(int userId)
         {
-            return _clientFactory.CreateClient().GetAsync(userId);
+            return _clientFactory.CreateClient().GetUserAsync(userId);
         }
 
         public Task<ICollection<User>> GetUsersAsync(params int[] groupIds)
         {
-            return _clientFactory.CreateClient().GetAllAsync(groupIds);
+            return _clientFactory.CreateClient().GetAllUsersAsync(groupIds);
         }
 
         public Task UpdateUserAsync(UpdateModel user)
