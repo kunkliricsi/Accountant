@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Accountant.APP.Views
+namespace Accountant.APP.Views.Templates
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class GroupsView : ContentPage
+    public partial class ReportTemplate : ContentView
     {
-        public GroupsView()
+        public ReportTemplate()
         {
             InitializeComponent();
         }

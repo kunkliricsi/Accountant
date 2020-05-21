@@ -68,6 +68,7 @@ namespace Accountant.APP.ViewModels
         public ICommand LogoutCommand => new Command(async () => await LogoutAsync());
         public ICommand NewGroupCommand => new Command(async () => await NewGroupAsync());
         public ICommand JoinGroupCommand => new Command(async () => await JoinGroupAsync());
+        public ICommand LeaveGroupCommand => new Command(async () => await LeaveGroupAsync());
         public ICommand DeleteGroupCommand => new Command<Group>(async g => await DeleteGroupAsync(g));
         public ICommand EditGroupCommand => new Command<Group>(async g => await EditGroupAsync(g));
 
@@ -117,13 +118,50 @@ namespace Accountant.APP.ViewModels
             {
                 // Ugly hack...
                 var groups = await _groupService.GetGroupsAsync(Enumerable.Range(1, 100).ToArray());
-                var result = await _dialogService.ShowActionSheetAsync("Groups", "", "Cancel", null, groups.Select(g => g.Name).ToArray());
+                var result = await _dialogService.ShowActionSheetAsync("Join group", "", "Cancel", null, 
+                    groups.Where(ag => !UserGroups.Any(g => g.Id == ag.Id))
+                        .Select(g => g.Name)
+                        .ToArray());
+
                 if (result != "Cancel")
                 {
                     var group = groups.SingleOrDefault(g => g.Name == result);
                     if (group != null)
                     {
                         await _userGroupService.CreateUserGroupAsync(_settingsService.UserId.Value, group.Id);
+                        await RefreshGroups();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await _dialogService.ShowAlertAsync($"{ex}", "Cannot join group.", "Hmm");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        private async Task LeaveGroupAsync()
+        {
+            IsBusy = true;
+
+            try
+            {
+                // Ugly hack...
+                var groups = await _groupService.GetGroupsAsync(Enumerable.Range(1, 100).ToArray());
+                var result = await _dialogService.ShowActionSheetAsync("Leave group", "", "Cancel", null,
+                    groups.Where(ag => UserGroups.Any(g => g.Id == ag.Id))
+                        .Select(g => g.Name)
+                        .ToArray());
+
+                if (result != "Cancel")
+                {
+                    var group = groups.SingleOrDefault(g => g.Name == result);
+                    if (group != null)
+                    {
+                        await _userGroupService.DeleteUserGroupAsync(_settingsService.UserId.Value, group.Id);
                         await RefreshGroups();
                     }
                 }

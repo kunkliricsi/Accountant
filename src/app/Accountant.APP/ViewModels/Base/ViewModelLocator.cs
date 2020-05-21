@@ -39,7 +39,6 @@ namespace Accountant.APP.ViewModels.Base
             // View models
             _container.Register<CategoriesViewModel>();
             _container.Register<ExpensesViewModel>();
-            _container.Register<GroupsViewModel>();
             _container.Register<LoginViewModel>();
             _container.Register<MainViewModel>();
             _container.Register<ProfileViewModel>();

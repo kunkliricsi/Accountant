@@ -3,7 +3,6 @@
     public enum Tabs
     {
         Categories,
-        Groups,
         Reports,
         Expenses,
         ShoppingList,

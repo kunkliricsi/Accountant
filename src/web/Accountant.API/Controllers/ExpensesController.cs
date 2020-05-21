@@ -1,4 +1,5 @@
 ﻿using Accountant.API.DTOs;
+using Accountant.API.DTOs.AddOrUpdateModels;
 using Accountant.BLL.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -39,7 +40,7 @@ namespace Accountant.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<Expense>> PostAsync([FromBody] Expense expense)
+        public async Task<ActionResult<Expense>> PostAsync([FromBody] AddExpenseModel expense)
         {
             _logger.LogInformation("Creating expense...");
 
@@ -55,7 +56,7 @@ namespace Accountant.API.Controllers
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> PutAsync([FromBody] Expense expense)
+        public async Task<IActionResult> PutAsync([FromBody] UpdateExpenseModel expense)
         {
             _logger.LogInformation($"Updating expense [{expense.Id}]...");
 

@@ -7,8 +7,9 @@
              x:Class="Accountant.APP.Views.Templates.CategoryTemplate">
   <ContentView.Content>
       <StackLayout Margin="5" Padding="5" Orientation="Horizontal">
-            <Label Text="{Binding Name}" VerticalTextAlignment="Start"/>
-            <Label Text="{Binding Description}" FontSize="Small" VerticalTextAlignment="End"/>
+            <Label Text="{Binding Name}" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"/>
+            <Label Text=":" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+            <Label Text="{Binding Description}" FontSize="Small" VerticalTextAlignment="Center" HorizontalTextAlignment="End"/>
         </StackLayout>
   </ContentView.Content>
 </ContentView>

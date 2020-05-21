@@ -31,7 +31,8 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Text="Add new category" Command="{Binding AddCategoryCommand}"/>
+            <Button Text="Add new category" Margin="10"
+                    Command="{Binding AddCategoryCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

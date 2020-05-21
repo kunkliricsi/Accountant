@@ -45,6 +45,10 @@ namespace Accountant.API.AutoMapper
                 .ReverseMap();
 
             CreateMap<User, DTOs.UserModels.UpdateModel>().ReverseMap();
+            CreateMap<Expense, DTOs.AddOrUpdateModels.AddExpenseModel>().ReverseMap();
+            CreateMap<Expense, DTOs.AddOrUpdateModels.UpdateExpenseModel>().ReverseMap();
+            CreateMap<Report, DTOs.AddOrUpdateModels.AddReportModel>().ReverseMap();
+            CreateMap<Report, DTOs.AddOrUpdateModels.UpdateReportModel>().ReverseMap();
         }
     }
 }

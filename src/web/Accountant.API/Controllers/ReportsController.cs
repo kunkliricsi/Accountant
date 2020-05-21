@@ -1,4 +1,5 @@
 ﻿using Accountant.API.DTOs;
+using Accountant.API.DTOs.AddOrUpdateModels;
 using Accountant.BLL.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -57,7 +58,7 @@ namespace Accountant.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<Report>> PostCurrentAsync(Report report)
+        public async Task<ActionResult<Report>> PostAsync(AddReportModel report)
         {
             _logger.LogInformation("Creating report...");
 
@@ -74,7 +75,7 @@ namespace Accountant.API.Controllers
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> PutAsync(Report report)
+        public async Task<IActionResult> PutAsync(UpdateReportModel report)
         {
             _logger.LogInformation($"Updating report [{report.Id}]...");
 

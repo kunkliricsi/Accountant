@@ -42,9 +42,14 @@ namespace Accountant.BLL.Services
         {
             var (user, group) = await GetUserAndGroupAsync(userId, groupId);
 
-            foreach (var ug in user.UserGroups.Where(ug => ug.Group == group))
+            var userGroups = user.UserGroups.Where(ug => ug.Group == group).ToList();
+
+            if (userGroups.Any())
             {
-                user.UserGroups.Remove(ug);
+                foreach (var ug in userGroups)
+                {
+                    user.UserGroups.Remove(ug);
+                }
 
                 _context.Users.Update(user);
                 await _context.SaveChangesAsync();
