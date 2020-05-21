@@ -7,7 +7,7 @@
              x:Class="Accountant.APP.Views.Templates.ReportTemplate">
   <ContentView.Content>
       <StackLayout BackgroundColor="Gray">
-          <Label Text="{Binding Id}" />
+          <Label Text="{Binding Id}" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
       </StackLayout>
   </ContentView.Content>
 </ContentView>

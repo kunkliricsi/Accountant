@@ -46,6 +46,8 @@ namespace Accountant.BLL.Services
                     .ThenInclude(e => e.Category)
                 .Include(r => r.Expenses)
                     .ThenInclude(e => e.User)
+                .Include(r => r.Expenses)
+                    .ThenInclude(e => e.Report)
                 .Where(r => reportIds.Contains(r.Id))
                 .SelectMany(r => r.Expenses)
                 .Distinct()

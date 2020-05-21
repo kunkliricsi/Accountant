@@ -15,7 +15,6 @@
     <views:ProfileView Title="Profile" x:Name="ProfileView"/>
     <views:CategoriesView Title="Categories" x:Name="CategoriesView"/>
     <views:ReportsView Title="Reports" x:Name="ReportsView"/>
-    <views:ExpensesView Title="Expenses" x:Name="ExpensesView"/>
     <views:ShoppingListView Title="Shopping List" x:Name="ShoppingListView"/>
 
 </TabbedPage>

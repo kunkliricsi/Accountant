@@ -36,9 +36,6 @@ namespace Accountant.APP.Views
                     case Tabs.Categories:
                         CurrentPage = CategoriesView;
                         break;
-                    case Tabs.Expenses:
-                        CurrentPage = ExpensesView;
-                        break;
                     case Tabs.Profile:
                         CurrentPage = ProfileView;
                         break;
@@ -54,7 +51,6 @@ namespace Accountant.APP.Views
             await ((ReportsViewModel)ReportsView.BindingContext).InitializeAsync(null);
             await ((ShoppingListViewModel)ShoppingListView.BindingContext).InitializeAsync(null);
             await ((CategoriesViewModel)CategoriesView.BindingContext).InitializeAsync(null);
-            await ((ExpensesViewModel)ExpensesView.BindingContext).InitializeAsync(null);
             await ((ProfileViewModel)ProfileView.BindingContext).InitializeAsync(null);
         }
 

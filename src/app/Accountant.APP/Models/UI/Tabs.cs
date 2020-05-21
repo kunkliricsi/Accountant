@@ -4,7 +4,6 @@
     {
         Categories,
         Reports,
-        Expenses,
         ShoppingList,
         Profile,
     }

@@ -6,8 +6,11 @@ using eShopOnContainers.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Accountant.APP.ViewModels
 {
@@ -39,6 +42,13 @@ namespace Accountant.APP.ViewModels
             set => Set(ref _reports, value);
         }
 
+        public ICommand OpenReportCommand => new Command<Report>(async r => await OpenReportAsync(r));
+
+        private async Task OpenReportAsync(Report report)
+        {
+            await _navigationService.NavigateToAsync<ExpensesViewModel>(report.Id);
+        }
+
         public override async Task InitializeAsync(object navigationData)
         {
             IsBusy = true;
@@ -58,7 +68,10 @@ namespace Accountant.APP.ViewModels
 
         private async Task RefreshReports()
         {
-            Reports = await _reportService.GetReportsAsync(_settingsService.GroupId.Value);
+            var groupId = _settingsService.GroupId;
+
+            if (groupId.HasValue)
+                Reports = await _reportService.GetReportsAsync(groupId.Value);
         }
     }
 }
