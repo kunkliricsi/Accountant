@@ -1,4 +1,5 @@
 ﻿using Accountant.APP.Models.Web;
+using Accountant.APP.Models.Web.Helpers;
 using Accountant.APP.Services.Web.Interfaces;
 using Accountant.APP.Services.Web.Providers;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Accountant.APP.Services.Web
             _clientFactory = clientFactory;
         }
 
-        public Task<Expense> CreateExpenseAsync(Expense expense)
+        public Task<Expense> CreateExpenseAsync(AddExpenseModel expense)
         {
             return _clientFactory.CreateClient().PostAsync(expense);
         }
@@ -30,7 +31,7 @@ namespace Accountant.APP.Services.Web
             return _clientFactory.CreateClient().GetAllExpensesAsync(reportIds);
         }
 
-        public Task UpdateExpenseAsync(Expense expense)
+        public Task UpdateExpenseAsync(UpdateExpenseModel expense)
         {
             return _clientFactory.CreateClient().PutAsync(expense);
         }

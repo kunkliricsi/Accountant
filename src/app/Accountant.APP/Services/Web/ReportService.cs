@@ -1,4 +1,5 @@
 ﻿using Accountant.APP.Models.Web;
+using Accountant.APP.Models.Web.Helpers;
 using Accountant.APP.Services.Web.Interfaces;
 using Accountant.APP.Services.Web.Providers;
 using System;
@@ -17,9 +18,9 @@ namespace Accountant.APP.Services.Web
             _clientFactory = clientFactory;
         }
 
-        public Task<Report> CreateReportAsync(Report report)
+        public Task<Report> CreateReportAsync(AddReportModel report)
         {
-            return _clientFactory.CreateClient().PostCurrentAsync(report);
+            return _clientFactory.CreateClient().PostAsync(report);
         }
 
         public Task DeleteReportAsync(int reportId)
@@ -47,7 +48,7 @@ namespace Accountant.APP.Services.Web
             return _clientFactory.CreateClient().GetAllReportsAsync(groupId);
         }
 
-        public Task UpdateReportAsync(Report report)
+        public Task UpdateReportAsync(UpdateReportModel report)
         {
             return _clientFactory.CreateClient().PutAsync(report);
         }
