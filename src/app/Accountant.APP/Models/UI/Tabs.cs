@@ -2,9 +2,10 @@
 {
     public enum Tabs
     {
+        Profile,
         Categories,
         Reports,
+        Statistics,
         ShoppingList,
-        Profile,
     }
 }

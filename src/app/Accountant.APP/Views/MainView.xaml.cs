@@ -42,6 +42,9 @@ namespace Accountant.APP.Views
                     case Tabs.Reports:
                         CurrentPage = ReportsView;
                         break;
+                    case Tabs.Statistics:
+                        CurrentPage = StatisticsView;
+                        break;
                     case Tabs.ShoppingList:
                         CurrentPage = ShoppingListView;
                         break;
@@ -52,6 +55,7 @@ namespace Accountant.APP.Views
             await ((ShoppingListViewModel)ShoppingListView.BindingContext).InitializeAsync(null);
             await ((CategoriesViewModel)CategoriesView.BindingContext).InitializeAsync(null);
             await ((ProfileViewModel)ProfileView.BindingContext).InitializeAsync(null);
+            await ((StatisticsViewModel)StatisticsView.BindingContext).InitializeAsync(null);
         }
 
         protected override async void OnCurrentPageChanged()
@@ -59,31 +63,6 @@ namespace Accountant.APP.Views
             base.OnCurrentPageChanged();
 
             await (CurrentPage.BindingContext as ViewModelBase).InitializeAsync(null);
-
-            //if (CurrentPage is ReportsView)
-            //{
-            //    await (ReportsView.BindingContext as ViewModelBase).InitializeAsync(null);
-            //}
-            //else if (CurrentPage is ShoppingListView)
-            //{
-            //    await (ShoppingListView.BindingContext as ViewModelBase).InitializeAsync(null);
-            //}
-            //else if (CurrentPage is CategoriesView)
-            //{
-            //    await (CategoriesView.BindingContext as ViewModelBase).InitializeAsync(null);
-            //}
-            //else if (CurrentPage is GroupsView)
-            //{
-            //    await (GroupsView.BindingContext as ViewModelBase).InitializeAsync(null);
-            //}
-            //else if (CurrentPage is ExpensesView)
-            //{
-            //    await (ExpensesView.BindingContext as ViewModelBase).InitializeAsync(null);
-            //}
-            //else if (CurrentPage is LoginView)
-            //{
-            //    await (LoginView.BindingContext as ViewModelBase).InitializeAsync(null);
-            //}
         }
     }
 }
