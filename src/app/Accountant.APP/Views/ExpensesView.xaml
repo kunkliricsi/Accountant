@@ -6,7 +6,8 @@
              mc:Ignorable="d"
              x:Class="Accountant.APP.Views.ExpensesView"
             xmlns:viewModelBase="clr-namespace:Accountant.APP.ViewModels.Base"
-            viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+            viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+            x:Name="ExpensesViewName">
     <ContentPage.Content>
         <Grid>
             <ActivityIndicator      
@@ -16,16 +17,35 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     WidthRequest="200"/>
-            <ListView SelectionMode="None"
-                      ItemsSource="{Binding Expenses}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Label Text="{Binding Amount}"/>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <StackLayout>
+                <ListView SelectionMode="None"
+                          ItemsSource="{Binding Expenses}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.ContextActions>
+                                    <MenuItem Command="{Binding Path=BindingContext.EditExpenseCommand, Source={x:Reference ExpensesViewName}}"
+                                              CommandParameter="{Binding .}"
+                                              Text="Edit"/>
+                                    <MenuItem Command="{Binding Path=BindingContext.DeleteExpenseCommand, Source={x:Reference ExpensesViewName}}"
+                                              CommandParameter="{Binding .}"
+                                              Text="Delete" IsDestructive="True" />
+                                </ViewCell.ContextActions>
+                                <StackLayout Orientation="Horizontal" Spacing="2" Padding="15, 5">
+                                    <Label Text="{Binding User.Name}" VerticalOptions="Center" HorizontalOptions="Start"/>
+                                    <Label Text=" --- " VerticalOptions="Center"/>
+                                    <Label Text="{Binding Amount}" VerticalOptions="Center" FontAttributes="Bold"/>
+                                    <Label Text=" --- " VerticalOptions="Center"/>
+                                    <Label Text="{Binding PurchaseDate}" VerticalOptions="Center" FontSize="Small" HorizontalOptions="Center"/>
+                                    <Label Text=" --- " VerticalOptions="Center"/>
+                                    <Label Text="{Binding Category.Name}" VerticalOptions="Center" HorizontalOptions="End"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Text="Add new expense" Margin="10" Command="{Binding AddNewExpenseCommand}"/>
+            </StackLayout>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

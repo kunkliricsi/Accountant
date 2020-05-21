@@ -18,15 +18,32 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     WidthRequest="200"/>
-            <ListView ItemsSource="{Binding Reports}" SelectionMode="None">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Button Text="{Binding Id}" Command="{Binding BindingContext.OpenReportCommand, Source={x:Reference ReportsViewName}}" CommandParameter="{Binding .}"/>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <StackLayout>
+                <ListView ItemsSource="{Binding Reports}" SelectionMode="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.ContextActions>
+                                    <MenuItem Command="{Binding Path=BindingContext.OpenReportCommand, Source={x:Reference ReportsViewName}}"
+                                                  CommandParameter="{Binding .}"
+                                                  Text="Open" />
+                                    <MenuItem Command="{Binding Path=BindingContext.EditReportCommand, Source={x:Reference ReportsViewName}}"
+                                                  CommandParameter="{Binding .}"
+                                                  Text="Edit"/>
+                                    <MenuItem Command="{Binding Path=BindingContext.DeleteReportCommand, Source={x:Reference ReportsViewName}}"
+                                                  CommandParameter="{Binding .}"
+                                                  Text="Delete" IsDestructive="True" />
+                                </ViewCell.ContextActions>
+                                <StackLayout HorizontalOptions="CenterAndExpand">
+                                    <Label Text="{Binding StartDate}" FontSize="Small"/>
+                                    <Label Text="{Binding EndDate}" FontSize="Small"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Text="Add new report" Command="{Binding AddNewReportCommand}" Margin="10"/>
+            </StackLayout>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -25,7 +25,11 @@ namespace Accountant.BLL.Services
             _context.Expenses.Add(expense);
             await _context.SaveChangesAsync();
 
-            return expense;
+            return await _context.Expenses
+                .Include(e => e.Category)
+                .Include(e => e.User)
+                .Include(e => e.Report)
+                .SingleOrDefaultAsync(e => e.Id == expense.Id);
         }
 
         public Task DeleteExpenseAsync(int expenseId)

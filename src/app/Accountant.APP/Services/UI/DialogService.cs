@@ -1,5 +1,6 @@
 ﻿using Accountant.APP.Models.Web;
 using Acr.UserDialogs;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,6 +21,11 @@ namespace eShopOnContainers.Services
         public Task<string> ShowActionSheetAsync(string title, string cancel, string destructive, CancellationToken? cancelToken = null, params string[] buttons)
         {
             return UserDialogs.Instance.ActionSheetAsync(title, cancel, destructive, cancelToken, buttons);
+        }
+
+        public Task<DatePromptResult> ShowDatePromptAsync(string title = null, DateTime? selectedDate = null, CancellationToken? cancelToken = null)
+        {
+            return UserDialogs.Instance.DatePromptAsync(title, selectedDate, cancelToken);
         }
 
         public Task<PromptResult> ShowPromptAsync(string message, string title = null, string okText = null, string cancelText = null, string placeholder = "", InputType inputType = InputType.Default, CancellationToken? cancelToken = null)
