@@ -17,7 +17,7 @@ namespace Accountant.BLL.Services
             _context = context;
         }
 
-        public async Task<User> CreateUserGroupAsync(int userId, int groupId)
+        public async Task<(User user, Group group)> CreateUserGroupAsync(int userId, int groupId)
         {
             var (user, group) = await GetUserAndGroupAsync(userId, groupId);
 
@@ -35,7 +35,7 @@ namespace Accountant.BLL.Services
                 await _context.SaveChangesAsync();
             }
 
-            return user;
+            return (user, group);
         }
 
         public async Task DeleteUserGroupAsync(int userId, int groupId)

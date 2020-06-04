@@ -1,9 +1,11 @@
 ﻿using Accountant.API.DTOs;
+using Accountant.API.Hubs;
 using Accountant.BLL.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -20,12 +22,15 @@ namespace Accountant.API.Controllers
         private readonly IUserGroupService _service;
         private readonly IMapper _mapper;
         private readonly ILogger<UserGroupController> _logger;
+        private readonly GroupHub _hub;
 
-        public UserGroupController(IUserGroupService service, IMapper mapper, ILogger<UserGroupController> logger)
+        public UserGroupController(IUserGroupService service, IMapper mapper, ILogger<UserGroupController> logger,
+            GroupHub hub)
         {
             _service = service;
             _mapper = mapper;
             _logger = logger;
+            _hub = hub;
         }
 
         [HttpPost]
@@ -34,7 +39,12 @@ namespace Accountant.API.Controllers
         {
             _logger.LogInformation($"Creating user[{userGroup.UserId}] group[{userGroup.GroupId}] connection...");
 
-            return _mapper.Map<User>(await _service.CreateUserGroupAsync(userGroup.UserId, userGroup.GroupId));
+            var (user, group) = await _service.CreateUserGroupAsync(userGroup.UserId, userGroup.GroupId);
+
+            await _hub.UserJoinedAsync(user.Name, group.Name);
+
+            _logger.LogInformation($"Created user[{userGroup.UserId}] group[{userGroup.GroupId}] connection.");
+            return _mapper.Map<User>(user);
         }
 
         [HttpDelete]
@@ -44,6 +54,8 @@ namespace Accountant.API.Controllers
             _logger.LogInformation($"Deleting user[{userGroup.UserId}] group[{userGroup.GroupId}] connection...");
 
             await _service.DeleteUserGroupAsync(userGroup.UserId, userGroup.GroupId);
+
+            _logger.LogInformation($"Deleted user[{userGroup.UserId}] group[{userGroup.GroupId}] connection.");
 
             return NoContent();
         }

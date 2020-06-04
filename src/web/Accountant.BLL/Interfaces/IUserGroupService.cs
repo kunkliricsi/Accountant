@@ -8,7 +8,7 @@ namespace Accountant.BLL.Interfaces
 {
     public interface IUserGroupService
     {
-        Task<User> CreateUserGroupAsync(int userId, int groupId);
+        Task<(User user, Group group)> CreateUserGroupAsync(int userId, int groupId);
 
         Task DeleteUserGroupAsync(int userId, int groupId);
     }

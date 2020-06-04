@@ -1,3 +1,4 @@
+using Accountant.API.Hubs;
 using Accountant.API.Middlewares;
 using Accountant.BLL.Interfaces;
 using Accountant.BLL.Services;
@@ -6,6 +7,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -49,6 +51,8 @@ namespace Accountant.API
 
             services.AddAutoMapper(typeof(Startup));
 
+            services.AddSignalR();
+
             var key = Encoding.ASCII.GetBytes(Configuration["AppSettings:Secret"]);
             services.AddAuthentication(opt =>
             {
@@ -66,7 +70,7 @@ namespace Accountant.API
 
                             try
                             {
-                                var user = await userService.GetUserAsync(userId);
+                                await userService.GetUserAsync(userId);
                             }
                             catch (Exception ex)
                             {
@@ -74,7 +78,7 @@ namespace Accountant.API
                             }
                         }
                     };
-                    opt.RequireHttpsMetadata = false;
+                    opt.RequireHttpsMetadata = true;
                     opt.SaveToken = true;
                     opt.TokenValidationParameters = new TokenValidationParameters
                     {
@@ -98,6 +102,15 @@ namespace Accountant.API
                         Description = "Bearer {token}",
                     });
             });
+
+            services.AddHttpsRedirection(opt =>
+            {
+                opt.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+                opt.HttpsPort = 5001;
+            });
+
+            services.AddHealthChecks()
+                .AddDbContextCheck<AccountantContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -107,6 +120,8 @@ namespace Accountant.API
             //{
             //    app.UseDeveloperExceptionPage();
             //}
+
+            app.UseHttpsRedirection();
 
             app.UseOpenApi();
             app.UseSwaggerUi3();
@@ -120,6 +135,8 @@ namespace Accountant.API
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHealthChecks("/health").RequireAuthorization();
+                endpoints.MapHub<GroupHub>("/groupHub");
                 endpoints.MapControllers();
             });
         }
