@@ -12,5 +12,6 @@ namespace eShopOnContainers.Services
         Task<string> ShowActionSheetAsync(string title, string cancel, string destructive, CancellationToken? cancelToken = null, params string[] buttons);
         Task<DatePromptResult> ShowDatePromptAsync(string title = null, DateTime? selectedDate = null, CancellationToken? cancelToken = null);
         Task<PromptResult> ShowPromptAsync(string message, string title = null, string okText = null, string cancelText = null, string placeholder = "", InputType inputType = InputType.Default, CancellationToken? cancelToken = null);
+        void ShowToast(string toast);
     }
 }

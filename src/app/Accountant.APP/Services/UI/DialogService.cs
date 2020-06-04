@@ -32,5 +32,10 @@ namespace eShopOnContainers.Services
         {
             return UserDialogs.Instance.PromptAsync(message, title, okText, cancelText, placeholder, inputType, cancelToken);
         }
+
+        public void ShowToast(string toast)
+        {
+            UserDialogs.Instance.Toast(toast);
+        }
     }
 }

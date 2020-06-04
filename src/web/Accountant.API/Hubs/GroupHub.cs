@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
 namespace Accountant.API.Hubs
 {
+    [Authorize]
     public class GroupHub : Hub
     {
         private readonly ILogger<GroupHub> _logger;
