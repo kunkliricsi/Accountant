@@ -70,7 +70,7 @@ namespace Accountant.APP.ViewModels.Base
             _container.Register<IUserService, UserService>();
 
             // Hub Services
-            _container.Register<IGroupHubService, GroupHubService>();
+            _container.Register<IGroupHubService, GroupHubService>().AsSingleton();
 
             // UI Services
             _container.Register<INavigationService, NavigationService>();
