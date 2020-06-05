@@ -22,15 +22,15 @@ namespace Accountant.API.Controllers
         private readonly IUserGroupService _service;
         private readonly IMapper _mapper;
         private readonly ILogger<UserGroupController> _logger;
-        private readonly GroupHub _hub;
+        private readonly IHubContext<GroupHub, IGroupHubClient> _hubContext;
 
         public UserGroupController(IUserGroupService service, IMapper mapper, ILogger<UserGroupController> logger,
-            GroupHub hub)
+            IHubContext<GroupHub, IGroupHubClient> hubContext)
         {
             _service = service;
             _mapper = mapper;
             _logger = logger;
-            _hub = hub;
+            _hubContext = hubContext;
         }
 
         [HttpPost]
@@ -41,7 +41,7 @@ namespace Accountant.API.Controllers
 
             var (user, group) = await _service.CreateUserGroupAsync(userGroup.UserId, userGroup.GroupId);
 
-            await _hub.UserJoinedAsync(user.Name, group.Name);
+            await _hubContext.Clients.All.UserJoinedAsync(user.Name, group.Name);
 
             _logger.LogInformation($"Created user[{userGroup.UserId}] group[{userGroup.GroupId}] connection.");
             return _mapper.Map<User>(user);

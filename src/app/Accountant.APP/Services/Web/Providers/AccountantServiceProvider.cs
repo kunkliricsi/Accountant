@@ -52,7 +52,7 @@ namespace Accountant.APP.Services.Web.Providers
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.5.0.0 (NJsonSchema v10.1.15.0 (Newtonsoft.Json v12.0.0.0))")]
     public partial class CategoriesClient : ICategoriesClient
     {
-        private string _baseUrl = "http://192.168.1.143:5000";
+        private string _baseUrl = "http://192.168.1.144:5000";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
     
@@ -482,7 +482,7 @@ namespace Accountant.APP.Services.Web.Providers
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.5.0.0 (NJsonSchema v10.1.15.0 (Newtonsoft.Json v12.0.0.0))")]
     public partial class ExpensesClient : IExpensesClient
     {
-        private string _baseUrl = "http://192.168.1.143:5000";
+        private string _baseUrl = "http://192.168.1.144:5000";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
     
@@ -924,7 +924,7 @@ namespace Accountant.APP.Services.Web.Providers
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.5.0.0 (NJsonSchema v10.1.15.0 (Newtonsoft.Json v12.0.0.0))")]
     public partial class GroupsClient : IGroupsClient
     {
-        private string _baseUrl = "http://192.168.1.143:5000";
+        private string _baseUrl = "http://192.168.1.144:5000";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
     
@@ -1449,7 +1449,7 @@ namespace Accountant.APP.Services.Web.Providers
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.5.0.0 (NJsonSchema v10.1.15.0 (Newtonsoft.Json v12.0.0.0))")]
     public partial class ReportsClient : IReportsClient
     {
-        private string _baseUrl = "http://192.168.1.143:5000";
+        private string _baseUrl = "http://192.168.1.144:5000";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
     
@@ -2113,7 +2113,7 @@ namespace Accountant.APP.Services.Web.Providers
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.5.0.0 (NJsonSchema v10.1.15.0 (Newtonsoft.Json v12.0.0.0))")]
     public partial class ShoppingListsClient : IShoppingListsClient
     {
-        private string _baseUrl = "http://192.168.1.143:5000";
+        private string _baseUrl = "http://192.168.1.144:5000";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
     
@@ -2740,7 +2740,7 @@ namespace Accountant.APP.Services.Web.Providers
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.5.0.0 (NJsonSchema v10.1.15.0 (Newtonsoft.Json v12.0.0.0))")]
     public partial class UserGroupClient : IUserGroupClient
     {
-        private string _baseUrl = "http://192.168.1.143:5000";
+        private string _baseUrl = "http://192.168.1.144:5000";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
     
@@ -3054,7 +3054,7 @@ namespace Accountant.APP.Services.Web.Providers
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.5.0.0 (NJsonSchema v10.1.15.0 (Newtonsoft.Json v12.0.0.0))")]
     public partial class UsersClient : IUsersClient
     {
-        private string _baseUrl = "http://192.168.1.143:5000";
+        private string _baseUrl = "http://192.168.1.144:5000";
         private System.Net.Http.HttpClient _httpClient;
         private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
     

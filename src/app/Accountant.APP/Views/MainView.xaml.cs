@@ -50,12 +50,6 @@ namespace Accountant.APP.Views
                         break;
                 }
             });
-
-            await ((ReportsViewModel)ReportsView.BindingContext).InitializeAsync(null);
-            await ((ShoppingListViewModel)ShoppingListView.BindingContext).InitializeAsync(null);
-            await ((CategoriesViewModel)CategoriesView.BindingContext).InitializeAsync(null);
-            await ((ProfileViewModel)ProfileView.BindingContext).InitializeAsync(null);
-            await ((StatisticsViewModel)StatisticsView.BindingContext).InitializeAsync(null);
         }
 
         protected override async void OnCurrentPageChanged()

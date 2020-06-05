@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Accountant.API.Hubs
 {
     [Authorize]
-    public class GroupHub : Hub
+    public class GroupHub : Hub<IGroupHubClient>
     {
         private readonly ILogger<GroupHub> _logger;
 
@@ -32,7 +32,7 @@ namespace Accountant.API.Hubs
 
         public Task UserJoinedAsync(string userName, string groupName)
         {
-            return Clients.All.SendAsync("JoinedGroup", userName, groupName);
+            return Clients.All.UserJoinedAsync(userName, groupName);
         }
     }
 }

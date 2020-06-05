@@ -1,6 +1,7 @@
 ﻿using Accountant.APP.Services.Settings;
 using Accountant.APP.Services.Settings.Interfaces;
 using Accountant.APP.Services.Web;
+using Accountant.APP.Services.Web.Hubs;
 using Accountant.APP.Services.Web.Interfaces;
 using Accountant.APP.Services.Web.Providers;
 using Accountant.APP.Views;
@@ -67,6 +68,9 @@ namespace Accountant.APP.ViewModels.Base
             _container.Register<IShoppingListService, ShoppingListService>();
             _container.Register<IUserGroupService, UserGroupService>();
             _container.Register<IUserService, UserService>();
+
+            // Hub Services
+            _container.Register<IGroupHubService, GroupHubService>();
 
             // UI Services
             _container.Register<INavigationService, NavigationService>();

@@ -24,13 +24,15 @@ namespace Accountant.APP.ViewModels
         private readonly IGroupService _groupService;
         private readonly IUserGroupService _userGroupService;
         private readonly IDialogService _dialogService;
+        private readonly IGroupHubService _groupHubService;
 
         public ProfileViewModel(ISettingsService settingsService,
             INavigationService navigationService,
             IUserService userService,
             IGroupService groupService,
             IUserGroupService userGroupService,
-            IDialogService dialogService)
+            IDialogService dialogService,
+            IGroupHubService groupHubService)
         {
             _settingsService = settingsService;
             _navigationService = navigationService;
@@ -38,6 +40,7 @@ namespace Accountant.APP.ViewModels
             _groupService = groupService;
             _userGroupService = userGroupService;
             _dialogService = dialogService;
+            _groupHubService = groupHubService;
         }
         
         private User _user;
@@ -78,6 +81,7 @@ namespace Accountant.APP.ViewModels
             _settingsService.UserId = null;
             _settingsService.GroupId = null;
 
+            await _groupHubService.DisconnectAsync();
             await _navigationService.NavigateToAsync<LoginViewModel>();
             await _navigationService.RemoveBackStackAsync();
         }
@@ -97,7 +101,7 @@ namespace Accountant.APP.ViewModels
                     });
 
                     await _userGroupService.CreateUserGroupAsync(User.Id, created.Id);
-                    await RefreshGroups();
+                    await RefreshGroupsAsync();
                 }
             }
             catch (Exception ex)
@@ -129,7 +133,7 @@ namespace Accountant.APP.ViewModels
                     if (group != null)
                     {
                         await _userGroupService.CreateUserGroupAsync(_settingsService.UserId.Value, group.Id);
-                        await RefreshGroups();
+                        await RefreshGroupsAsync();
                     }
                 }
             }
@@ -162,7 +166,7 @@ namespace Accountant.APP.ViewModels
                     if (group != null)
                     {
                         await _userGroupService.DeleteUserGroupAsync(_settingsService.UserId.Value, group.Id);
-                        await RefreshGroups();
+                        await RefreshGroupsAsync();
                     }
                 }
             }
@@ -186,7 +190,7 @@ namespace Accountant.APP.ViewModels
                 if (result)
                 {
                     await _groupService.DeleteGroupAsync(group.Id);
-                    await RefreshGroups();
+                    await RefreshGroupsAsync();
                 }
             }
             catch (Exception ex)
@@ -210,7 +214,7 @@ namespace Accountant.APP.ViewModels
                 {
                     group.Name = result.Text;
                     await _groupService.UpdateGroupAsync(group);
-                    await RefreshGroups();
+                    await RefreshGroupsAsync();
                 }
             }
             catch (Exception ex)
@@ -230,7 +234,17 @@ namespace Accountant.APP.ViewModels
 
             try
             {
-                await RefreshGroups();
+                try
+                {
+                    await _groupHubService.ConnectAsync();
+                    _groupHubService.HubMessageRecieved += async () => await RefreshGroupsAsync();
+                }
+                catch (Exception ex)
+                {
+                    await _dialogService.ShowAlertAsync($"{ex}", "Could not connect to SignalR.", "Hmm");
+                }
+
+                await RefreshGroupsAsync();
             }
             catch (Exception ex)
             {
@@ -241,7 +255,7 @@ namespace Accountant.APP.ViewModels
             IsBusy = false;
         }
 
-        private async Task RefreshGroups()
+        private async Task RefreshGroupsAsync()
         {
             User = await _userService.GetUserAsync(_settingsService.UserId.Value);
             UserGroups = User.Groups;
