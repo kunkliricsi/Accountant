@@ -7,7 +7,7 @@ namespace Accountant.BLL.Interfaces
     public interface IShoppingListService
     {
         Task<ShoppingList> GetShoppingListAsync(int shoppingListId);
-        Task<ShoppingList> CreateShoppingListAsync(ShoppingList shoppingList, int groupId);
+        Task<ShoppingList> CreateShoppingListAsync(ShoppingList shoppingList);
         Task UpdateShoppingListAsync(ShoppingList shoppingList);
         Task DeleteShoppingListAsync(int shoppingListId);
 

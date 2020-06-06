@@ -25,7 +25,7 @@ namespace Accountant.APP.Views
             On<Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
         }
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
 

@@ -20,7 +20,7 @@ namespace Accountant.BLL.Services
             _context = context;
         }
 
-        public async Task<ShoppingList> CreateShoppingListAsync(ShoppingList shoppingList, int groupId)
+        public async Task<ShoppingList> CreateShoppingListAsync(ShoppingList shoppingList)
         {
             _context.ShoppingLists.Add(shoppingList);
             await _context.SaveChangesAsync();

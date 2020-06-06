@@ -44,8 +44,7 @@ namespace Accountant.API.Controllers
             _logger.LogInformation("Creating shopping list...");
 
             var created = await _service.CreateShoppingListAsync(
-                _mapper.Map<DAL.Entities.ShoppingList>(list),
-                groupId);
+                _mapper.Map<DAL.Entities.ShoppingList>(list));
 
             _logger.LogInformation($"Created shopping list [{created.Id}].");
 
