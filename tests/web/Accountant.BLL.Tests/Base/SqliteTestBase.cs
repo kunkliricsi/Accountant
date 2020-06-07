@@ -3,7 +3,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace Accountant.BLL.Tests.Helpers
+namespace Accountant.BLL.Tests.Base
 {
     public abstract class SqliteTestBase : IDisposable
     {

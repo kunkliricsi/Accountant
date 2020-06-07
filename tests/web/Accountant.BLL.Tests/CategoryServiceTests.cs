@@ -1,5 +1,5 @@
 using Accountant.BLL.Services;
-using Accountant.BLL.Tests.Helpers;
+using Accountant.BLL.Tests.Base;
 using Accountant.DAL.Entities;
 using System;
 using System.Linq;
