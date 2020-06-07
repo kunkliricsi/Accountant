@@ -1,5 +1,6 @@
 using Accountant.API.Controllers;
 using Accountant.API.DTOs;
+using Accountant.API.Tests.Helpers;
 using Accountant.BLL.Interfaces;
 using Accountant.BLL.Services;
 using AutoMapper;
@@ -65,14 +66,13 @@ namespace Accountant.API.Tests
             ServiceMock.Verify(s => s.UpdateCategoryAsync(It.IsAny<DAL.Entities.Category>()), Times.Once());
         }
 
-        [Fact]
-        public void DeleteTest()
+        [Theory]
+        [MemberData(nameof(RangeData.Data), MemberType = typeof(RangeData))]
+        public void DeleteTest(int id)
         {
-            var rand = new Random().Next(1, 100);
+            Controller.DeleteAsync(id).Wait();
 
-            Controller.DeleteAsync(rand).Wait();
-
-            ServiceMock.Verify(s => s.DeleteCategoryAsync(rand), Times.Once());
+            ServiceMock.Verify(s => s.DeleteCategoryAsync(id), Times.Once());
         }
     }
 }
