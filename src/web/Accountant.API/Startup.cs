@@ -78,7 +78,7 @@ namespace Accountant.API
                             }
                         }
                     };
-                    opt.RequireHttpsMetadata = true;
+                    opt.RequireHttpsMetadata = false;
                     opt.SaveToken = true;
                     opt.TokenValidationParameters = new TokenValidationParameters
                     {

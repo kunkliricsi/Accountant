@@ -21,16 +21,7 @@ namespace Accountant.APP.Services.Web.Hubs
             _dialogService = dialogService;
             _settingsService = settingsService;
 
-            _connection = new HubConnectionBuilder()
-                .WithUrl(backendUrl, opt =>
-                {
-                    opt.SkipNegotiation = true;
-                    opt.Transports = Microsoft.AspNetCore.Http.Connections.HttpTransportType.WebSockets;
-                    opt.AccessTokenProvider = () => Task.FromResult(_settingsService.AuthToken);
-                })
-                .WithAutomaticReconnect()
-                .Build();
-
+            InitializeConnection();
         }
 
         public async Task ConnectAsync()
@@ -52,8 +43,19 @@ namespace Accountant.APP.Services.Web.Hubs
 
             await _connection.DisposeAsync();
 
+            InitializeConnection();
+        }
+
+        private void InitializeConnection()
+        {
             _connection = new HubConnectionBuilder()
-                .WithUrl(backendUrl)
+                .WithUrl(backendUrl, opt =>
+                {
+                    opt.SkipNegotiation = true;
+                    opt.Transports = Microsoft.AspNetCore.Http.Connections.HttpTransportType.WebSockets;
+                    opt.AccessTokenProvider = () => Task.FromResult(_settingsService.AuthToken);
+                })
+                .WithAutomaticReconnect()
                 .Build();
         }
     }
